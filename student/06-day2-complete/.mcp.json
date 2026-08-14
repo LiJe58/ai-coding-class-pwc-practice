@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "mock-erp": {
+      "command": "python",
+      "args": ["tools/run_python.py", "backend/mcp_server.py"]
+    }
+  }
+}
