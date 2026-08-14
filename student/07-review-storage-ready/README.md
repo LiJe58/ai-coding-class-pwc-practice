@@ -2,7 +2,7 @@
 
 완료 상태: Day 2 조서는 그대로 보존하고, 사람 결론은 기존 기록을 지우지 않는 별도 SQLite 이력으로 저장합니다. U701만 저장할 수 있으며 잘못된 사용자·결론·메모·사례는 거부됩니다.
 
-다음 교재: `save-idempotent-history` → `build-final-review`.
+다음 교재: `save-idempotent-history` → `build-final-review` → `connect-review-actions`.
 
 ```text
 npm run setup

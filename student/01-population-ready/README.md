@@ -4,6 +4,8 @@
 
 다음 교재: `implement-control-rules` → `save-results`.
 
+프런트엔드는 백엔드 준비 상태만 표시합니다. 실제 검토 UI는 `connect-review-screens`부터 구현합니다.
+
 ```text
 npm run setup
 npm run check
