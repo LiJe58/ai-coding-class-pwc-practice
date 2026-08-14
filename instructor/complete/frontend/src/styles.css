@@ -15,3 +15,9 @@ button { width: fit-content; margin-top: 8px; padding: 8px 12px; }
 .layout section button { width: 100%; text-align: left; }
 .layout section button.selected { background: #286267; color: white; }
 .layout section div { display: grid; gap: 3px; border-bottom: 1px solid #cbd5d7; }
+.agent-card { margin: 8px 0; padding: 12px; border: 1px solid #cbd5d7; border-radius: 8px; background: #f4f7f7; }
+.agent-card p { margin: 4px 0; }
+.agent-result { padding: 10px; border-radius: 8px; background: #f4f7f7; }
+.agent-result.permission_denied, .agent-result.config_error, .agent-result.tool_error, .agent-result.model_error { background: #fff0ed; }
+.agent-history article { padding: 10px 0; border-bottom: 1px solid #cbd5d7; }
+.agent-history p { margin: 4px 0; }
