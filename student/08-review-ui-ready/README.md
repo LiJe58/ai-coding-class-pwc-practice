@@ -2,7 +2,9 @@
 
 완료 상태: 같은 요청 식별값을 다시 보내도 기록이 늘지 않고, 같은 식별값으로 다른 내용을 보내면 거부합니다. Agent 초안과 사람 결론, 현재 결론과 전체 이력을 분리해 화면에 표시합니다.
 
-다음 교재: `connect-review-status` → `complete-and-export` → `verify-failures` → `run-final-demo` → `write-application-scope`.
+다음 교재: `course/agent/web-preview` → `connect-review-status` → `complete-and-export` → `verify-failures` → `run-final-demo` → `write-application-scope`.
+
+이 체크포인트에는 `Agent로 다시 확인` API와 버튼이 아직 없습니다. `course/agent/web-preview`에서 직접 구현하며, 완성 결과는 `instructor/complete`를 기준으로 확인합니다.
 
 ```text
 npm run setup

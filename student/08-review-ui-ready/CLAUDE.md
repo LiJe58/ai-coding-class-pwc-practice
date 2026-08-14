@@ -21,7 +21,7 @@
 
 - Day 1~3 차시는 `internal-control-lab` Skill의 순서로 진행합니다.
 - 현재 코드와 호출 경로를 조사한 뒤 변경 파일과 화면 결과를 먼저 설명합니다.
-- 기존 React, FastAPI, SQLite와 설치된 패키지를 재사용하고 새 패키지를 추가하지 않습니다.
+- 기존 React, FastAPI, SQLite와 설치된 패키지를 재사용합니다. Agent 웹 연결에서는 공식 OpenAI SDK 하나만 검증된 버전으로 고정해 추가하고 다른 패키지는 늘리지 않습니다.
 - 동작이 바뀌면 기존 `test_checkpoint.py`에 꼭 필요한 검사만 추가하며 기존 검사를 삭제하거나 약하게 만들지 않습니다.
 - 구현 후 `npm run check`와 관련 API를 실제로 확인합니다. 실행하지 않은 항목은 통과로 보고하지 않습니다.
 - 백엔드는 `npm run start:backend`, 프런트엔드는 `npm run dev:frontend`, MCP 단계는 `npm run start:mcp`로 실행합니다.
