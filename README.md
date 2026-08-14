@@ -12,10 +12,10 @@
 
 ## 처음 시작하기
 
-공개 주소가 확정되면 다음 자리의 URL을 바꾸어 사용합니다.
+교육 기간에 공개되는 저장소를 HTTPS로 clone합니다.
 
 ```powershell
-git clone <PUBLIC_HTTPS_REPOSITORY_URL>
+git clone https://github.com/LiJe58/ai-coding-class-pwc-practice.git
 cd ai-coding-class-pwc-practice
 python scripts/checkpoint.py reset instructor/complete
 cd practice/workspace
@@ -61,3 +61,7 @@ npm run check
 `assets/day-1/input/`의 CSV 6종, `assets/scenario/control-card.md`, `assets/scenario/case-matrix.xlsx`, Day 2 이후의 `output/day-2/working-paper.json`은 합성 고정 자료입니다. 실제 회사 자료, 개인정보, 비밀번호, 인증정보, 운영 URL을 추가하지 마세요. Excel과 애플리케이션에서 경로는 저장소 상대경로만 사용합니다.
 
 `.venv`, `node_modules`, `dist`, `backend/data`, SQLite/WAL/journal, pycache, 로그, 임시 JSON, 실제 검토 이벤트와 다운로드 CSV는 Git에 포함하지 않습니다. 강사용 완성본은 `instructor/complete`에 있으며 같은 내용의 학생 최종 폴더는 두지 않습니다.
+
+## 이용 조건
+
+이 저장소는 교육 기간에만 임시 공개됩니다. 승인된 강사와 수강생은 해당 교육 실습 목적으로만 clone·실행·수정할 수 있으며, 외부 공유·재배포·공개 게시·상업적 또는 운영 목적 이용은 허용되지 않습니다. 공개 상태 자체가 일반 이용 허락을 의미하지 않습니다. 자세한 조건은 [LICENSE](LICENSE)를 확인하세요.
