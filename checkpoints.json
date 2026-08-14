@@ -25,7 +25,7 @@
     "vendor_changes.csv": "bf63d81e2aef1fcf1e0452915a3cc5b162f1f95a419ff2249e535b16236ba88f",
     "vendor_master.csv": "d01dc4798f4cbe80cf162f7165b3aa1b7cd84a13d35e1c0fa0ec0c939cc05be9"
   },
-  "working_paper_sha256": "cf21cdfa95b743bce7afde3e22ca1bced3daa2c17d0c1b7f0cae2223615f77ae",
+  "working_paper_sha256": "2d702687e1f52ce475266ccf7df2a7a7acffdb799e098fba8b065fb8dc21616b",
   "case_matrix_sha256": "09923e3a533dd0626e4b75a940b3e2105d3cbc687a38bd668dedc33560509bb7",
   "case_matrix_sheets": ["사용안내", "사례판정", "규칙", "거래처마스터", "거래처변경", "변경승인", "지급요청", "사용자역할", "증빙목록"]
 }

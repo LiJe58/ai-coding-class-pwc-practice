@@ -10,7 +10,7 @@ from app.main import app
 
 ROOT = Path(__file__).resolve().parents[2]
 PAPER = ROOT / "output" / "day-2" / "working-paper.json"
-PAPER_SHA256 = "cf21cdfa95b743bce7afde3e22ca1bced3daa2c17d0c1b7f0cae2223615f77ae"
+PAPER_SHA256 = "2d702687e1f52ce475266ccf7df2a7a7acffdb799e098fba8b065fb8dc21616b"
 
 
 class Day2CheckpointTest(unittest.TestCase):

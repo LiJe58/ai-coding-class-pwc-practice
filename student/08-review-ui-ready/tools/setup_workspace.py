@@ -32,7 +32,7 @@ def main() -> int:
     run([str(python), "-m", "pip", "install", "--disable-pip-version-check", "-r", str(requirements)], workspace)
     node = os.environ.get("COURSE_NODE")
     npm_cli = os.environ.get("COURSE_NPM_CLI")
-    npm = [node, npm_cli] if node and npm_cli else ["npm"]
+    npm = [node, npm_cli] if node and npm_cli else ["npm.cmd" if os.name == "nt" else "npm"]
     run([*npm, "ci", "--prefix", str(frontend)], workspace)
     return 0
 
