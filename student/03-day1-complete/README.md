@@ -11,4 +11,4 @@ npm run start:backend
 npm run dev:frontend
 ```
 
-`CHG-2608-023` 상세에는 R-02 실패와 R-03/R-04 평가 불가가 표시됩니다. CSV를 보존하고 SQLite는 runtime으로만 사용합니다. 문제 시 `python scripts/checkpoint.py reset student/03-day1-complete`로 복구합니다.
+`CHG-2608-023` 상세에는 R-02 실패와 R-03/R-04 평가 불가가 표시됩니다. CSV를 보존하고 SQLite는 실행 중에만 사용합니다. 문제 시 `python scripts/checkpoint.py reset student/03-day1-complete`로 복구합니다.

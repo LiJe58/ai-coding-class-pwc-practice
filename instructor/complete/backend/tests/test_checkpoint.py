@@ -1,13 +1,14 @@
 import csv
 import hashlib
 import io
+import json
 import unittest
 import uuid
 from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from app.main import DAY3_DB_PATH, app
+from app.main import DAY3_DB_PATH, app, day3_payload, review_events
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -54,6 +55,10 @@ class InstructorCheckpointTest(unittest.TestCase):
         self.assertEqual(len(rows), 12)
         self.assertEqual(hashlib.sha256(PAPER.read_bytes()).hexdigest(), PAPER_SHA256)
         self.assertTrue((ROOT / "templates" / "application-scope.md").is_file())
+
+        new_paper = json.loads(PAPER.read_text(encoding="utf-8"))
+        new_paper["generated_at"] = "2026-08-14 09:00:00"
+        self.assertEqual(day3_payload(new_paper, review_events())["summary"]["reviewed_count"], 0)
 
 
 if __name__ == "__main__":

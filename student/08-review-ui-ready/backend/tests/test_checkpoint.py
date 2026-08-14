@@ -1,3 +1,4 @@
+import json
 import sqlite3
 import unittest
 import uuid
@@ -6,7 +7,7 @@ from pathlib import Path
 
 from fastapi.testclient import TestClient
 
-from app.main import DAY3_DB_PATH, app
+from app.main import DAY3_DB_PATH, WORKING_PAPER_PATH, app, day3_payload, review_events
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -48,6 +49,10 @@ class ReviewUiCheckpointTest(unittest.TestCase):
         frontend = (ROOT / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
         for contract in ("Agent 초안", "사람 결론", "전체 이력", "/api/day3/reviews"):
             self.assertIn(contract, frontend)
+
+        new_paper = json.loads(WORKING_PAPER_PATH.read_text(encoding="utf-8"))
+        new_paper["generated_at"] = "2026-08-14 09:00:00"
+        self.assertIsNone(day3_payload(new_paper, review_events())["items"][0]["current_review"])
 
 
 if __name__ == "__main__":

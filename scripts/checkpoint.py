@@ -49,8 +49,8 @@ def ignored(path: Path) -> bool:
     return path.name.endswith(RUNTIME_SUFFIXES) or path.name.endswith((".sqlite3-wal", ".sqlite3-shm", ".sqlite3-journal"))
 
 
-def copy_clean(source: Path, destination: Path) -> None:
-    shutil.copytree(source, destination, ignore=lambda directory, names: [name for name in names if ignored(Path(directory) / name)])
+def copy_clean(source: Path, destination: Path, *, root_excludes: tuple[str, ...] = ()) -> None:
+    shutil.copytree(source, destination, ignore=lambda directory, names: [name for name in names if (Path(directory) == source and name in root_excludes) or ignored(Path(directory) / name)])
 
 
 def reset(value: str) -> None:
@@ -68,6 +68,7 @@ def reset(value: str) -> None:
         if WORKSPACE.exists():
             shutil.rmtree(WORKSPACE)
         copy_clean(source, WORKSPACE)
+        copy_clean(REPO / "assets" / "scenario", WORKSPACE / "assets" / "scenario")
         for saved, relative in preserved:
             destination = WORKSPACE / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
@@ -81,7 +82,7 @@ def promote(value: str) -> None:
     if target.exists():
         raise ValueError(f"대상이 이미 존재합니다: {value}")
     target.parent.mkdir(parents=True, exist_ok=True)
-    copy_clean(WORKSPACE, target)
+    copy_clean(WORKSPACE, target, root_excludes=("assets",))
 
 
 def sha256(path: Path) -> str:

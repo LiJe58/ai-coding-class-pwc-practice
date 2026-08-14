@@ -24,6 +24,10 @@ class CheckpointToolTest(unittest.TestCase):
         (source / "output" / "day-2").mkdir(parents=True)
         (source / "output" / "day-2" / "working-paper.json").write_text("{}", encoding="utf-8")
         (source / "output" / "temporary.json").write_text("runtime", encoding="utf-8")
+        scenario = self.repo / "assets" / "scenario"
+        scenario.mkdir(parents=True)
+        (scenario / "control-card.md").write_text("# controls", encoding="utf-8")
+        (scenario / "case-matrix.xlsx").write_bytes(b"matrix")
         self.workspace = self.repo / "practice" / "workspace"
         (self.workspace / ".venv").mkdir(parents=True)
         (self.workspace / ".venv" / "keep").write_text("yes", encoding="utf-8")
@@ -42,6 +46,8 @@ class CheckpointToolTest(unittest.TestCase):
         self.assertFalse((self.workspace / "backend" / "data").exists())
         self.assertTrue((self.workspace / "output" / "day-2" / "working-paper.json").is_file())
         self.assertFalse((self.workspace / "output" / "temporary.json").exists())
+        self.assertTrue((self.workspace / "assets" / "scenario" / "control-card.md").is_file())
+        self.assertTrue((self.workspace / "assets" / "scenario" / "case-matrix.xlsx").is_file())
 
     def test_promote_refuses_existing_target_and_outside_paths(self) -> None:
         with self.assertRaises(ValueError):
@@ -58,6 +64,7 @@ class CheckpointToolTest(unittest.TestCase):
         self.assertTrue((target / "output" / "day-2" / "working-paper.json").is_file())
         self.assertFalse((target / ".venv").exists())
         self.assertFalse((target / "runtime.log").exists())
+        self.assertFalse((target / "assets").exists())
 
 
 if __name__ == "__main__":

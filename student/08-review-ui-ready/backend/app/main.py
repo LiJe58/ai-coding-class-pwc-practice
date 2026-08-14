@@ -220,6 +220,7 @@ def review_events() -> list[dict]:
 
 
 def day3_payload(paper: dict, events: list[dict]) -> dict:
+    events = [event for event in events if event["source_test_run_id"] == paper["source_test_run_id"] and event["agent_run_id"] == paper["agent_run_id"] and event["working_paper_generated_at"] == paper["generated_at"]]
     current = {}
     for event in events:
         current[event["change_id"]] = event
@@ -287,7 +288,7 @@ def save_day3_review(change_id: str, request: ReviewRequest) -> dict:
         if existing:
             event = dict(existing)
             if any(event[key] != value for key, value in expected.items()):
-                raise HTTPException(status_code=409, detail="같은 action ID가 다른 요청에 이미 사용되었습니다.")
+                raise HTTPException(status_code=409, detail="같은 요청 식별값이 다른 저장 내용에 이미 사용되었습니다.")
         else:
             connection.execute("INSERT INTO review_events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", tuple(event.values()))
     return {"status": "saved", "event": event}
