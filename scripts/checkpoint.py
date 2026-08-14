@@ -40,7 +40,7 @@ def checkpoint_path(value: str, *, must_exist: bool) -> Path:
 
 def ignored(path: Path) -> bool:
     parts = path.parts
-    if any(part in RUNTIME_NAMES for part in parts) or any(parts[index:index + 2] == ("backend", "data") for index in range(len(parts) - 1)):
+    if path.name == ".env" or any(part in RUNTIME_NAMES for part in parts) or any(parts[index:index + 2] == ("backend", "data") for index in range(len(parts) - 1)):
         return True
     if "output" in parts:
         suffix = parts[parts.index("output"):]
@@ -58,7 +58,7 @@ def reset(value: str) -> None:
     preserved: list[tuple[Path, Path]] = []
     with tempfile.TemporaryDirectory(dir=REPO / "practice") as temporary:
         temporary_path = Path(temporary)
-        for relative in (Path(".venv"), Path("frontend/node_modules")):
+        for relative in (Path(".venv"), Path("frontend/node_modules"), Path(".env")):
             runtime = WORKSPACE / relative
             if runtime.exists():
                 saved = temporary_path / relative

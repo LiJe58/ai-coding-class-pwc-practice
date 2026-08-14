@@ -3,6 +3,7 @@ import hashlib
 import io
 import json
 import os
+import tempfile
 import unittest
 import uuid
 from pathlib import Path
@@ -11,7 +12,8 @@ from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
-from app.main import DAY3_DB_PATH, app, day3_payload, review_events
+from app.main import DAY3_DB_PATH, app, day3_ready_payload, review_events
+from app.agent import load_agent_settings
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -93,13 +95,20 @@ class InstructorCheckpointTest(unittest.TestCase):
         self.assertEqual(denied.status_code, 403)
 
     def test_agent_preview_stops_safely_without_api_settings(self) -> None:
-        with patch.dict(os.environ, {}, clear=True):
+        with patch.dict(os.environ, {}, clear=True), patch("app.agent.load_dotenv"):
             response = self.client.post(
                 "/api/day2/agent-preview/CHG-2608-023",
                 json={"requester_user_id": "U701"},
             )
         self.assertEqual(response.status_code, 503)
         self.assertEqual(response.json()["detail"], "Agent 실행에 필요한 API 설정이 없습니다.")
+
+    def test_agent_settings_load_workspace_dotenv(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / ".env").write_text("OPENAI_API_KEY=test-key\nOPENAI_MODEL=test-model\n", encoding="utf-8")
+            with patch("app.agent.ROOT", root), patch.dict(os.environ, {}, clear=True):
+                self.assertEqual(load_agent_settings(), ("test-key", "test-model", None))
 
     def test_export_gate_and_final_totals(self) -> None:
         initial = self.client.get("/api/day3/reviews").json()["summary"]
@@ -126,7 +135,7 @@ class InstructorCheckpointTest(unittest.TestCase):
 
         new_paper = json.loads(PAPER.read_text(encoding="utf-8"))
         new_paper["generated_at"] = "2026-08-14 09:00:00"
-        self.assertEqual(day3_payload(new_paper, review_events())["summary"]["reviewed_count"], 0)
+        self.assertEqual(day3_ready_payload(new_paper, review_events())["summary"]["reviewed_count"], 0)
 
 
 if __name__ == "__main__":

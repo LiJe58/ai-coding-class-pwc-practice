@@ -7,6 +7,7 @@ from pathlib import Path
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
+from dotenv import load_dotenv
 from openai import AsyncOpenAI
 
 
@@ -42,6 +43,11 @@ class AgentExecutionError(Exception):
     pass
 
 
+def load_agent_settings() -> tuple[str | None, str | None, str | None]:
+    load_dotenv(ROOT / ".env", override=False)
+    return os.getenv("OPENAI_API_KEY"), os.getenv("OPENAI_MODEL"), os.getenv("OPENAI_BASE_URL")
+
+
 async def fetch_case_evidence(arguments: dict[str, str]) -> dict:
     server = StdioServerParameters(command=sys.executable, args=[str(ROOT / "backend" / "mcp_server.py")])
     async with stdio_client(server) as streams:
@@ -58,13 +64,12 @@ async def fetch_case_evidence(arguments: dict[str, str]) -> dict:
 
 
 async def create_agent_preview(change_id: str, requester_user_id: str) -> dict:
-    api_key = os.getenv("OPENAI_API_KEY")
-    model = os.getenv("OPENAI_MODEL")
+    api_key, model, base_url = load_agent_settings()
     if not api_key or not model:
         raise AgentConfigurationError
 
     client_options = {"api_key": api_key, "max_retries": 0, "timeout": 30.0}
-    if base_url := os.getenv("OPENAI_BASE_URL"):
+    if base_url:
         client_options["base_url"] = base_url.rstrip("/")
     client = AsyncOpenAI(**client_options)
     expected_arguments = {"change_id": change_id, "requester_user_id": requester_user_id}
