@@ -2,10 +2,6 @@
   "name": "internal-control-practice-frontend",
   "private": true,
   "type": "module",
-  "engines": {
-    "node": "22.16.0",
-    "npm": "10.9.2"
-  },
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 5173",
     "check": "tsc --noEmit && vite build"

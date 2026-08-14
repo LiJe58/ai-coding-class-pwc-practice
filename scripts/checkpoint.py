@@ -136,8 +136,8 @@ def verify() -> None:
                 raise ValueError(f"필수 파일 누락: {name}/{required}")
         if (root / ".node-version").read_text(encoding="utf-8").strip() != data["versions"]["node"] or (root / ".python-version").read_text(encoding="utf-8").strip() != data["versions"]["python"]:
             raise ValueError(f"runtime 버전 불일치: {name}")
-        if "engine-strict=true" not in (root / ".npmrc").read_text(encoding="utf-8"):
-            raise ValueError(f"engine-strict 누락: {name}")
+        if "engine-strict=true" in (root / ".npmrc").read_text(encoding="utf-8"):
+            raise ValueError(f"상위 Node/npm 버전을 차단하는 설정이 있습니다: {name}")
         frontend = json.loads((root / "frontend" / "package.json").read_text(encoding="utf-8"))
         versions = [*frontend.get("dependencies", {}).values(), *frontend.get("devDependencies", {}).values()]
         if any(not version[:1].isdigit() or "latest" in version.lower() for version in versions):

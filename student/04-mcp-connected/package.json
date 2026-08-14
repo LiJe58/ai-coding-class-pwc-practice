@@ -1,10 +1,6 @@
 {
   "name": "internal-control-practice-04-mcp-connected",
   "private": true,
-  "engines": {
-    "node": "22.16.0",
-    "npm": "10.9.2"
-  },
   "scripts": {
     "setup": "python tools/setup_workspace.py",
     "check": "python tools/run_python.py -m compileall -q backend && python tools/run_python.py -m unittest discover -s backend/tests -t backend -p test_checkpoint.py && npm --prefix frontend run check",

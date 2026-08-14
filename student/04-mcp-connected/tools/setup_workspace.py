@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 
-REQUIRED_PYTHON = (3, 14, 5)
+MINIMUM_PYTHON = (3, 14, 5)
 
 
 def run(command: list[str], workspace: Path) -> None:
@@ -17,10 +17,10 @@ def run(command: list[str], workspace: Path) -> None:
 
 def main() -> int:
     workspace = Path.cwd().resolve()
-    if sys.version_info[:3] != REQUIRED_PYTHON:
-        expected = ".".join(map(str, REQUIRED_PYTHON))
+    if sys.version_info[:3] < MINIMUM_PYTHON:
+        expected = ".".join(map(str, MINIMUM_PYTHON))
         actual = ".".join(map(str, sys.version_info[:3]))
-        raise SystemExit(f"Python {expected}가 필요합니다. 현재 버전: {actual}")
+        raise SystemExit(f"Python {expected} 이상이 필요합니다. 현재 버전: {actual}")
     requirements = workspace / "backend" / "requirements.txt"
     frontend = workspace / "frontend"
     if not requirements.is_file() or not (frontend / "package-lock.json").is_file():

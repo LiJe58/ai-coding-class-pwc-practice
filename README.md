@@ -2,13 +2,13 @@
 
 합성 거래처·승인·증빙·지급 데이터를 사용해 Day 1 규칙 기반 통제, Day 2 읽기 전용 MCP Agent 조서, Day 3 사람 검토와 export를 단계별로 구현하는 독립 공개 실습 저장소입니다.
 
-## 요구 환경
+## 검증 기준 환경
 
 - Node.js `22.16.0`
 - npm `10.9.2`
 - Python `3.14.5`
 
-모든 direct dependency와 Python transitive dependency는 exact 버전으로 고정되어 있습니다. frontend 설치에는 `npm ci`를 사용합니다.
+위 버전에서 전체 검증했으며 더 높은 Node.js, npm, Python 버전도 사용할 수 있습니다. 애플리케이션 dependency는 재현성을 위해 exact 버전으로 고정하며 frontend 설치에는 `npm ci`를 사용합니다.
 
 ## 처음 시작하기
 
