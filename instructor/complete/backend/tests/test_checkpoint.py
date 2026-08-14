@@ -2,9 +2,12 @@ import csv
 import hashlib
 import io
 import json
+import os
 import unittest
 import uuid
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
@@ -32,6 +35,71 @@ class InstructorCheckpointTest(unittest.TestCase):
             "review_comment": f"{change_id} 강사 검토",
         })
         self.assertEqual(response.status_code, 200)
+
+    @staticmethod
+    def agent_client(change_id: str, requester_user_id: str):
+        responses = SimpleNamespace()
+        responses.call_count = 0
+
+        async def create(**request):
+            responses.call_count += 1
+            if responses.call_count == 1:
+                return SimpleNamespace(
+                    output=[SimpleNamespace(
+                        type="function_call",
+                        name="get_case_evidence",
+                        arguments=json.dumps({"change_id": change_id, "requester_user_id": requester_user_id}),
+                        call_id="call-1",
+                    )],
+                    output_text="",
+                )
+            return SimpleNamespace(output=[], output_text="근거를 확인했습니다. 사람 검토가 필요합니다.")
+
+        responses.create = create
+        return SimpleNamespace(responses=responses)
+
+    def test_agent_preview_is_read_only_and_permission_checked(self) -> None:
+        before = self.client.get("/api/day3/reviews").json()
+        paper_hash = hashlib.sha256(PAPER.read_bytes()).hexdigest()
+        environment = {"OPENAI_API_KEY": uuid.uuid4().hex, "OPENAI_MODEL": "test-model"}
+
+        with patch.dict(os.environ, environment, clear=False), patch(
+            "app.agent.AsyncOpenAI", return_value=self.agent_client("CHG-2608-023", "U701")
+        ):
+            response = self.client.post(
+                "/api/day2/agent-preview/CHG-2608-023",
+                json={"requester_user_id": "U701"},
+            )
+
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertEqual(payload["status"], "completed")
+        self.assertEqual(payload["tool_events"], [{
+            "tool": "get_case_evidence",
+            "arguments": {"change_id": "CHG-2608-023", "requester_user_id": "U701"},
+            "status": "success",
+        }])
+        self.assertTrue(payload["requires_human_review"])
+        self.assertEqual(self.client.get("/api/day3/reviews").json(), before)
+        self.assertEqual(hashlib.sha256(PAPER.read_bytes()).hexdigest(), paper_hash)
+
+        with patch.dict(os.environ, environment, clear=False), patch(
+            "app.agent.AsyncOpenAI", return_value=self.agent_client("CHG-2608-023", "U601")
+        ):
+            denied = self.client.post(
+                "/api/day2/agent-preview/CHG-2608-023",
+                json={"requester_user_id": "U601"},
+            )
+        self.assertEqual(denied.status_code, 403)
+
+    def test_agent_preview_stops_safely_without_api_settings(self) -> None:
+        with patch.dict(os.environ, {}, clear=True):
+            response = self.client.post(
+                "/api/day2/agent-preview/CHG-2608-023",
+                json={"requester_user_id": "U701"},
+            )
+        self.assertEqual(response.status_code, 503)
+        self.assertEqual(response.json()["detail"], "Agent 실행에 필요한 API 설정이 없습니다.")
 
     def test_export_gate_and_final_totals(self) -> None:
         initial = self.client.get("/api/day3/reviews").json()["summary"]

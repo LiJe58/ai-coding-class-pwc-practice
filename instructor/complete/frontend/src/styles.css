@@ -1,4 +1,5 @@
 :root { font-family: system-ui, sans-serif; color: #203038; background: #f4f7f7; }
+* { box-sizing: border-box; }
 body { margin: 0; }
 main { width: min(720px, calc(100% - 40px)); margin: 12vh auto; padding: 40px; border: 1px solid #cbd5d7; border-radius: 16px; background: white; }
 .eyebrow { color: #286267; font-weight: 800; }
@@ -15,3 +16,7 @@ button { width: fit-content; margin-top: 8px; padding: 8px 12px; }
 .layout section button { width: 100%; text-align: left; }
 .layout section button.selected { background: #286267; color: white; }
 .layout section div { display: grid; gap: 3px; border-bottom: 1px solid #cbd5d7; }
+.agent-preview { display: grid; gap: 8px; margin-top: 12px; padding: 16px; border-left: 4px solid #286267; background: #f4faf6; }
+.agent-preview h3, .agent-preview p { margin: 0; }
+.agent-preview small { color: #4e5b64; }
+@media (max-width: 640px) { main { margin: 20px auto; padding: 20px; } .metrics, .layout { grid-template-columns: 1fr; } }

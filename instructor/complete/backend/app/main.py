@@ -13,6 +13,8 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import Response
 from pydantic import BaseModel, Field, field_validator
 
+from .agent import AgentConfigurationError, AgentExecutionError, AgentPermissionError, create_agent_preview
+
 
 app = FastAPI(title="Internal Control Day 1")
 ROOT = Path(__file__).resolve().parents[2]
@@ -49,6 +51,10 @@ class ReviewRequest(BaseModel):
         if not isinstance(value, str) or not value.strip():
             raise ValueError("검토 의견을 입력하세요.")
         return value.strip()
+
+
+class AgentPreviewRequest(BaseModel):
+    requester_user_id: str = Field(min_length=1)
 
 
 def read_inputs() -> dict[str, list[dict[str, str]]]:
@@ -268,6 +274,23 @@ def run_control_test() -> dict:
 @app.get("/api/day2/working-paper")
 def get_day2_working_paper() -> dict:
     return load_working_paper()
+
+
+@app.post("/api/day2/agent-preview/{change_id}")
+async def post_agent_preview(change_id: str, request: AgentPreviewRequest) -> dict:
+    paper = require_working_paper()
+    if change_id not in {sample["change_id"] for sample in paper["samples"]}:
+        raise HTTPException(status_code=404, detail=f"고정 표본에 없는 change_id입니다: {change_id}")
+    try:
+        return await create_agent_preview(change_id, request.requester_user_id)
+    except AgentConfigurationError as error:
+        raise HTTPException(status_code=503, detail="Agent 실행에 필요한 API 설정이 없습니다.") from error
+    except AgentPermissionError as error:
+        raise HTTPException(status_code=403, detail="이 근거를 조회할 권한이 없습니다.") from error
+    except AgentExecutionError as error:
+        raise HTTPException(status_code=502, detail="Agent가 근거를 확인하지 못했습니다. 기존 검토 기능은 계속 사용할 수 있습니다.") from error
+    except Exception as error:
+        raise HTTPException(status_code=502, detail="외부 Agent 호출에 실패했습니다. 기존 검토 기능은 계속 사용할 수 있습니다.") from error
 
 
 @app.get("/api/day3/reviews")
