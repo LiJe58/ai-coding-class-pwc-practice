@@ -44,6 +44,7 @@ npm run start:backend
 | `student/06-day2-complete` | 고정 조서 12건, 모두 사람 검토 필요 | 결론 저장소 분리 |
 | `student/07-review-storage-ready` | 권한 검증, append-only 검토 이벤트 | 멱등 이력·최종 화면 |
 | `student/08-review-ui-ready` | action ID 멱등, 전체 이력, 검토 UI | 상태·완료·export |
+| `student/09-agent-history-ready` | 현재 테스트 사용자, Agent 실행·append-only 이력 | 최종 검증·발표 |
 | `instructor/complete` | Day 1~3 전체 기능과 적용 범위 템플릿 | 최종 시연 |
 
 중간 합류나 오류 복구는 저장할 코드가 없는지 확인한 뒤 저장소 루트에서 다음처럼 실행합니다.
