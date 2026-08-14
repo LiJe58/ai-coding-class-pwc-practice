@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "versions": {
+    "node": "22.16.0",
+    "npm": "10.9.2",
+    "python": "3.14.5"
+  },
+  "checkpoints": [
+    "student/00-starter",
+    "student/01-population-ready",
+    "student/02-controls-persisted",
+    "student/03-day1-complete",
+    "student/04-mcp-connected",
+    "student/05-evidence-skill-ready",
+    "student/06-day2-complete",
+    "student/07-review-storage-ready",
+    "student/08-review-ui-ready",
+    "instructor/complete"
+  ],
+  "assets": {
+    "change_approvals.csv": "4207d029c3b2c43992d2a7e057e3925ea99995b7803a63a4a877e5497e4c7d7d",
+    "evidence_register.csv": "b7cc2bc27ec2a4e7b23073bb459f66faba6a16c5c4dc219511d453bd7bf54fd3",
+    "payment_requests.csv": "a3a5b89977f70158bae56df6d4b7af1a21a37b351312eb2275c9172774d850ed",
+    "user_roles.csv": "f7a890634b7908b76b176677af5cdd1d0954f3cbddcd9bc4578541e9309801f8",
+    "vendor_changes.csv": "bf63d81e2aef1fcf1e0452915a3cc5b162f1f95a419ff2249e535b16236ba88f",
+    "vendor_master.csv": "d01dc4798f4cbe80cf162f7165b3aa1b7cd84a13d35e1c0fa0ec0c939cc05be9"
+  },
+  "working_paper_sha256": "cf21cdfa95b743bce7afde3e22ca1bced3daa2c17d0c1b7f0cae2223615f77ae",
+  "case_matrix_sha256": "09923e3a533dd0626e4b75a940b3e2105d3cbc687a38bd668dedc33560509bb7",
+  "case_matrix_sheets": ["사용안내", "사례판정", "규칙", "거래처마스터", "거래처변경", "변경승인", "지급요청", "사용자역할", "증빙목록"]
+}

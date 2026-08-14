@@ -8,6 +8,8 @@ import json
 import shutil
 import subprocess
 import tempfile
+import zipfile
+from xml.etree import ElementTree
 from pathlib import Path
 
 
@@ -37,7 +39,14 @@ def checkpoint_path(value: str, *, must_exist: bool) -> Path:
 
 
 def ignored(path: Path) -> bool:
-    return any(part in RUNTIME_NAMES for part in path.parts) or path.name.endswith(RUNTIME_SUFFIXES) or path.name.endswith((".sqlite3-wal", ".sqlite3-shm", ".sqlite3-journal"))
+    parts = path.parts
+    if any(part in RUNTIME_NAMES for part in parts) or any(parts[index:index + 2] == ("backend", "data") for index in range(len(parts) - 1)):
+        return True
+    if "output" in parts:
+        suffix = parts[parts.index("output"):]
+        if suffix not in {("output",), ("output", "day-2"), ("output", "day-2", "working-paper.json")}:
+            return True
+    return path.name.endswith(RUNTIME_SUFFIXES) or path.name.endswith((".sqlite3-wal", ".sqlite3-shm", ".sqlite3-journal"))
 
 
 def copy_clean(source: Path, destination: Path) -> None:
@@ -84,15 +93,32 @@ def manifest() -> dict:
     return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
 
 
+def verify_excel(data: dict) -> None:
+    path = REPO / "assets" / "scenario" / "case-matrix.xlsx"
+    if sha256(path) != data["case_matrix_sha256"]:
+        raise ValueError("case-matrix.xlsx 해시가 다릅니다.")
+    with zipfile.ZipFile(path) as package:
+        names = package.namelist()
+        content = b"".join(package.read(name) for name in names)
+        if any(token in content for token in (b"C:\\", b"/Users/", b"/home/", b"x15ac:absPath")):
+            raise ValueError("Excel 패키지에 로컬 경로가 남아 있습니다.")
+        core = package.read("docProps/core.xml")
+        if b"<dc:creator" in core or b"<cp:lastModifiedBy" in core:
+            raise ValueError("Excel 작성자 메타데이터가 남아 있습니다.")
+        if any(name.startswith("xl/externalLinks/") or name == "xl/connections.xml" for name in names):
+            raise ValueError("Excel 외부 연결이 남아 있습니다.")
+        workbook = ElementTree.fromstring(package.read("xl/workbook.xml"))
+        namespace = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+        sheets = [sheet.attrib["name"] for sheet in workbook.findall(f"{namespace}sheets/{namespace}sheet")]
+        if sheets != data["case_matrix_sheets"] or len([name for name in names if name.startswith("xl/tables/table") and name.endswith(".xml")]) != 8:
+            raise ValueError("Excel 시트 또는 표 구성이 다릅니다.")
+
+
 def verify() -> None:
     data = manifest()
-    names = data.get("checkpoints") or [
-        path.relative_to(REPO).as_posix()
-        for root in (REPO / "student", REPO / "instructor")
-        if root.exists()
-        for path in root.iterdir()
-        if path.is_dir()
-    ]
+    names = data.get("checkpoints", [])
+    if not names:
+        raise ValueError("checkpoints.json에 체크포인트 목록이 필요합니다.")
     canonical = REPO / "assets" / "day-1" / "input"
     csvs = sorted(canonical.glob("*.csv"))
     if len(csvs) != 6:
@@ -100,11 +126,32 @@ def verify() -> None:
     expected_assets = data.get("assets", {})
     for csv_path in csvs:
         expected = expected_assets.get(csv_path.name)
-        if expected and sha256(csv_path) != expected:
+        if not expected or sha256(csv_path) != expected:
             raise ValueError(f"canonical asset 해시 불일치: {csv_path.name}")
     fixture_hash = data.get("working_paper_sha256")
-    for name in names:
+    for position, name in enumerate(names):
         root = checkpoint_path(name, must_exist=True)
+        for required in (".node-version", ".python-version", ".npmrc", "package.json", "backend/requirements.txt", "frontend/package.json", "frontend/package-lock.json"):
+            if not (root / required).is_file():
+                raise ValueError(f"필수 파일 누락: {name}/{required}")
+        if (root / ".node-version").read_text(encoding="utf-8").strip() != data["versions"]["node"] or (root / ".python-version").read_text(encoding="utf-8").strip() != data["versions"]["python"]:
+            raise ValueError(f"runtime 버전 불일치: {name}")
+        if "engine-strict=true" not in (root / ".npmrc").read_text(encoding="utf-8"):
+            raise ValueError(f"engine-strict 누락: {name}")
+        frontend = json.loads((root / "frontend" / "package.json").read_text(encoding="utf-8"))
+        versions = [*frontend.get("dependencies", {}).values(), *frontend.get("devDependencies", {}).values()]
+        if any(not version[:1].isdigit() or "latest" in version.lower() for version in versions):
+            raise ValueError(f"frontend direct dependency가 exact pin이 아닙니다: {name}")
+        requirements = [line.split(";", 1)[0].strip() for line in (root / "backend" / "requirements.txt").read_text(encoding="utf-8").splitlines() if line.strip() and not line.startswith("#")]
+        if any("==" not in line or "*" in line for line in requirements):
+            raise ValueError(f"Python dependency가 exact pin이 아닙니다: {name}")
+        scripts = json.loads((root / "package.json").read_text(encoding="utf-8")).get("scripts", {})
+        if not {"setup", "check", "start:backend", "dev:frontend"}.issubset(scripts):
+            raise ValueError(f"공통 npm 명령 누락: {name}")
+        if (position >= 4 or name == "instructor/complete") and not (root / ".mcp.json").is_file():
+            raise ValueError(f"MCP 설정 누락: {name}")
+        if (position >= 5 or name == "instructor/complete") and not (root / ".claude" / "skills" / "control-test" / "SKILL.md").is_file():
+            raise ValueError(f"control-test Skill 누락: {name}")
         for csv_path in csvs:
             copy = root / "input" / "day-1" / csv_path.name
             if not copy.is_file() or sha256(copy) != sha256(csv_path):
@@ -112,10 +159,19 @@ def verify() -> None:
         fixture = root / "output" / "day-2" / "working-paper.json"
         if name in DAY2_TARGETS and (not fixture.is_file() or fixture_hash and sha256(fixture) != fixture_hash):
             raise ValueError(f"Day 2 조서 fixture 불일치: {name}")
+        links = [path for path in root.rglob("*") if path.is_symlink() or getattr(path, "is_junction", lambda: False)()]
+        if links:
+            raise ValueError(f"링크를 사용할 수 없습니다: {links[0]}")
     tracked = subprocess.run(["git", "ls-files"], cwd=REPO, check=True, capture_output=True, text=True).stdout.splitlines()
+    tracked_set = set(tracked)
+    for name in DAY2_TARGETS:
+        fixture = f"{name}/output/day-2/working-paper.json"
+        if fixture not in tracked_set:
+            raise ValueError(f"Day 2 조서가 추적되지 않습니다: {fixture}")
     bad = [path for path in tracked if ignored(Path(path)) and not path.endswith("output/day-2/working-paper.json")]
     if bad:
         raise ValueError("runtime 파일이 추적됩니다: " + ", ".join(bad))
+    verify_excel(data)
     print(f"verified {len(names)} checkpoints, {len(csvs)} canonical CSV files")
 
 

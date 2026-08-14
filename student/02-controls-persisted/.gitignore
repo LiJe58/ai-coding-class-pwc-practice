@@ -11,6 +11,7 @@ backend/data/
 .env
 .env.*
 !.env.example
+day3-human-reviews.csv
 output/*
 !output/day-2/
 !output/day-2/working-paper.json

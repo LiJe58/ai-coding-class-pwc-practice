@@ -1,0 +1,67 @@
+name: check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  windows-all:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14.5"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.16.0"
+      - name: Verify npm version
+        shell: pwsh
+        run: if ((npm --version) -ne "10.9.2") { throw "npm 10.9.2 required" }
+      - name: Install dependencies once
+        shell: pwsh
+        run: |
+          python scripts/checkpoint.py reset instructor/complete
+          Push-Location practice/workspace
+          npm run setup
+          Pop-Location
+      - name: Check every checkpoint
+        shell: pwsh
+        run: |
+          $checkpoints = (Get-Content checkpoints.json -Raw -Encoding UTF8 | ConvertFrom-Json).checkpoints
+          foreach ($checkpoint in $checkpoints) {
+            python scripts/checkpoint.py reset $checkpoint
+            Push-Location practice/workspace
+            npm run check
+            Pop-Location
+          }
+          python -m unittest discover -s scripts/tests -p "test_*.py"
+          python scripts/checkpoint.py verify
+          if (git status --porcelain) { throw "runtime files changed Git status" }
+
+  ubuntu-representative:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14.5"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.16.0"
+      - name: Verify npm version
+        run: test "$(npm --version)" = "10.9.2"
+      - name: Install dependencies once
+        run: |
+          python scripts/checkpoint.py reset instructor/complete
+          cd practice/workspace
+          npm run setup
+      - name: Check representative checkpoints
+        run: |
+          for checkpoint in student/00-starter student/04-mcp-connected instructor/complete; do
+            python scripts/checkpoint.py reset "$checkpoint"
+            (cd practice/workspace && npm run check)
+          done
+          python -m unittest discover -s scripts/tests -p 'test_*.py'
+          python scripts/checkpoint.py verify
+          test -z "$(git status --porcelain)"

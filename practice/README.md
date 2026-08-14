@@ -1,9 +1,13 @@
-# 강사 리허설 workspace
+# 리허설 workspace
 
-저장소 루트에서 다음 명령으로 체크포인트를 `practice/workspace`에 복구합니다.
+`practice/workspace`는 Git에서 제외되는 실행 폴더입니다. 의존성을 한 번만 설치하려면 먼저 강사용 superset을 설치한 뒤 starter로 reset합니다.
 
-```text
+```powershell
+python scripts/checkpoint.py reset instructor/complete
+cd practice/workspace
+npm run setup
+cd ../..
 python scripts/checkpoint.py reset student/00-starter
 ```
 
-`practice/workspace`는 Git에서 제외됩니다. reset은 설치한 `.venv`와 `frontend/node_modules`를 보존하지만 SQLite, 빌드 결과와 로그는 보존하지 않습니다.
+이후 `python scripts/checkpoint.py reset <체크포인트>`는 `.venv`와 `frontend/node_modules`를 보존합니다. 각 상태에서 `npm run check`, `npm run start:backend`, `npm run dev:frontend`를 사용합니다.
