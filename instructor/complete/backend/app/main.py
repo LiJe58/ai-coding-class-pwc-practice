@@ -1,6 +1,7 @@
 import csv
 import io
 import json
+import os
 import sqlite3
 import uuid
 from collections import Counter, defaultdict
@@ -9,6 +10,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal
 
+import httpx
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import Response
 from pydantic import BaseModel, Field, field_validator
@@ -49,6 +51,10 @@ class ReviewRequest(BaseModel):
         if not isinstance(value, str) or not value.strip():
             raise ValueError("검토 의견을 입력하세요.")
         return value.strip()
+
+
+class AgentPreviewRequest(BaseModel):
+    requester_user_id: str = Field(pattern=r"^U\d{3}$")
 
 
 def read_inputs() -> dict[str, list[dict[str, str]]]:
@@ -195,6 +201,13 @@ def require_reviewer(user_id: str) -> None:
         raise HTTPException(status_code=403, detail="활성 CONTROL_REVIEW 권한이 필요합니다.")
 
 
+def require_agent_requester(user_id: str) -> None:
+    user = next((row for row in read_inputs()["user_roles.csv"] if row["user_id"] == user_id), None)
+    permissions = set(user["permissions"].split(";")) if user else set()
+    if not user or user["user_status"] != "활성" or permissions.isdisjoint({"EVIDENCE_VERIFY", "CONTROL_REVIEW"}):
+        raise HTTPException(status_code=403, detail="활성 EVIDENCE_VERIFY 또는 CONTROL_REVIEW 권한이 필요합니다.")
+
+
 def open_review_db() -> sqlite3.Connection:
     DAY3_DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     connection = sqlite3.connect(DAY3_DB_PATH)
@@ -213,7 +226,110 @@ def open_review_db() -> sqlite3.Connection:
             reviewed_at TEXT NOT NULL
         )
     """)
+    # ponytail: 과정 규모의 append-only 기록이다. 보존정책이 생기기 전에는 자동 삭제·갱신하지 않는다.
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS agent_runs (
+            agent_run_id TEXT PRIMARY KEY,
+            change_id TEXT NOT NULL,
+            requester_user_id TEXT NOT NULL,
+            status TEXT NOT NULL CHECK (status IN ('success', 'permission_denied', 'config_error', 'tool_error', 'model_error')),
+            model_name TEXT,
+            tool_name TEXT,
+            tool_input_json TEXT,
+            tool_status TEXT,
+            response_text TEXT,
+            error_code TEXT,
+            started_at TEXT NOT NULL,
+            completed_at TEXT NOT NULL
+        )
+    """)
     return connection
+
+
+def save_agent_run(run: dict) -> dict:
+    with closing(open_review_db()) as connection, connection:
+        connection.execute(
+            """INSERT INTO agent_runs (
+                agent_run_id, change_id, requester_user_id, status, model_name, tool_name,
+                tool_input_json, tool_status, response_text, error_code, started_at, completed_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+            tuple(run[key] for key in (
+                "agent_run_id", "change_id", "requester_user_id", "status", "model_name", "tool_name",
+                "tool_input_json", "tool_status", "response_text", "error_code", "started_at", "completed_at",
+            )),
+        )
+    return run
+
+
+def list_agent_runs(change_id: str) -> list[dict]:
+    with closing(open_review_db()) as connection, connection:
+        return [dict(row) for row in connection.execute(
+            "SELECT * FROM agent_runs WHERE change_id = ? ORDER BY started_at DESC, rowid DESC",
+            (change_id,),
+        )]
+
+
+def call_evidence_tool(change_id: str, requester_user_id: str) -> dict:
+    from mcp_server import get_case_evidence
+
+    return get_case_evidence(change_id, requester_user_id)
+
+
+def call_model(*, api_key: str, model: str, base_url: str, input_items: list, tool_choice: object) -> dict:
+    tool = {
+        "type": "function",
+        "name": "get_case_evidence",
+        "description": "권한을 확인한 뒤 선택 사례의 승인·증빙·지급 근거를 읽기 전용으로 조회합니다.",
+        "strict": True,
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "change_id": {"type": "string"},
+                "requester_user_id": {"type": "string"},
+            },
+            "required": ["change_id", "requester_user_id"],
+            "additionalProperties": False,
+        },
+    }
+    response = httpx.post(
+        f"{base_url.rstrip('/')}/responses",
+        headers={"Authorization": f"Bearer {api_key}"},
+        json={
+            "model": model,
+            "instructions": "조회 근거만 요약하고 최종 사람 결론을 변경하거나 추정하지 마세요.",
+            "input": input_items,
+            "tools": [tool],
+            "tool_choice": tool_choice,
+            "parallel_tool_calls": False,
+            "store": False,
+        },
+        timeout=30,
+    )
+    response.raise_for_status()
+    return response.json()
+
+
+def model_text(payload: dict) -> str:
+    if payload.get("output_text"):
+        return str(payload["output_text"]).strip()
+    texts = []
+    for item in payload.get("output", []):
+        for content in item.get("content", []) if isinstance(item, dict) else []:
+            if content.get("type") == "output_text" and content.get("text"):
+                texts.append(content["text"])
+    return "\n".join(texts).strip()
+
+
+def agent_error(run: dict, *, status: str, code: str, message: str, http_status: int, tool_status: str = "not_called") -> None:
+    run.update({
+        "status": status,
+        "tool_status": tool_status,
+        "response_text": message,
+        "error_code": code,
+        "completed_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+    })
+    save_agent_run(run)
+    raise HTTPException(status_code=http_status, detail={"status": status, "error_code": code, "message": message})
 
 
 def review_events() -> list[dict]:
@@ -267,6 +383,148 @@ def run_control_test() -> dict:
 @app.get("/api/day2/working-paper")
 def get_day2_working_paper() -> dict:
     return load_working_paper()
+
+
+@app.post("/api/day2/agent-preview/{change_id}")
+def run_agent_preview(change_id: str, request: AgentPreviewRequest) -> dict:
+    paper = require_working_paper()
+    if change_id not in {sample["change_id"] for sample in paper["samples"]}:
+        raise HTTPException(status_code=404, detail=f"고정 표본에 없는 change_id입니다: {change_id}")
+    started_at = datetime.now().astimezone().isoformat(timespec="seconds")
+    tool_input = {"change_id": change_id, "requester_user_id": request.requester_user_id}
+    run = {
+        "agent_run_id": str(uuid.uuid4()),
+        "change_id": change_id,
+        "requester_user_id": request.requester_user_id,
+        "status": "model_error",
+        "model_name": None,
+        "tool_name": "get_case_evidence",
+        "tool_input_json": json.dumps(tool_input, ensure_ascii=False, separators=(",", ":")),
+        "tool_status": "not_called",
+        "response_text": None,
+        "error_code": None,
+        "started_at": started_at,
+        "completed_at": started_at,
+    }
+    try:
+        require_agent_requester(request.requester_user_id)
+    except HTTPException:
+        agent_error(
+            run,
+            status="permission_denied",
+            code="permission_denied",
+            message="현재 사용자는 Agent 근거 조회 권한이 없습니다.",
+            http_status=403,
+        )
+
+    api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+    model = os.environ.get("OPENAI_MODEL", "").strip()
+    if not api_key or not model:
+        agent_error(
+            run,
+            status="config_error",
+            code="agent_config_missing",
+            message="Agent API 설정이 없어 이 기능만 사용할 수 없습니다.",
+            http_status=503,
+        )
+    run["model_name"] = model
+    base_url = os.environ.get("OPENAI_BASE_URL", "").strip() or "https://api.openai.com/v1"
+    input_items: list = [{
+        "role": "user",
+        "content": f"{change_id}의 근거를 get_case_evidence로 한 번 조회하고 사람 검토용 설명을 작성하세요.",
+    }]
+    try:
+        first = call_model(
+            api_key=api_key,
+            model=model,
+            base_url=base_url,
+            input_items=input_items,
+            tool_choice={"type": "function", "name": "get_case_evidence"},
+        )
+    except Exception:
+        agent_error(
+            run,
+            status="model_error",
+            code="model_request_failed",
+            message="모델 요청에 실패했습니다. 잠시 후 다시 시도하세요.",
+            http_status=502,
+        )
+    calls = [item for item in first.get("output", []) if item.get("type") == "function_call"]
+    if len(calls) != 1 or calls[0].get("name") != "get_case_evidence":
+        agent_error(
+            run,
+            status="model_error",
+            code="model_tool_call_invalid",
+            message="모델이 허용된 Tool 호출 형식을 지키지 않았습니다.",
+            http_status=502,
+        )
+    try:
+        evidence = call_evidence_tool(change_id, request.requester_user_id)
+    except Exception:
+        agent_error(
+            run,
+            status="tool_error",
+            code="evidence_tool_failed",
+            message="근거 조회 Tool 실행에 실패했습니다.",
+            http_status=502,
+            tool_status="error",
+        )
+    if evidence.get("status") != "success":
+        agent_error(
+            run,
+            status="tool_error",
+            code="evidence_tool_rejected",
+            message="근거 조회 Tool이 요청을 완료하지 못했습니다.",
+            http_status=502,
+            tool_status=str(evidence.get("status", "error")),
+        )
+    run["tool_status"] = "success"
+    input_items.extend(first["output"])
+    input_items.append({
+        "type": "function_call_output",
+        "call_id": calls[0]["call_id"],
+        "output": json.dumps(evidence, ensure_ascii=False),
+    })
+    try:
+        final = call_model(
+            api_key=api_key,
+            model=model,
+            base_url=base_url,
+            input_items=input_items,
+            tool_choice="none",
+        )
+    except Exception:
+        agent_error(
+            run,
+            status="model_error",
+            code="model_response_failed",
+            message="모델 최종 설명 생성에 실패했습니다.",
+            http_status=502,
+            tool_status="success",
+        )
+    response_text = model_text(final)
+    if not response_text:
+        agent_error(
+            run,
+            status="model_error",
+            code="model_response_empty",
+            message="모델이 표시할 최종 설명을 반환하지 않았습니다.",
+            http_status=502,
+            tool_status="success",
+        )
+    run.update({
+        "status": "success",
+        "response_text": response_text,
+        "completed_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+    })
+    save_agent_run(run)
+    return {"status": "success", "run": run}
+
+
+@app.get("/api/day2/agent-runs")
+def get_agent_runs(change_id: str = Query(...), requester_user_id: str = Query(...)) -> dict:
+    require_agent_requester(requester_user_id)
+    return {"status": "ready", "runs": list_agent_runs(change_id)}
 
 
 @app.get("/api/day3/reviews")
