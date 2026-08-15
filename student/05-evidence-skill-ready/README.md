@@ -1,8 +1,8 @@
 # 05 · Evidence Skill Ready
 
-완료 상태: 고정 표본 12건, U701 근거 조회, 무권한 거부, MCP Tool 계약과 일치하는 `control-test` Skill이 준비되어 있습니다.
+완료 상태: 고정 표본 12건, U701 근거 조회, 무권한 거부, MCP Tool 계약과 일치하는 `control-test` Skill과 검증된 `working-paper.json`이 준비되어 있습니다.
 
-다음 교재: `create-working-paper` → `connect-working-paper` → `build-working-paper-screen` → `verify-agent-draft`.
+다음 교재: `connect-working-paper` → `build-working-paper-screen`.
 
 ```text
 npm run setup

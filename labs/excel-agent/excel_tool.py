@@ -9,7 +9,7 @@ DATA_PATH = Path(__file__).with_name("data") / "Excel_Copilot_anonymized.xlsx"
 OUTPUT_COLUMNS = [
     "계정코드",
     "분류",
-    "조서계정",
+    "검토계정",
     "계정명",
     "계산된 당기(수정후)",
     "정산표 당기(수정후)(G)",
@@ -32,6 +32,8 @@ def get_pbc_mismatches(top_n: int) -> dict:
         headers = next((list(row) for row in rows if "검증결과" in row and "차이" in row), None)
         if headers is None:
             raise ValueError("PBC 시트에서 검증 결과 열을 찾지 못했습니다.")
+        account_name_index = headers.index("계정명")
+        headers[account_name_index - 1] = "검토계정"
         records = [dict(zip(headers, row, strict=True)) for row in rows]
     finally:
         workbook.close()

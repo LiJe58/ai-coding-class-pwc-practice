@@ -59,7 +59,7 @@ class CheckpointToolTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             checkpoint.checkpoint_path("../outside", must_exist=False)
 
-    def test_promote_copies_hidden_and_fixture_but_not_runtime(self) -> None:
+    def test_promote_copies_hidden_and_reference_file_but_not_runtime(self) -> None:
         checkpoint.reset("student/00-starter")
         (self.workspace / "runtime.log").write_text("ignored", encoding="utf-8")
         checkpoint.promote("student/01-new")

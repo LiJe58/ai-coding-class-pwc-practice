@@ -2,7 +2,7 @@
 
 완료 상태: health API, `실습 준비 완료` 화면, 합성 CSV 6종. Day 1~3 업무 기능은 없습니다.
 
-다음 교재: `environment-and-inputs` → `connect-population` → `separate-input-errors`.
+다음 교재: `environment-and-inputs` → `separate-input-errors`.
 
 ```text
 npm run setup

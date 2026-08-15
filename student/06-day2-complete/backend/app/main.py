@@ -155,7 +155,7 @@ def load_working_paper() -> dict:
         errors.append("모든 표본 12건은 사람 검토가 필요합니다.")
     return {
         "status": "invalid" if errors else "ready",
-        "message": errors[0] if errors else "Agent 통제조서 12건을 불러왔습니다.",
+        "message": errors[0] if errors else "Agent 통제 검토자료 12건을 불러왔습니다.",
         "working_paper": paper,
         "validation": {"valid": not errors, "errors": errors},
     }

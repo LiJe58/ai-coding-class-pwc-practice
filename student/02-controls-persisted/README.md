@@ -2,7 +2,7 @@
 
 완료 상태: R-01~R-04 판정과 고정 실행 ID의 SQLite 저장. 전체/유효/정상/검토/오류는 `30/29/21/8/1`입니다.
 
-다음 교재: `connect-review-screens` → `connect-review-detail` → `verify-day1`.
+다음 교재: `connect-review-screens` → `verify-day1`.
 
 ```text
 npm run setup

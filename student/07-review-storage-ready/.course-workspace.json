@@ -1,6 +1,6 @@
 {
   "kind": "course-workspace",
-  "stage": "03-day1-complete",
+  "stage": "07-review-storage-ready",
   "audience": "student",
   "inputSource": "input/day-1",
   "inputPolicy": "read-only"
