@@ -46,7 +46,7 @@ npm run start:backend
 | `student/07-review-storage-ready` | 권한 검증, 기존 기록을 남기는 검토 이력 | 중복 저장 방지·최종 화면 |
 | `student/08-review-ui-ready` | 요청 ID로 중복 저장 방지, 전체 이력, 검토 화면 | 상태·완료·CSV 내보내기 |
 | `student/09-agent-history-ready` | Agent 권한·실행 이력 API와 UI, 전체 검증 | 발표·마무리 |
-| `instructor/complete` | Day 1~3 전체 기능과 적용 범위 템플릿 | 최종 시연 |
+| `instructor/complete` | Day 1–3 전체 기능과 적용 범위 템플릿 | 최종 시연 |
 
 중간 합류나 오류 복구는 저장할 코드가 없는지 확인한 뒤 저장소 루트에서 다음처럼 실행합니다.
 

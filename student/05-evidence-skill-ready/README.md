@@ -12,4 +12,4 @@ npm run start:mcp
 npm run dev:frontend
 ```
 
-표본 순서는 `001~004, 022~029`이며 정상 4건·검토 필요 8건입니다. 입력 CSV를 보존하세요. 문제 발생 시 `python scripts/checkpoint.py reset student/05-evidence-skill-ready`로 복구합니다.
+표본 순서는 `001–004, 022–029`이며 정상 4건·검토 필요 8건입니다. 입력 CSV를 보존하세요. 문제 발생 시 `python scripts/checkpoint.py reset student/05-evidence-skill-ready`로 복구합니다.
