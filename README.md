@@ -28,7 +28,7 @@ npm run check
 npm run start:backend
 ```
 
-의존성은 강사용 전체 기능 포함 환경으로 한 번만 설치합니다. 이후 reset은 `.venv`, `frontend/node_modules`, 로컬 비밀 설정 `.env`를 보존하므로 다시 설치하거나 키를 재입력하지 않습니다. `.env.example`은 강사용 완성 체크포인트에서 함께 복사됩니다. 새 터미널에서는 저장소 루트 또는 `practice/workspace`에서 `npm run dev:frontend`를 실행합니다.
+의존성은 전체 기능이 포함된 환경으로 한 번만 설치합니다. 이후 reset은 `.venv`, `frontend/node_modules`, 로컬 비밀 설정 `.env`를 보존하므로 다시 설치하거나 키를 재입력하지 않습니다. `.env.example`은 `instructor/complete`에 포함됩니다. 새 터미널에서는 저장소 루트 또는 `practice/workspace`에서 `npm run dev:frontend`를 실행합니다.
 
 기본 주소는 backend `http://127.0.0.1:8000`, frontend `http://127.0.0.1:5173`입니다. MCP가 필요한 단계는 `npm run start:mcp`를 사용합니다.
 
@@ -67,7 +67,7 @@ npm run check
 
 `assets/day-1/input/`의 CSV 6종, `assets/scenario/control-card.md`, `assets/scenario/case-matrix.xlsx`, Day 2 이후의 Agent 검토자료 파일 `output/day-2/working-paper.json`은 제공된 합성 자료입니다. 체크포인트를 reset하면 시나리오 자산은 `practice/workspace/assets/scenario`에도 복사됩니다. 실제 회사 자료, 개인정보, 비밀번호, 인증정보, 운영 URL을 추가하지 마세요. Excel과 애플리케이션에서 경로는 저장소 상대경로만 사용합니다.
 
-`.venv`, `node_modules`, `dist`, `backend/data`, SQLite/WAL/journal, pycache, 로그, 임시 JSON, 실제 검토 이벤트와 다운로드 CSV는 Git에 포함하지 않습니다. 학생 최종 복구 지점은 `student/14-agent-history-ready`, 강사용 시연본은 `instructor/complete`입니다.
+`.venv`, `node_modules`, `dist`, `backend/data`, SQLite/WAL/journal, pycache, 로그, 임시 JSON, 실제 검토 이벤트와 다운로드 CSV는 Git에 포함하지 않습니다. 마지막 복구 지점은 `student/14-agent-history-ready`이며 전체 기능 시연에는 `instructor/complete`를 사용합니다.
 
 ## 이용 조건
 
