@@ -17,11 +17,12 @@ WORKSPACE = REPO / "practice" / "workspace"
 RUNTIME_NAMES = {".venv", "node_modules", "dist", "__pycache__", ".pytest_cache"}
 RUNTIME_SUFFIXES = (".pyc", ".pyo", ".sqlite", ".sqlite3", ".db", ".log")
 DAY2_TARGETS = {
-    "student/05-evidence-skill-ready",
-    "student/06-day2-complete",
-    "student/07-review-storage-ready",
-    "student/08-review-ui-ready",
-    "student/09-agent-history-ready",
+    "student/09-evidence-skill-ready",
+    "student/10-working-paper-api-ready",
+    "student/11-day2-complete",
+    "student/12-review-storage-ready",
+    "student/13-review-ui-ready",
+    "student/14-agent-history-ready",
     "instructor/complete",
 }
 
@@ -143,9 +144,9 @@ def verify() -> None:
         scripts = json.loads((root / "package.json").read_text(encoding="utf-8")).get("scripts", {})
         if not {"setup", "check", "start:backend", "dev:frontend"}.issubset(scripts):
             raise ValueError(f"공통 npm 명령 누락: {name}")
-        if (position >= 4 or name == "instructor/complete") and not (root / ".mcp.json").is_file():
+        if (position >= 6 or name == "instructor/complete") and not (root / ".mcp.json").is_file():
             raise ValueError(f"MCP 설정 누락: {name}")
-        if (position >= 5 or name == "instructor/complete") and not (root / ".claude" / "skills" / "control-test" / "SKILL.md").is_file():
+        if (position >= 9 or name == "instructor/complete") and not (root / ".claude" / "skills" / "control-test" / "SKILL.md").is_file():
             raise ValueError(f"control-test Skill 누락: {name}")
         for csv_path in csvs:
             copy = root / "input" / "day-1" / csv_path.name

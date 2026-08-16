@@ -37,21 +37,26 @@ npm run start:backend
 | 경로 | 이미 완료된 상태 | 다음 교재 묶음 |
 |---|---|---|
 | `student/00-starter` | health, 준비 화면, CSV 6종 | 환경·입력 연결 |
-| `student/01-population-ready` | 모집단 30, 유효 29, 오류 1 | 통제 규칙·저장 |
-| `student/02-controls-persisted` | 정상 21, 검토 8, 같은 실행을 중복 없이 SQLite에 저장 | Day 1 화면 연결 |
-| `student/03-day1-complete` | Day 1 API·UI·SQLite 완료 | Agent 구성·MCP 연결 |
-| `student/04-mcp-connected` | 읽기 전용 `mock-erp` Tool 3개 | 표본·근거·Skill |
-| `student/05-evidence-skill-ready` | 표본 12건, 권한 근거 조회, Skill | Agent 검토자료 생성·연결 |
-| `student/06-day2-complete` | 고정 검토자료 12건, 모두 담당자 검토 필요 | 결론 저장소 분리 |
-| `student/07-review-storage-ready` | 권한 검증, 기존 기록을 남기는 검토 이력 | 중복 저장 방지·최종 화면 |
-| `student/08-review-ui-ready` | 요청 ID로 중복 저장 방지, 전체 이력, 검토 화면 | 상태·완료·CSV 내보내기 |
-| `student/09-agent-history-ready` | Agent 권한·실행 이력 API와 UI, 전체 검증 | 발표·마무리 |
+| `student/01-population-ready` | 모집단 30건 로드 | 입력 오류·통제 규칙 |
+| `student/02-controls-ready` | 유효 29, 정상 21, 검토 8, 입력 오류 1 | SQLite 저장 |
+| `student/03-controls-persisted` | 정상 21, 검토 8, 같은 실행을 중복 없이 SQLite에 저장 | Day 1 화면 연결 |
+| `student/04-day1-ui-ready` | Day 1 집계·예외·상세 화면 연결 | Day 1 검증 |
+| `student/05-day1-complete` | Day 1 API·UI·SQLite 검증 완료 | Agent 구성·MCP 연결 |
+| `student/06-mcp-connected` | 읽기 전용 `mock-erp` Tool 3개 | 고정 표본 선정 |
+| `student/07-samples-ready` | 정상 4건·검토 8건의 고정 표본 | 권한 기반 근거 연결 |
+| `student/08-evidence-ready` | U701 근거 조회·U601 권한 거부 | Skill·Agent 초안 |
+| `student/09-evidence-skill-ready` | 통제 Skill과 고정 검토자료 12건 | 검토자료 API |
+| `student/10-working-paper-api-ready` | 검토자료 API와 오류 구분 | Day 2 화면 연결 |
+| `student/11-day2-complete` | 고정 검토자료 12건, 모두 담당자 검토 필요 | 결론 저장소 분리 |
+| `student/12-review-storage-ready` | 권한 검증, 기존 기록을 남기는 검토 이력 | 중복 저장 방지·최종 화면 |
+| `student/13-review-ui-ready` | 요청 ID로 중복 저장 방지, 전체 이력, 검토 화면 | 상태·완료·CSV 내보내기 |
+| `student/14-agent-history-ready` | Agent 권한·실행 이력 API와 UI, 전체 검증 | 발표·마무리 |
 | `instructor/complete` | Day 1–3 전체 기능과 적용 범위 템플릿 | 최종 시연 |
 
 중간 합류나 오류 복구는 저장할 코드가 없는지 확인한 뒤 저장소 루트에서 다음처럼 실행합니다.
 
 ```powershell
-python scripts/checkpoint.py reset student/05-evidence-skill-ready
+python scripts/checkpoint.py reset student/09-evidence-skill-ready
 cd practice/workspace
 npm run check
 ```
@@ -62,7 +67,7 @@ npm run check
 
 `assets/day-1/input/`의 CSV 6종, `assets/scenario/control-card.md`, `assets/scenario/case-matrix.xlsx`, Day 2 이후의 Agent 검토자료 파일 `output/day-2/working-paper.json`은 제공된 합성 자료입니다. 체크포인트를 reset하면 시나리오 자산은 `practice/workspace/assets/scenario`에도 복사됩니다. 실제 회사 자료, 개인정보, 비밀번호, 인증정보, 운영 URL을 추가하지 마세요. Excel과 애플리케이션에서 경로는 저장소 상대경로만 사용합니다.
 
-`.venv`, `node_modules`, `dist`, `backend/data`, SQLite/WAL/journal, pycache, 로그, 임시 JSON, 실제 검토 이벤트와 다운로드 CSV는 Git에 포함하지 않습니다. 강사용 완성본은 `instructor/complete`에 있으며 같은 내용의 학생 최종 폴더는 두지 않습니다.
+`.venv`, `node_modules`, `dist`, `backend/data`, SQLite/WAL/journal, pycache, 로그, 임시 JSON, 실제 검토 이벤트와 다운로드 CSV는 Git에 포함하지 않습니다. 학생 최종 복구 지점은 `student/14-agent-history-ready`, 강사용 시연본은 `instructor/complete`입니다.
 
 ## 이용 조건
 

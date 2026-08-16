@@ -58,7 +58,7 @@ jobs:
           npm run setup
       - name: Check representative checkpoints
         run: |
-          for checkpoint in student/00-starter student/04-mcp-connected instructor/complete; do
+          for checkpoint in student/00-starter student/06-mcp-connected instructor/complete; do
             python scripts/checkpoint.py reset "$checkpoint"
             (cd practice/workspace && npm run check)
           done

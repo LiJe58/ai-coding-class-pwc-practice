@@ -1,0 +1,7 @@
+{
+  "kind": "course-workspace",
+  "stage": "04-day1-ui-ready",
+  "audience": "student",
+  "inputSource": "input/day-1",
+  "inputPolicy": "read-only"
+}

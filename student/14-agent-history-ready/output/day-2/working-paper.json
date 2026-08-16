@@ -1,0 +1,3042 @@
+{
+  "schema_version": "1.0",
+  "agent_run_id": "DAY2-2026-08-V1",
+  "source_test_run_id": "DAY1-2026-08-V1",
+  "generated_at": "2026-08-13 19:58:57",
+  "mcp": {
+    "server": "mock-erp",
+    "status": "connected",
+    "tools_used": [
+      "get_control_population",
+      "select_day2_samples",
+      "get_case_evidence"
+    ],
+    "calls": [
+      {
+        "tool": "get_control_population",
+        "status": "success"
+      },
+      {
+        "tool": "select_day2_samples",
+        "status": "success"
+      },
+      {
+        "tool": "get_case_evidence",
+        "status": "success",
+        "change_id": "CHG-2608-001"
+      },
+      {
+        "tool": "get_case_evidence",
+        "status": "success",
+        "change_id": "CHG-2608-002"
+      },
+      {
+        "tool": "get_case_evidence",
+        "status": "success",
+        "change_id": "CHG-2608-003"
+      },
+      {
+        "tool": "get_case_evidence",
+        "status": "success",
+        "change_id": "CHG-2608-004"
+      },
+      {
+        "tool": "get_case_evidence",
+        "status": "success",
+        "change_id": "CHG-2608-022"
+      },
+      {
+        "tool": "get_case_evidence",
+        "status": "success",
+        "change_id": "CHG-2608-023"
+      },
+      {
+        "tool": "get_case_evidence",
+        "status": "success",
+        "change_id": "CHG-2608-024"
+      },
+      {
+        "tool": "get_case_evidence",
+        "status": "success",
+        "change_id": "CHG-2608-025"
+      },
+      {
+        "tool": "get_case_evidence",
+        "status": "success",
+        "change_id": "CHG-2608-026"
+      },
+      {
+        "tool": "get_case_evidence",
+        "status": "success",
+        "change_id": "CHG-2608-027"
+      },
+      {
+        "tool": "get_case_evidence",
+        "status": "success",
+        "change_id": "CHG-2608-028"
+      },
+      {
+        "tool": "get_case_evidence",
+        "status": "success",
+        "change_id": "CHG-2608-029"
+      }
+    ]
+  },
+  "summary": {
+    "population_count": 30,
+    "valid_count": 29,
+    "sample_count": 12,
+    "normal_sample_count": 4,
+    "review_sample_count": 8,
+    "draft_count": 12,
+    "additional_follow_up_count": 9
+  },
+  "samples": [
+    {
+      "sample_id": "SMP-2608-001",
+      "change_id": "CHG-2608-001",
+      "case_id": "CASE-2608-001",
+      "vendor_id": "V26001",
+      "vendor_name": "가상한빛물산",
+      "selection_reason": "교육용 지정 정상 표본",
+      "day1_status": "normal",
+      "rule_results": [
+        {
+          "rule_id": "R-01",
+          "rule_name": "필수값과 형식",
+          "result": "pass",
+          "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+        },
+        {
+          "rule_id": "R-02",
+          "rule_name": "변경 전 승인",
+          "result": "pass",
+          "detail": "ERP 반영 전 또는 같은 시각 승인"
+        },
+        {
+          "rule_id": "R-03",
+          "rule_name": "요청·승인 업무 분리",
+          "result": "pass",
+          "detail": "요청자와 최종 승인자 분리"
+        },
+        {
+          "rule_id": "R-04",
+          "rule_name": "승인 계좌와 ERP 일치",
+          "result": "pass",
+          "detail": "승인 계좌와 ERP 계좌 일치"
+        }
+      ],
+      "source_ids": {
+        "approval_ids": [
+          "APR-2608-001"
+        ],
+        "evidence_ids": [
+          "EVD-2608-001"
+        ],
+        "payment_ids": [
+          "PAY-2608-001"
+        ]
+      },
+      "evidence": {
+        "vendor_change": {
+          "change_id": "CHG-2608-001",
+          "case_id": "CASE-2608-001",
+          "vendor_id": "V26001",
+          "request_id": "REQ-2608-001",
+          "requested_at": "2026-08-01 08:30:00",
+          "requested_by": "U201",
+          "before_account_token": "ACCT-2608-001-OLD",
+          "requested_account_token": "ACCT-2608-001-NEW",
+          "changed_at": "2026-08-01 10:00:00",
+          "changed_by": "U401",
+          "change_reason": "거래처 요청에 따른 주거래 계좌 변경"
+        },
+        "vendor_master": {
+          "vendor_id": "V26001",
+          "vendor_name": "가상한빛물산",
+          "business_registration_no_masked": "***-**-10001",
+          "vendor_status": "활성",
+          "vendor_type": "일반거래처",
+          "bank_code": "004",
+          "bank_name": "국민은행",
+          "account_holder": "가상한빛물산",
+          "current_account_masked": "***-***-1001",
+          "current_account_token": "ACCT-2608-001-NEW",
+          "last_updated_at": "2026-08-01 10:00:00",
+          "last_updated_by": "U401"
+        },
+        "approvals": [
+          {
+            "approval_id": "APR-2608-001",
+            "change_id": "CHG-2608-001",
+            "approval_stage": "최종 승인",
+            "decision": "승인",
+            "approved_at": "2026-08-01 09:30:00",
+            "approved_by": "U301",
+            "approved_account_token": "ACCT-2608-001-NEW",
+            "approval_note": "요청서와 계좌 증빙 확인"
+          }
+        ],
+        "evidence_register": [
+          {
+            "evidence_id": "EVD-2608-001",
+            "request_id": "REQ-2608-001",
+            "document_type": "거래처 계좌변경 요청서",
+            "document_name": "가상한빛물산 계좌변경 요청서",
+            "document_status": "원본대조 확인",
+            "issued_date": "2026-08-01 08:00:00",
+            "received_at": "2026-08-01 08:20:00",
+            "verified_at": "2026-08-01 09:00:00",
+            "verified_by": "U501",
+            "document_account_token": "ACCT-2608-001-NEW",
+            "storage_ref": "EDU-DAY1/EVD-2608-001",
+            "note": "교육용 메타데이터"
+          }
+        ],
+        "payment_requests": [
+          {
+            "payment_id": "PAY-2608-001",
+            "vendor_id": "V26001",
+            "change_id": "CHG-2608-001",
+            "requested_at": "2026-08-02 11:00:00",
+            "scheduled_date": "2026-08-11 09:00:00",
+            "amount_krw": "4100000",
+            "payment_status": "지급 예정",
+            "payment_purpose": "교육용 포장재 대금",
+            "beneficiary_account_token": "ACCT-2608-001-NEW",
+            "requested_by": "U601"
+          }
+        ],
+        "user_roles": [
+          {
+            "user_id": "U201",
+            "user_name": "가상사용자 김가람",
+            "department": "구매운영팀",
+            "position": "대리",
+            "role_name": "거래처 변경 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_REQUEST",
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U301",
+            "user_name": "가상사용자 최하늘",
+            "department": "재무관리팀",
+            "position": "차장",
+            "role_name": "거래처 변경 승인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U401",
+            "user_name": "가상사용자 윤마루",
+            "department": "ERP운영팀",
+            "position": "과장",
+            "role_name": "거래처 마스터 변경자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_MASTER_EDIT"
+            ]
+          },
+          {
+            "user_id": "U501",
+            "user_name": "가상사용자 한누리",
+            "department": "구매지원팀",
+            "position": "대리",
+            "role_name": "증빙 확인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "EVIDENCE_VERIFY"
+            ]
+          },
+          {
+            "user_id": "U601",
+            "user_name": "가상사용자 서이음",
+            "department": "지급운영팀",
+            "position": "대리",
+            "role_name": "지급 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "PAYMENT_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U701",
+            "user_name": "가상사용자 조다정",
+            "department": "내부통제팀",
+            "position": "차장",
+            "role_name": "내부통제 검토자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "CONTROL_REVIEW"
+            ]
+          }
+        ],
+        "day1_result": {
+          "status": "normal",
+          "reason": "핵심 규칙 모두 충족",
+          "rule_results": [
+            {
+              "rule_id": "R-01",
+              "rule_name": "필수값과 형식",
+              "result": "pass",
+              "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+            },
+            {
+              "rule_id": "R-02",
+              "rule_name": "변경 전 승인",
+              "result": "pass",
+              "detail": "ERP 반영 전 또는 같은 시각 승인"
+            },
+            {
+              "rule_id": "R-03",
+              "rule_name": "요청·승인 업무 분리",
+              "result": "pass",
+              "detail": "요청자와 최종 승인자 분리"
+            },
+            {
+              "rule_id": "R-04",
+              "rule_name": "승인 계좌와 ERP 일치",
+              "result": "pass",
+              "detail": "승인 계좌와 ERP 계좌 일치"
+            }
+          ]
+        }
+      },
+      "agent_draft": {
+        "procedure": "Day 1에 적용한 규칙 결과를 유지한 채 Mock ERP MCP의 승인·증빙 등록부·지급 요청·사용자 역할 메타데이터를 식별자로 연결했습니다.",
+        "facts": [
+          "R-01 규칙 결과는 pass이며 사유는 '필수값·날짜 형식·change_id 중복 확인 완료'입니다.",
+          "R-02 규칙 결과는 pass이며 사유는 'ERP 반영 전 또는 같은 시각 승인'입니다.",
+          "R-03 규칙 결과는 pass이며 사유는 '요청자와 최종 승인자 분리'입니다.",
+          "R-04 규칙 결과는 pass이며 사유는 '승인 계좌와 ERP 계좌 일치'입니다.",
+          "APR-2608-001 승인 메타데이터의 승인 시각은 2026-08-01 09:30:00이고 승인자 ID는 U301입니다.",
+          "EVD-2608-001 증빙 등록부 메타데이터의 상태는 원본대조 확인입니다.",
+          "PAY-2608-001 지급 요청 메타데이터의 상태는 지급 예정이고 금액은 4100000원입니다."
+        ],
+        "draft_assessment": "Day 1에 규칙을 적용한 결과 위반은 발견되지 않았습니다. 이 문장은 담당자 검토 전 Agent 초안이며 최종 검토 결과가 아닙니다.",
+        "additional_follow_up": [],
+        "citations": [
+          "R-01",
+          "R-02",
+          "R-03",
+          "R-04",
+          "APR-2608-001",
+          "EVD-2608-001",
+          "PAY-2608-001"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "sample_id": "SMP-2608-002",
+      "change_id": "CHG-2608-002",
+      "case_id": "CASE-2608-002",
+      "vendor_id": "V26002",
+      "vendor_name": "가상새봄유통",
+      "selection_reason": "교육용 지정 정상 표본",
+      "day1_status": "normal",
+      "rule_results": [
+        {
+          "rule_id": "R-01",
+          "rule_name": "필수값과 형식",
+          "result": "pass",
+          "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+        },
+        {
+          "rule_id": "R-02",
+          "rule_name": "변경 전 승인",
+          "result": "pass",
+          "detail": "ERP 반영 전 또는 같은 시각 승인"
+        },
+        {
+          "rule_id": "R-03",
+          "rule_name": "요청·승인 업무 분리",
+          "result": "pass",
+          "detail": "요청자와 최종 승인자 분리"
+        },
+        {
+          "rule_id": "R-04",
+          "rule_name": "승인 계좌와 ERP 일치",
+          "result": "pass",
+          "detail": "승인 계좌와 ERP 계좌 일치"
+        }
+      ],
+      "source_ids": {
+        "approval_ids": [
+          "APR-2608-002"
+        ],
+        "evidence_ids": [
+          "EVD-2608-002"
+        ],
+        "payment_ids": [
+          "PAY-2608-002"
+        ]
+      },
+      "evidence": {
+        "vendor_change": {
+          "change_id": "CHG-2608-002",
+          "case_id": "CASE-2608-002",
+          "vendor_id": "V26002",
+          "request_id": "REQ-2608-002",
+          "requested_at": "2026-08-02 08:30:00",
+          "requested_by": "U202",
+          "before_account_token": "ACCT-2608-002-OLD",
+          "requested_account_token": "ACCT-2608-002-NEW",
+          "changed_at": "2026-08-02 10:00:00",
+          "changed_by": "U401",
+          "change_reason": "은행 변경에 따른 지급 계좌 변경"
+        },
+        "vendor_master": {
+          "vendor_id": "V26002",
+          "vendor_name": "가상새봄유통",
+          "business_registration_no_masked": "***-**-10002",
+          "vendor_status": "활성",
+          "vendor_type": "일반거래처",
+          "bank_code": "088",
+          "bank_name": "신한은행",
+          "account_holder": "가상새봄유통",
+          "current_account_masked": "***-***-1002",
+          "current_account_token": "ACCT-2608-002-NEW",
+          "last_updated_at": "2026-08-02 10:00:00",
+          "last_updated_by": "U401"
+        },
+        "approvals": [
+          {
+            "approval_id": "APR-2608-002",
+            "change_id": "CHG-2608-002",
+            "approval_stage": "최종 승인",
+            "decision": "승인",
+            "approved_at": "2026-08-02 09:30:00",
+            "approved_by": "U302",
+            "approved_account_token": "ACCT-2608-002-NEW",
+            "approval_note": "요청서와 계좌 증빙 확인"
+          }
+        ],
+        "evidence_register": [
+          {
+            "evidence_id": "EVD-2608-002",
+            "request_id": "REQ-2608-002",
+            "document_type": "거래처 명의 계좌변경 공문",
+            "document_name": "가상새봄유통 계좌변경 공문",
+            "document_status": "원본대조 확인",
+            "issued_date": "2026-08-02 08:00:00",
+            "received_at": "2026-08-02 08:20:00",
+            "verified_at": "2026-08-02 09:00:00",
+            "verified_by": "U501",
+            "document_account_token": "ACCT-2608-002-NEW",
+            "storage_ref": "EDU-DAY1/EVD-2608-002",
+            "note": "교육용 메타데이터"
+          }
+        ],
+        "payment_requests": [
+          {
+            "payment_id": "PAY-2608-002",
+            "vendor_id": "V26002",
+            "change_id": "CHG-2608-002",
+            "requested_at": "2026-08-03 11:00:00",
+            "scheduled_date": "2026-08-12 09:00:00",
+            "amount_krw": "4200000",
+            "payment_status": "지급 예정",
+            "payment_purpose": "교육용 유통 대금",
+            "beneficiary_account_token": "ACCT-2608-002-NEW",
+            "requested_by": "U601"
+          }
+        ],
+        "user_roles": [
+          {
+            "user_id": "U202",
+            "user_name": "가상사용자 이나래",
+            "department": "구매운영팀",
+            "position": "과장",
+            "role_name": "거래처 변경 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_REQUEST",
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U302",
+            "user_name": "가상사용자 정바다",
+            "department": "재무관리팀",
+            "position": "부장",
+            "role_name": "거래처 변경 승인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U401",
+            "user_name": "가상사용자 윤마루",
+            "department": "ERP운영팀",
+            "position": "과장",
+            "role_name": "거래처 마스터 변경자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_MASTER_EDIT"
+            ]
+          },
+          {
+            "user_id": "U501",
+            "user_name": "가상사용자 한누리",
+            "department": "구매지원팀",
+            "position": "대리",
+            "role_name": "증빙 확인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "EVIDENCE_VERIFY"
+            ]
+          },
+          {
+            "user_id": "U601",
+            "user_name": "가상사용자 서이음",
+            "department": "지급운영팀",
+            "position": "대리",
+            "role_name": "지급 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "PAYMENT_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U701",
+            "user_name": "가상사용자 조다정",
+            "department": "내부통제팀",
+            "position": "차장",
+            "role_name": "내부통제 검토자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "CONTROL_REVIEW"
+            ]
+          }
+        ],
+        "day1_result": {
+          "status": "normal",
+          "reason": "핵심 규칙 모두 충족",
+          "rule_results": [
+            {
+              "rule_id": "R-01",
+              "rule_name": "필수값과 형식",
+              "result": "pass",
+              "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+            },
+            {
+              "rule_id": "R-02",
+              "rule_name": "변경 전 승인",
+              "result": "pass",
+              "detail": "ERP 반영 전 또는 같은 시각 승인"
+            },
+            {
+              "rule_id": "R-03",
+              "rule_name": "요청·승인 업무 분리",
+              "result": "pass",
+              "detail": "요청자와 최종 승인자 분리"
+            },
+            {
+              "rule_id": "R-04",
+              "rule_name": "승인 계좌와 ERP 일치",
+              "result": "pass",
+              "detail": "승인 계좌와 ERP 계좌 일치"
+            }
+          ]
+        }
+      },
+      "agent_draft": {
+        "procedure": "Day 1에 적용한 규칙 결과를 유지한 채 Mock ERP MCP의 승인·증빙 등록부·지급 요청·사용자 역할 메타데이터를 식별자로 연결했습니다.",
+        "facts": [
+          "R-01 규칙 결과는 pass이며 사유는 '필수값·날짜 형식·change_id 중복 확인 완료'입니다.",
+          "R-02 규칙 결과는 pass이며 사유는 'ERP 반영 전 또는 같은 시각 승인'입니다.",
+          "R-03 규칙 결과는 pass이며 사유는 '요청자와 최종 승인자 분리'입니다.",
+          "R-04 규칙 결과는 pass이며 사유는 '승인 계좌와 ERP 계좌 일치'입니다.",
+          "APR-2608-002 승인 메타데이터의 승인 시각은 2026-08-02 09:30:00이고 승인자 ID는 U302입니다.",
+          "EVD-2608-002 증빙 등록부 메타데이터의 상태는 원본대조 확인입니다.",
+          "PAY-2608-002 지급 요청 메타데이터의 상태는 지급 예정이고 금액은 4200000원입니다."
+        ],
+        "draft_assessment": "Day 1에 규칙을 적용한 결과 위반은 발견되지 않았습니다. 이 문장은 담당자 검토 전 Agent 초안이며 최종 검토 결과가 아닙니다.",
+        "additional_follow_up": [],
+        "citations": [
+          "R-01",
+          "R-02",
+          "R-03",
+          "R-04",
+          "APR-2608-002",
+          "EVD-2608-002",
+          "PAY-2608-002"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "sample_id": "SMP-2608-003",
+      "change_id": "CHG-2608-003",
+      "case_id": "CASE-2608-003",
+      "vendor_id": "V26003",
+      "vendor_name": "가상다온포장",
+      "selection_reason": "교육용 지정 정상 표본",
+      "day1_status": "normal",
+      "rule_results": [
+        {
+          "rule_id": "R-01",
+          "rule_name": "필수값과 형식",
+          "result": "pass",
+          "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+        },
+        {
+          "rule_id": "R-02",
+          "rule_name": "변경 전 승인",
+          "result": "pass",
+          "detail": "ERP 반영 전 또는 같은 시각 승인"
+        },
+        {
+          "rule_id": "R-03",
+          "rule_name": "요청·승인 업무 분리",
+          "result": "pass",
+          "detail": "요청자와 최종 승인자 분리"
+        },
+        {
+          "rule_id": "R-04",
+          "rule_name": "승인 계좌와 ERP 일치",
+          "result": "pass",
+          "detail": "승인 계좌와 ERP 계좌 일치"
+        }
+      ],
+      "source_ids": {
+        "approval_ids": [
+          "APR-2608-003"
+        ],
+        "evidence_ids": [
+          "EVD-2608-003"
+        ],
+        "payment_ids": [
+          "PAY-2608-003"
+        ]
+      },
+      "evidence": {
+        "vendor_change": {
+          "change_id": "CHG-2608-003",
+          "case_id": "CASE-2608-003",
+          "vendor_id": "V26003",
+          "request_id": "REQ-2608-003",
+          "requested_at": "2026-08-03 08:30:00",
+          "requested_by": "U203",
+          "before_account_token": "ACCT-2608-003-OLD",
+          "requested_account_token": "ACCT-2608-003-NEW",
+          "changed_at": "2026-08-03 10:00:00",
+          "changed_by": "U401",
+          "change_reason": "거래처 요청에 따른 주거래 계좌 변경"
+        },
+        "vendor_master": {
+          "vendor_id": "V26003",
+          "vendor_name": "가상다온포장",
+          "business_registration_no_masked": "***-**-10003",
+          "vendor_status": "활성",
+          "vendor_type": "일반거래처",
+          "bank_code": "020",
+          "bank_name": "우리은행",
+          "account_holder": "가상다온포장",
+          "current_account_masked": "***-***-1003",
+          "current_account_token": "ACCT-2608-003-NEW",
+          "last_updated_at": "2026-08-03 10:00:00",
+          "last_updated_by": "U401"
+        },
+        "approvals": [
+          {
+            "approval_id": "APR-2608-003",
+            "change_id": "CHG-2608-003",
+            "approval_stage": "최종 승인",
+            "decision": "승인",
+            "approved_at": "2026-08-03 09:30:00",
+            "approved_by": "U301",
+            "approved_account_token": "ACCT-2608-003-NEW",
+            "approval_note": "요청서와 계좌 증빙 확인"
+          }
+        ],
+        "evidence_register": [
+          {
+            "evidence_id": "EVD-2608-003",
+            "request_id": "REQ-2608-003",
+            "document_type": "사업자등록증 사본",
+            "document_name": "가상다온포장 사업자등록증 사본",
+            "document_status": "사본 확인",
+            "issued_date": "2026-08-03 08:00:00",
+            "received_at": "2026-08-03 08:20:00",
+            "verified_at": "2026-08-03 09:00:00",
+            "verified_by": "U501",
+            "document_account_token": "ACCT-2608-003-NEW",
+            "storage_ref": "EDU-DAY1/EVD-2608-003",
+            "note": "마스킹된 표시값만 사용"
+          }
+        ],
+        "payment_requests": [
+          {
+            "payment_id": "PAY-2608-003",
+            "vendor_id": "V26003",
+            "change_id": "CHG-2608-003",
+            "requested_at": "2026-08-04 11:00:00",
+            "scheduled_date": "2026-08-13 09:00:00",
+            "amount_krw": "4300000",
+            "payment_status": "지급 예정",
+            "payment_purpose": "교육용 포장 대금",
+            "beneficiary_account_token": "ACCT-2608-003-NEW",
+            "requested_by": "U601"
+          }
+        ],
+        "user_roles": [
+          {
+            "user_id": "U203",
+            "user_name": "가상사용자 박도윤",
+            "department": "구매운영팀",
+            "position": "대리",
+            "role_name": "거래처 변경 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U301",
+            "user_name": "가상사용자 최하늘",
+            "department": "재무관리팀",
+            "position": "차장",
+            "role_name": "거래처 변경 승인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U401",
+            "user_name": "가상사용자 윤마루",
+            "department": "ERP운영팀",
+            "position": "과장",
+            "role_name": "거래처 마스터 변경자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_MASTER_EDIT"
+            ]
+          },
+          {
+            "user_id": "U501",
+            "user_name": "가상사용자 한누리",
+            "department": "구매지원팀",
+            "position": "대리",
+            "role_name": "증빙 확인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "EVIDENCE_VERIFY"
+            ]
+          },
+          {
+            "user_id": "U601",
+            "user_name": "가상사용자 서이음",
+            "department": "지급운영팀",
+            "position": "대리",
+            "role_name": "지급 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "PAYMENT_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U701",
+            "user_name": "가상사용자 조다정",
+            "department": "내부통제팀",
+            "position": "차장",
+            "role_name": "내부통제 검토자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "CONTROL_REVIEW"
+            ]
+          }
+        ],
+        "day1_result": {
+          "status": "normal",
+          "reason": "핵심 규칙 모두 충족",
+          "rule_results": [
+            {
+              "rule_id": "R-01",
+              "rule_name": "필수값과 형식",
+              "result": "pass",
+              "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+            },
+            {
+              "rule_id": "R-02",
+              "rule_name": "변경 전 승인",
+              "result": "pass",
+              "detail": "ERP 반영 전 또는 같은 시각 승인"
+            },
+            {
+              "rule_id": "R-03",
+              "rule_name": "요청·승인 업무 분리",
+              "result": "pass",
+              "detail": "요청자와 최종 승인자 분리"
+            },
+            {
+              "rule_id": "R-04",
+              "rule_name": "승인 계좌와 ERP 일치",
+              "result": "pass",
+              "detail": "승인 계좌와 ERP 계좌 일치"
+            }
+          ]
+        }
+      },
+      "agent_draft": {
+        "procedure": "Day 1에 적용한 규칙 결과를 유지한 채 Mock ERP MCP의 승인·증빙 등록부·지급 요청·사용자 역할 메타데이터를 식별자로 연결했습니다.",
+        "facts": [
+          "R-01 규칙 결과는 pass이며 사유는 '필수값·날짜 형식·change_id 중복 확인 완료'입니다.",
+          "R-02 규칙 결과는 pass이며 사유는 'ERP 반영 전 또는 같은 시각 승인'입니다.",
+          "R-03 규칙 결과는 pass이며 사유는 '요청자와 최종 승인자 분리'입니다.",
+          "R-04 규칙 결과는 pass이며 사유는 '승인 계좌와 ERP 계좌 일치'입니다.",
+          "APR-2608-003 승인 메타데이터의 승인 시각은 2026-08-03 09:30:00이고 승인자 ID는 U301입니다.",
+          "EVD-2608-003 증빙 등록부 메타데이터의 상태는 사본 확인입니다.",
+          "PAY-2608-003 지급 요청 메타데이터의 상태는 지급 예정이고 금액은 4300000원입니다."
+        ],
+        "draft_assessment": "Day 1에 규칙을 적용한 결과 위반은 발견되지 않았습니다. 이 문장은 담당자 검토 전 Agent 초안이며 최종 검토 결과가 아닙니다.",
+        "additional_follow_up": [],
+        "citations": [
+          "R-01",
+          "R-02",
+          "R-03",
+          "R-04",
+          "APR-2608-003",
+          "EVD-2608-003",
+          "PAY-2608-003"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "sample_id": "SMP-2608-004",
+      "change_id": "CHG-2608-004",
+      "case_id": "CASE-2608-004",
+      "vendor_id": "V26004",
+      "vendor_name": "가상누리물류",
+      "selection_reason": "교육용 지정 정상 표본",
+      "day1_status": "normal",
+      "rule_results": [
+        {
+          "rule_id": "R-01",
+          "rule_name": "필수값과 형식",
+          "result": "pass",
+          "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+        },
+        {
+          "rule_id": "R-02",
+          "rule_name": "변경 전 승인",
+          "result": "pass",
+          "detail": "ERP 반영 전 또는 같은 시각 승인"
+        },
+        {
+          "rule_id": "R-03",
+          "rule_name": "요청·승인 업무 분리",
+          "result": "pass",
+          "detail": "요청자와 최종 승인자 분리"
+        },
+        {
+          "rule_id": "R-04",
+          "rule_name": "승인 계좌와 ERP 일치",
+          "result": "pass",
+          "detail": "승인 계좌와 ERP 계좌 일치"
+        }
+      ],
+      "source_ids": {
+        "approval_ids": [
+          "APR-2608-004"
+        ],
+        "evidence_ids": [
+          "EVD-2608-004"
+        ],
+        "payment_ids": [
+          "PAY-2608-004"
+        ]
+      },
+      "evidence": {
+        "vendor_change": {
+          "change_id": "CHG-2608-004",
+          "case_id": "CASE-2608-004",
+          "vendor_id": "V26004",
+          "request_id": "REQ-2608-004",
+          "requested_at": "2026-08-04 08:30:00",
+          "requested_by": "U201",
+          "before_account_token": "ACCT-2608-004-OLD",
+          "requested_account_token": "ACCT-2608-004-NEW",
+          "changed_at": "2026-08-04 10:00:00",
+          "changed_by": "U401",
+          "change_reason": "은행 변경에 따른 지급 계좌 변경"
+        },
+        "vendor_master": {
+          "vendor_id": "V26004",
+          "vendor_name": "가상누리물류",
+          "business_registration_no_masked": "***-**-10004",
+          "vendor_status": "활성",
+          "vendor_type": "일반거래처",
+          "bank_code": "081",
+          "bank_name": "하나은행",
+          "account_holder": "가상누리물류",
+          "current_account_masked": "***-***-1004",
+          "current_account_token": "ACCT-2608-004-NEW",
+          "last_updated_at": "2026-08-04 10:00:00",
+          "last_updated_by": "U401"
+        },
+        "approvals": [
+          {
+            "approval_id": "APR-2608-004",
+            "change_id": "CHG-2608-004",
+            "approval_stage": "최종 승인",
+            "decision": "승인",
+            "approved_at": "2026-08-04 09:30:00",
+            "approved_by": "U302",
+            "approved_account_token": "ACCT-2608-004-NEW",
+            "approval_note": "요청서와 계좌 증빙 확인"
+          }
+        ],
+        "evidence_register": [
+          {
+            "evidence_id": "EVD-2608-004",
+            "request_id": "REQ-2608-004",
+            "document_type": "거래처 명의 통장 사본",
+            "document_name": "가상누리물류 통장 사본",
+            "document_status": "사본 확인",
+            "issued_date": "2026-08-04 08:00:00",
+            "received_at": "2026-08-04 08:20:00",
+            "verified_at": "2026-08-04 09:00:00",
+            "verified_by": "U501",
+            "document_account_token": "ACCT-2608-004-NEW",
+            "storage_ref": "EDU-DAY1/EVD-2608-004",
+            "note": "이미지 없이 등록부 정보만 사용"
+          }
+        ],
+        "payment_requests": [
+          {
+            "payment_id": "PAY-2608-004",
+            "vendor_id": "V26004",
+            "change_id": "CHG-2608-004",
+            "requested_at": "2026-08-05 11:00:00",
+            "scheduled_date": "2026-08-14 09:00:00",
+            "amount_krw": "4400000",
+            "payment_status": "지급 예정",
+            "payment_purpose": "교육용 물류 대금",
+            "beneficiary_account_token": "ACCT-2608-004-NEW",
+            "requested_by": "U601"
+          }
+        ],
+        "user_roles": [
+          {
+            "user_id": "U201",
+            "user_name": "가상사용자 김가람",
+            "department": "구매운영팀",
+            "position": "대리",
+            "role_name": "거래처 변경 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_REQUEST",
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U302",
+            "user_name": "가상사용자 정바다",
+            "department": "재무관리팀",
+            "position": "부장",
+            "role_name": "거래처 변경 승인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U401",
+            "user_name": "가상사용자 윤마루",
+            "department": "ERP운영팀",
+            "position": "과장",
+            "role_name": "거래처 마스터 변경자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_MASTER_EDIT"
+            ]
+          },
+          {
+            "user_id": "U501",
+            "user_name": "가상사용자 한누리",
+            "department": "구매지원팀",
+            "position": "대리",
+            "role_name": "증빙 확인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "EVIDENCE_VERIFY"
+            ]
+          },
+          {
+            "user_id": "U601",
+            "user_name": "가상사용자 서이음",
+            "department": "지급운영팀",
+            "position": "대리",
+            "role_name": "지급 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "PAYMENT_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U701",
+            "user_name": "가상사용자 조다정",
+            "department": "내부통제팀",
+            "position": "차장",
+            "role_name": "내부통제 검토자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "CONTROL_REVIEW"
+            ]
+          }
+        ],
+        "day1_result": {
+          "status": "normal",
+          "reason": "핵심 규칙 모두 충족",
+          "rule_results": [
+            {
+              "rule_id": "R-01",
+              "rule_name": "필수값과 형식",
+              "result": "pass",
+              "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+            },
+            {
+              "rule_id": "R-02",
+              "rule_name": "변경 전 승인",
+              "result": "pass",
+              "detail": "ERP 반영 전 또는 같은 시각 승인"
+            },
+            {
+              "rule_id": "R-03",
+              "rule_name": "요청·승인 업무 분리",
+              "result": "pass",
+              "detail": "요청자와 최종 승인자 분리"
+            },
+            {
+              "rule_id": "R-04",
+              "rule_name": "승인 계좌와 ERP 일치",
+              "result": "pass",
+              "detail": "승인 계좌와 ERP 계좌 일치"
+            }
+          ]
+        }
+      },
+      "agent_draft": {
+        "procedure": "Day 1에 적용한 규칙 결과를 유지한 채 Mock ERP MCP의 승인·증빙 등록부·지급 요청·사용자 역할 메타데이터를 식별자로 연결했습니다.",
+        "facts": [
+          "R-01 규칙 결과는 pass이며 사유는 '필수값·날짜 형식·change_id 중복 확인 완료'입니다.",
+          "R-02 규칙 결과는 pass이며 사유는 'ERP 반영 전 또는 같은 시각 승인'입니다.",
+          "R-03 규칙 결과는 pass이며 사유는 '요청자와 최종 승인자 분리'입니다.",
+          "R-04 규칙 결과는 pass이며 사유는 '승인 계좌와 ERP 계좌 일치'입니다.",
+          "APR-2608-004 승인 메타데이터의 승인 시각은 2026-08-04 09:30:00이고 승인자 ID는 U302입니다.",
+          "EVD-2608-004 증빙 등록부 메타데이터의 상태는 사본 확인입니다.",
+          "PAY-2608-004 지급 요청 메타데이터의 상태는 지급 예정이고 금액은 4400000원입니다."
+        ],
+        "draft_assessment": "Day 1에 규칙을 적용한 결과 위반은 발견되지 않았습니다. 이 문장은 담당자 검토 전 Agent 초안이며 최종 검토 결과가 아닙니다.",
+        "additional_follow_up": [],
+        "citations": [
+          "R-01",
+          "R-02",
+          "R-03",
+          "R-04",
+          "APR-2608-004",
+          "EVD-2608-004",
+          "PAY-2608-004"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "sample_id": "SMP-2608-005",
+      "change_id": "CHG-2608-022",
+      "case_id": "CASE-2608-022",
+      "vendor_id": "V26022",
+      "vendor_name": "가상바른기술",
+      "selection_reason": "핵심 규칙 위반 전수",
+      "day1_status": "review",
+      "rule_results": [
+        {
+          "rule_id": "R-01",
+          "rule_name": "필수값과 형식",
+          "result": "pass",
+          "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+        },
+        {
+          "rule_id": "R-02",
+          "rule_name": "변경 전 승인",
+          "result": "fail",
+          "detail": "ERP 반영 후 승인"
+        },
+        {
+          "rule_id": "R-03",
+          "rule_name": "요청·승인 업무 분리",
+          "result": "pass",
+          "detail": "요청자와 최종 승인자 분리"
+        },
+        {
+          "rule_id": "R-04",
+          "rule_name": "승인 계좌와 ERP 일치",
+          "result": "pass",
+          "detail": "승인 계좌와 ERP 계좌 일치"
+        }
+      ],
+      "source_ids": {
+        "approval_ids": [
+          "APR-2608-022"
+        ],
+        "evidence_ids": [
+          "EVD-2608-022"
+        ],
+        "payment_ids": [
+          "PAY-2608-022"
+        ]
+      },
+      "evidence": {
+        "vendor_change": {
+          "change_id": "CHG-2608-022",
+          "case_id": "CASE-2608-022",
+          "vendor_id": "V26022",
+          "request_id": "REQ-2608-022",
+          "requested_at": "2026-08-22 08:30:00",
+          "requested_by": "U201",
+          "before_account_token": "ACCT-2608-022-OLD",
+          "requested_account_token": "ACCT-2608-022-NEW",
+          "changed_at": "2026-08-22 09:30:00",
+          "changed_by": "U401",
+          "change_reason": "긴급 요청으로 ERP 우선 반영"
+        },
+        "vendor_master": {
+          "vendor_id": "V26022",
+          "vendor_name": "가상바른기술",
+          "business_registration_no_masked": "***-**-10022",
+          "vendor_status": "활성",
+          "vendor_type": "일반거래처",
+          "bank_code": "081",
+          "bank_name": "하나은행",
+          "account_holder": "가상바른기술",
+          "current_account_masked": "***-***-1022",
+          "current_account_token": "ACCT-2608-022-NEW",
+          "last_updated_at": "2026-08-22 09:30:00",
+          "last_updated_by": "U401"
+        },
+        "approvals": [
+          {
+            "approval_id": "APR-2608-022",
+            "change_id": "CHG-2608-022",
+            "approval_stage": "최종 승인",
+            "decision": "승인",
+            "approved_at": "2026-08-22 11:00:00",
+            "approved_by": "U302",
+            "approved_account_token": "ACCT-2608-022-NEW",
+            "approval_note": "ERP 반영 후 사후 승인"
+          }
+        ],
+        "evidence_register": [
+          {
+            "evidence_id": "EVD-2608-022",
+            "request_id": "REQ-2608-022",
+            "document_type": "거래처 계좌변경 요청서",
+            "document_name": "가상바른기술 계좌변경 요청서",
+            "document_status": "추가 확인",
+            "issued_date": "2026-08-22 08:00:00",
+            "received_at": "2026-08-22 08:20:00",
+            "verified_at": "2026-08-22 11:20:00",
+            "verified_by": "U501",
+            "document_account_token": "ACCT-2608-022-NEW",
+            "storage_ref": "EDU-DAY1/EVD-2608-022",
+            "note": "사후 승인 사유 추가 확인"
+          }
+        ],
+        "payment_requests": [
+          {
+            "payment_id": "PAY-2608-022",
+            "vendor_id": "V26022",
+            "change_id": "CHG-2608-022",
+            "requested_at": "2026-08-22 12:00:00",
+            "scheduled_date": "2026-08-24 09:00:00",
+            "amount_krw": "22000000",
+            "payment_status": "지급 대기",
+            "payment_purpose": "교육용 기술용역 대금",
+            "beneficiary_account_token": "ACCT-2608-022-NEW",
+            "requested_by": "U601"
+          }
+        ],
+        "user_roles": [
+          {
+            "user_id": "U201",
+            "user_name": "가상사용자 김가람",
+            "department": "구매운영팀",
+            "position": "대리",
+            "role_name": "거래처 변경 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_REQUEST",
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U302",
+            "user_name": "가상사용자 정바다",
+            "department": "재무관리팀",
+            "position": "부장",
+            "role_name": "거래처 변경 승인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U401",
+            "user_name": "가상사용자 윤마루",
+            "department": "ERP운영팀",
+            "position": "과장",
+            "role_name": "거래처 마스터 변경자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_MASTER_EDIT"
+            ]
+          },
+          {
+            "user_id": "U501",
+            "user_name": "가상사용자 한누리",
+            "department": "구매지원팀",
+            "position": "대리",
+            "role_name": "증빙 확인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "EVIDENCE_VERIFY"
+            ]
+          },
+          {
+            "user_id": "U601",
+            "user_name": "가상사용자 서이음",
+            "department": "지급운영팀",
+            "position": "대리",
+            "role_name": "지급 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "PAYMENT_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U701",
+            "user_name": "가상사용자 조다정",
+            "department": "내부통제팀",
+            "position": "차장",
+            "role_name": "내부통제 검토자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "CONTROL_REVIEW"
+            ]
+          }
+        ],
+        "day1_result": {
+          "status": "review",
+          "reason": "ERP 반영 후 승인",
+          "rule_results": [
+            {
+              "rule_id": "R-01",
+              "rule_name": "필수값과 형식",
+              "result": "pass",
+              "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+            },
+            {
+              "rule_id": "R-02",
+              "rule_name": "변경 전 승인",
+              "result": "fail",
+              "detail": "ERP 반영 후 승인"
+            },
+            {
+              "rule_id": "R-03",
+              "rule_name": "요청·승인 업무 분리",
+              "result": "pass",
+              "detail": "요청자와 최종 승인자 분리"
+            },
+            {
+              "rule_id": "R-04",
+              "rule_name": "승인 계좌와 ERP 일치",
+              "result": "pass",
+              "detail": "승인 계좌와 ERP 계좌 일치"
+            }
+          ]
+        }
+      },
+      "agent_draft": {
+        "procedure": "Day 1에 적용한 규칙 결과를 유지한 채 Mock ERP MCP의 승인·증빙 등록부·지급 요청·사용자 역할 메타데이터를 식별자로 연결했습니다.",
+        "facts": [
+          "R-01 규칙 결과는 pass이며 사유는 '필수값·날짜 형식·change_id 중복 확인 완료'입니다.",
+          "R-02 규칙 결과는 fail이며 사유는 'ERP 반영 후 승인'입니다.",
+          "R-03 규칙 결과는 pass이며 사유는 '요청자와 최종 승인자 분리'입니다.",
+          "R-04 규칙 결과는 pass이며 사유는 '승인 계좌와 ERP 계좌 일치'입니다.",
+          "APR-2608-022 승인 메타데이터의 승인 시각은 2026-08-22 11:00:00이고 승인자 ID는 U302입니다.",
+          "EVD-2608-022 증빙 등록부 메타데이터의 상태는 추가 확인입니다.",
+          "PAY-2608-022 지급 요청 메타데이터의 상태는 지급 대기이고 금액은 22000000원입니다."
+        ],
+        "draft_assessment": "Day 1에 규칙을 적용한 결과 R-02 검토 사항이 식별됐습니다. 연결 메타데이터는 참고 정보이며 담당자의 확인이 필요합니다.",
+        "additional_follow_up": [
+          "EVD-2608-022 등록부 상태가 추가 확인이므로 실제 문서 수취·확인 여부를 추가 확인해야 합니다."
+        ],
+        "citations": [
+          "R-01",
+          "R-02",
+          "R-03",
+          "R-04",
+          "APR-2608-022",
+          "EVD-2608-022",
+          "PAY-2608-022"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "sample_id": "SMP-2608-006",
+      "change_id": "CHG-2608-023",
+      "case_id": "CASE-2608-023",
+      "vendor_id": "V26023",
+      "vendor_name": "가상푸른물류",
+      "selection_reason": "핵심 규칙 위반 전수",
+      "day1_status": "review",
+      "rule_results": [
+        {
+          "rule_id": "R-01",
+          "rule_name": "필수값과 형식",
+          "result": "pass",
+          "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+        },
+        {
+          "rule_id": "R-02",
+          "rule_name": "변경 전 승인",
+          "result": "fail",
+          "detail": "최종 승인 기록 없음"
+        },
+        {
+          "rule_id": "R-03",
+          "rule_name": "요청·승인 업무 분리",
+          "result": "not_applicable",
+          "detail": "최종 승인 기록이 없어 평가 불가"
+        },
+        {
+          "rule_id": "R-04",
+          "rule_name": "승인 계좌와 ERP 일치",
+          "result": "not_applicable",
+          "detail": "최종 승인 기록이 없어 평가 불가"
+        }
+      ],
+      "source_ids": {
+        "approval_ids": [],
+        "evidence_ids": [
+          "EVD-2608-023"
+        ],
+        "payment_ids": [
+          "PAY-2608-023"
+        ]
+      },
+      "evidence": {
+        "vendor_change": {
+          "change_id": "CHG-2608-023",
+          "case_id": "CASE-2608-023",
+          "vendor_id": "V26023",
+          "request_id": "REQ-2608-023",
+          "requested_at": "2026-08-23 08:30:00",
+          "requested_by": "U202",
+          "before_account_token": "ACCT-2608-023-OLD",
+          "requested_account_token": "ACCT-2608-023-NEW",
+          "changed_at": "2026-08-23 10:00:00",
+          "changed_by": "U401",
+          "change_reason": "승인 기록 누락 사례"
+        },
+        "vendor_master": {
+          "vendor_id": "V26023",
+          "vendor_name": "가상푸른물류",
+          "business_registration_no_masked": "***-**-10023",
+          "vendor_status": "활성",
+          "vendor_type": "일반거래처",
+          "bank_code": "011",
+          "bank_name": "NH농협은행",
+          "account_holder": "가상푸른물류",
+          "current_account_masked": "***-***-1023",
+          "current_account_token": "ACCT-2608-023-NEW",
+          "last_updated_at": "2026-08-23 10:00:00",
+          "last_updated_by": "U401"
+        },
+        "approvals": [],
+        "evidence_register": [
+          {
+            "evidence_id": "EVD-2608-023",
+            "request_id": "REQ-2608-023",
+            "document_type": "사내 전자결재 승인문서",
+            "document_name": "가상푸른물류 전자결재 승인문서",
+            "document_status": "미수취",
+            "issued_date": "2026-08-23 08:00:00",
+            "received_at": "",
+            "verified_at": "",
+            "verified_by": "",
+            "document_account_token": "ACCT-2608-023-NEW",
+            "storage_ref": "EDU-DAY1/EVD-2608-023",
+            "note": "승인 기록과 승인문서 모두 미수취"
+          }
+        ],
+        "payment_requests": [
+          {
+            "payment_id": "PAY-2608-023",
+            "vendor_id": "V26023",
+            "change_id": "CHG-2608-023",
+            "requested_at": "2026-08-23 11:00:00",
+            "scheduled_date": "2026-08-25 09:00:00",
+            "amount_krw": "23000000",
+            "payment_status": "지급 대기",
+            "payment_purpose": "교육용 물류 대금",
+            "beneficiary_account_token": "ACCT-2608-023-NEW",
+            "requested_by": "U601"
+          }
+        ],
+        "user_roles": [
+          {
+            "user_id": "U202",
+            "user_name": "가상사용자 이나래",
+            "department": "구매운영팀",
+            "position": "과장",
+            "role_name": "거래처 변경 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_REQUEST",
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U401",
+            "user_name": "가상사용자 윤마루",
+            "department": "ERP운영팀",
+            "position": "과장",
+            "role_name": "거래처 마스터 변경자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_MASTER_EDIT"
+            ]
+          },
+          {
+            "user_id": "U601",
+            "user_name": "가상사용자 서이음",
+            "department": "지급운영팀",
+            "position": "대리",
+            "role_name": "지급 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "PAYMENT_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U701",
+            "user_name": "가상사용자 조다정",
+            "department": "내부통제팀",
+            "position": "차장",
+            "role_name": "내부통제 검토자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "CONTROL_REVIEW"
+            ]
+          }
+        ],
+        "day1_result": {
+          "status": "review",
+          "reason": "최종 승인 기록 없음",
+          "rule_results": [
+            {
+              "rule_id": "R-01",
+              "rule_name": "필수값과 형식",
+              "result": "pass",
+              "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+            },
+            {
+              "rule_id": "R-02",
+              "rule_name": "변경 전 승인",
+              "result": "fail",
+              "detail": "최종 승인 기록 없음"
+            },
+            {
+              "rule_id": "R-03",
+              "rule_name": "요청·승인 업무 분리",
+              "result": "not_applicable",
+              "detail": "최종 승인 기록이 없어 평가 불가"
+            },
+            {
+              "rule_id": "R-04",
+              "rule_name": "승인 계좌와 ERP 일치",
+              "result": "not_applicable",
+              "detail": "최종 승인 기록이 없어 평가 불가"
+            }
+          ]
+        }
+      },
+      "agent_draft": {
+        "procedure": "Day 1에 적용한 규칙 결과를 유지한 채 Mock ERP MCP의 승인·증빙 등록부·지급 요청·사용자 역할 메타데이터를 식별자로 연결했습니다.",
+        "facts": [
+          "R-01 규칙 결과는 pass이며 사유는 '필수값·날짜 형식·change_id 중복 확인 완료'입니다.",
+          "R-02 규칙 결과는 fail이며 사유는 '최종 승인 기록 없음'입니다.",
+          "R-03 규칙 결과는 not_applicable이며 사유는 '최종 승인 기록이 없어 평가 불가'입니다.",
+          "R-04 규칙 결과는 not_applicable이며 사유는 '최종 승인 기록이 없어 평가 불가'입니다.",
+          "R-02 기준 연결된 최종 승인 기록이 없어 승인자는 확인 불가입니다.",
+          "EVD-2608-023 증빙 등록부 메타데이터의 상태는 미수취입니다.",
+          "PAY-2608-023 지급 요청 메타데이터의 상태는 지급 대기이고 금액은 23000000원입니다."
+        ],
+        "draft_assessment": "Day 1에 규칙을 적용한 결과 R-02 검토 사항이 식별됐습니다. 연결 메타데이터는 참고 정보이며 담당자의 확인이 필요합니다.",
+        "additional_follow_up": [
+          "R-02 관련 최종 승인 기록과 승인자는 추가 확인 필요입니다.",
+          "EVD-2608-023 등록부 상태가 미수취이므로 실제 문서 수취·확인 여부를 추가 확인해야 합니다."
+        ],
+        "citations": [
+          "R-01",
+          "R-02",
+          "R-03",
+          "R-04",
+          "EVD-2608-023",
+          "PAY-2608-023"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "sample_id": "SMP-2608-007",
+      "change_id": "CHG-2608-024",
+      "case_id": "CASE-2608-024",
+      "vendor_id": "V26024",
+      "vendor_name": "가상참빛상사",
+      "selection_reason": "핵심 규칙 위반 전수",
+      "day1_status": "review",
+      "rule_results": [
+        {
+          "rule_id": "R-01",
+          "rule_name": "필수값과 형식",
+          "result": "pass",
+          "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+        },
+        {
+          "rule_id": "R-02",
+          "rule_name": "변경 전 승인",
+          "result": "pass",
+          "detail": "ERP 반영 전 또는 같은 시각 승인"
+        },
+        {
+          "rule_id": "R-03",
+          "rule_name": "요청·승인 업무 분리",
+          "result": "fail",
+          "detail": "요청자와 최종 승인자가 동일"
+        },
+        {
+          "rule_id": "R-04",
+          "rule_name": "승인 계좌와 ERP 일치",
+          "result": "pass",
+          "detail": "승인 계좌와 ERP 계좌 일치"
+        }
+      ],
+      "source_ids": {
+        "approval_ids": [
+          "APR-2608-024"
+        ],
+        "evidence_ids": [
+          "EVD-2608-024"
+        ],
+        "payment_ids": [
+          "PAY-2608-024"
+        ]
+      },
+      "evidence": {
+        "vendor_change": {
+          "change_id": "CHG-2608-024",
+          "case_id": "CASE-2608-024",
+          "vendor_id": "V26024",
+          "request_id": "REQ-2608-024",
+          "requested_at": "2026-08-24 08:30:00",
+          "requested_by": "U201",
+          "before_account_token": "ACCT-2608-024-OLD",
+          "requested_account_token": "ACCT-2608-024-NEW",
+          "changed_at": "2026-08-24 10:00:00",
+          "changed_by": "U401",
+          "change_reason": "요청자와 승인자 동일 사례"
+        },
+        "vendor_master": {
+          "vendor_id": "V26024",
+          "vendor_name": "가상참빛상사",
+          "business_registration_no_masked": "***-**-10024",
+          "vendor_status": "활성",
+          "vendor_type": "일반거래처",
+          "bank_code": "003",
+          "bank_name": "IBK기업은행",
+          "account_holder": "가상참빛상사",
+          "current_account_masked": "***-***-1024",
+          "current_account_token": "ACCT-2608-024-NEW",
+          "last_updated_at": "2026-08-24 10:00:00",
+          "last_updated_by": "U401"
+        },
+        "approvals": [
+          {
+            "approval_id": "APR-2608-024",
+            "change_id": "CHG-2608-024",
+            "approval_stage": "최종 승인",
+            "decision": "승인",
+            "approved_at": "2026-08-24 09:30:00",
+            "approved_by": "U201",
+            "approved_account_token": "ACCT-2608-024-NEW",
+            "approval_note": "요청자가 직접 승인한 교육용 사례"
+          }
+        ],
+        "evidence_register": [
+          {
+            "evidence_id": "EVD-2608-024",
+            "request_id": "REQ-2608-024",
+            "document_type": "사업자등록증 사본",
+            "document_name": "가상참빛상사 사업자등록증 사본",
+            "document_status": "사본 확인",
+            "issued_date": "2026-08-24 08:00:00",
+            "received_at": "2026-08-24 08:20:00",
+            "verified_at": "2026-08-24 09:00:00",
+            "verified_by": "U501",
+            "document_account_token": "ACCT-2608-024-NEW",
+            "storage_ref": "EDU-DAY1/EVD-2608-024",
+            "note": "업무 미분리와 별도인 참고정보"
+          }
+        ],
+        "payment_requests": [
+          {
+            "payment_id": "PAY-2608-024",
+            "vendor_id": "V26024",
+            "change_id": "CHG-2608-024",
+            "requested_at": "2026-08-24 11:00:00",
+            "scheduled_date": "2026-08-26 09:00:00",
+            "amount_krw": "24000000",
+            "payment_status": "지급 대기",
+            "payment_purpose": "교육용 상품 대금",
+            "beneficiary_account_token": "ACCT-2608-024-NEW",
+            "requested_by": "U601"
+          }
+        ],
+        "user_roles": [
+          {
+            "user_id": "U201",
+            "user_name": "가상사용자 김가람",
+            "department": "구매운영팀",
+            "position": "대리",
+            "role_name": "거래처 변경 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_REQUEST",
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U401",
+            "user_name": "가상사용자 윤마루",
+            "department": "ERP운영팀",
+            "position": "과장",
+            "role_name": "거래처 마스터 변경자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_MASTER_EDIT"
+            ]
+          },
+          {
+            "user_id": "U501",
+            "user_name": "가상사용자 한누리",
+            "department": "구매지원팀",
+            "position": "대리",
+            "role_name": "증빙 확인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "EVIDENCE_VERIFY"
+            ]
+          },
+          {
+            "user_id": "U601",
+            "user_name": "가상사용자 서이음",
+            "department": "지급운영팀",
+            "position": "대리",
+            "role_name": "지급 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "PAYMENT_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U701",
+            "user_name": "가상사용자 조다정",
+            "department": "내부통제팀",
+            "position": "차장",
+            "role_name": "내부통제 검토자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "CONTROL_REVIEW"
+            ]
+          }
+        ],
+        "day1_result": {
+          "status": "review",
+          "reason": "요청자와 최종 승인자가 동일",
+          "rule_results": [
+            {
+              "rule_id": "R-01",
+              "rule_name": "필수값과 형식",
+              "result": "pass",
+              "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+            },
+            {
+              "rule_id": "R-02",
+              "rule_name": "변경 전 승인",
+              "result": "pass",
+              "detail": "ERP 반영 전 또는 같은 시각 승인"
+            },
+            {
+              "rule_id": "R-03",
+              "rule_name": "요청·승인 업무 분리",
+              "result": "fail",
+              "detail": "요청자와 최종 승인자가 동일"
+            },
+            {
+              "rule_id": "R-04",
+              "rule_name": "승인 계좌와 ERP 일치",
+              "result": "pass",
+              "detail": "승인 계좌와 ERP 계좌 일치"
+            }
+          ]
+        }
+      },
+      "agent_draft": {
+        "procedure": "Day 1에 적용한 규칙 결과를 유지한 채 Mock ERP MCP의 승인·증빙 등록부·지급 요청·사용자 역할 메타데이터를 식별자로 연결했습니다.",
+        "facts": [
+          "R-01 규칙 결과는 pass이며 사유는 '필수값·날짜 형식·change_id 중복 확인 완료'입니다.",
+          "R-02 규칙 결과는 pass이며 사유는 'ERP 반영 전 또는 같은 시각 승인'입니다.",
+          "R-03 규칙 결과는 fail이며 사유는 '요청자와 최종 승인자가 동일'입니다.",
+          "R-04 규칙 결과는 pass이며 사유는 '승인 계좌와 ERP 계좌 일치'입니다.",
+          "APR-2608-024 승인 메타데이터의 승인 시각은 2026-08-24 09:30:00이고 승인자 ID는 U201입니다.",
+          "EVD-2608-024 증빙 등록부 메타데이터의 상태는 사본 확인입니다.",
+          "PAY-2608-024 지급 요청 메타데이터의 상태는 지급 대기이고 금액은 24000000원입니다."
+        ],
+        "draft_assessment": "Day 1에 규칙을 적용한 결과 R-03 검토 사항이 식별됐습니다. 연결 메타데이터는 참고 정보이며 담당자의 확인이 필요합니다.",
+        "additional_follow_up": [
+          "R-03 위반 사유를 승인·ERP 원시 이력과 대조해야 합니다."
+        ],
+        "citations": [
+          "R-01",
+          "R-02",
+          "R-03",
+          "R-04",
+          "APR-2608-024",
+          "EVD-2608-024",
+          "PAY-2608-024"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "sample_id": "SMP-2608-008",
+      "change_id": "CHG-2608-025",
+      "case_id": "CASE-2608-025",
+      "vendor_id": "V26025",
+      "vendor_name": "가상늘봄산업",
+      "selection_reason": "핵심 규칙 위반 전수",
+      "day1_status": "review",
+      "rule_results": [
+        {
+          "rule_id": "R-01",
+          "rule_name": "필수값과 형식",
+          "result": "pass",
+          "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+        },
+        {
+          "rule_id": "R-02",
+          "rule_name": "변경 전 승인",
+          "result": "pass",
+          "detail": "ERP 반영 전 또는 같은 시각 승인"
+        },
+        {
+          "rule_id": "R-03",
+          "rule_name": "요청·승인 업무 분리",
+          "result": "fail",
+          "detail": "요청자와 최종 승인자가 동일"
+        },
+        {
+          "rule_id": "R-04",
+          "rule_name": "승인 계좌와 ERP 일치",
+          "result": "pass",
+          "detail": "승인 계좌와 ERP 계좌 일치"
+        }
+      ],
+      "source_ids": {
+        "approval_ids": [
+          "APR-2608-025"
+        ],
+        "evidence_ids": [
+          "EVD-2608-025"
+        ],
+        "payment_ids": [
+          "PAY-2608-025"
+        ]
+      },
+      "evidence": {
+        "vendor_change": {
+          "change_id": "CHG-2608-025",
+          "case_id": "CASE-2608-025",
+          "vendor_id": "V26025",
+          "request_id": "REQ-2608-025",
+          "requested_at": "2026-08-25 08:30:00",
+          "requested_by": "U202",
+          "before_account_token": "ACCT-2608-025-OLD",
+          "requested_account_token": "ACCT-2608-025-NEW",
+          "changed_at": "2026-08-25 10:00:00",
+          "changed_by": "U401",
+          "change_reason": "요청자와 승인자 동일 사례"
+        },
+        "vendor_master": {
+          "vendor_id": "V26025",
+          "vendor_name": "가상늘봄산업",
+          "business_registration_no_masked": "***-**-10025",
+          "vendor_status": "활성",
+          "vendor_type": "일반거래처",
+          "bank_code": "004",
+          "bank_name": "국민은행",
+          "account_holder": "가상늘봄산업",
+          "current_account_masked": "***-***-1025",
+          "current_account_token": "ACCT-2608-025-NEW",
+          "last_updated_at": "2026-08-25 10:00:00",
+          "last_updated_by": "U401"
+        },
+        "approvals": [
+          {
+            "approval_id": "APR-2608-025",
+            "change_id": "CHG-2608-025",
+            "approval_stage": "최종 승인",
+            "decision": "승인",
+            "approved_at": "2026-08-25 09:30:00",
+            "approved_by": "U202",
+            "approved_account_token": "ACCT-2608-025-NEW",
+            "approval_note": "요청자가 직접 승인한 교육용 사례"
+          }
+        ],
+        "evidence_register": [
+          {
+            "evidence_id": "EVD-2608-025",
+            "request_id": "REQ-2608-025",
+            "document_type": "거래처 명의 통장 사본",
+            "document_name": "가상늘봄산업 통장 사본",
+            "document_status": "사본 확인",
+            "issued_date": "2026-08-25 08:00:00",
+            "received_at": "2026-08-25 08:20:00",
+            "verified_at": "2026-08-25 09:00:00",
+            "verified_by": "U501",
+            "document_account_token": "ACCT-2608-025-NEW",
+            "storage_ref": "EDU-DAY1/EVD-2608-025",
+            "note": "업무 미분리와 별도인 참고정보"
+          }
+        ],
+        "payment_requests": [
+          {
+            "payment_id": "PAY-2608-025",
+            "vendor_id": "V26025",
+            "change_id": "CHG-2608-025",
+            "requested_at": "2026-08-25 11:00:00",
+            "scheduled_date": "2026-08-27 09:00:00",
+            "amount_krw": "25000000",
+            "payment_status": "지급 대기",
+            "payment_purpose": "교육용 산업재 대금",
+            "beneficiary_account_token": "ACCT-2608-025-NEW",
+            "requested_by": "U601"
+          }
+        ],
+        "user_roles": [
+          {
+            "user_id": "U202",
+            "user_name": "가상사용자 이나래",
+            "department": "구매운영팀",
+            "position": "과장",
+            "role_name": "거래처 변경 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_REQUEST",
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U401",
+            "user_name": "가상사용자 윤마루",
+            "department": "ERP운영팀",
+            "position": "과장",
+            "role_name": "거래처 마스터 변경자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_MASTER_EDIT"
+            ]
+          },
+          {
+            "user_id": "U501",
+            "user_name": "가상사용자 한누리",
+            "department": "구매지원팀",
+            "position": "대리",
+            "role_name": "증빙 확인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "EVIDENCE_VERIFY"
+            ]
+          },
+          {
+            "user_id": "U601",
+            "user_name": "가상사용자 서이음",
+            "department": "지급운영팀",
+            "position": "대리",
+            "role_name": "지급 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "PAYMENT_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U701",
+            "user_name": "가상사용자 조다정",
+            "department": "내부통제팀",
+            "position": "차장",
+            "role_name": "내부통제 검토자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "CONTROL_REVIEW"
+            ]
+          }
+        ],
+        "day1_result": {
+          "status": "review",
+          "reason": "요청자와 최종 승인자가 동일",
+          "rule_results": [
+            {
+              "rule_id": "R-01",
+              "rule_name": "필수값과 형식",
+              "result": "pass",
+              "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+            },
+            {
+              "rule_id": "R-02",
+              "rule_name": "변경 전 승인",
+              "result": "pass",
+              "detail": "ERP 반영 전 또는 같은 시각 승인"
+            },
+            {
+              "rule_id": "R-03",
+              "rule_name": "요청·승인 업무 분리",
+              "result": "fail",
+              "detail": "요청자와 최종 승인자가 동일"
+            },
+            {
+              "rule_id": "R-04",
+              "rule_name": "승인 계좌와 ERP 일치",
+              "result": "pass",
+              "detail": "승인 계좌와 ERP 계좌 일치"
+            }
+          ]
+        }
+      },
+      "agent_draft": {
+        "procedure": "Day 1에 적용한 규칙 결과를 유지한 채 Mock ERP MCP의 승인·증빙 등록부·지급 요청·사용자 역할 메타데이터를 식별자로 연결했습니다.",
+        "facts": [
+          "R-01 규칙 결과는 pass이며 사유는 '필수값·날짜 형식·change_id 중복 확인 완료'입니다.",
+          "R-02 규칙 결과는 pass이며 사유는 'ERP 반영 전 또는 같은 시각 승인'입니다.",
+          "R-03 규칙 결과는 fail이며 사유는 '요청자와 최종 승인자가 동일'입니다.",
+          "R-04 규칙 결과는 pass이며 사유는 '승인 계좌와 ERP 계좌 일치'입니다.",
+          "APR-2608-025 승인 메타데이터의 승인 시각은 2026-08-25 09:30:00이고 승인자 ID는 U202입니다.",
+          "EVD-2608-025 증빙 등록부 메타데이터의 상태는 사본 확인입니다.",
+          "PAY-2608-025 지급 요청 메타데이터의 상태는 지급 대기이고 금액은 25000000원입니다."
+        ],
+        "draft_assessment": "Day 1에 규칙을 적용한 결과 R-03 검토 사항이 식별됐습니다. 연결 메타데이터는 참고 정보이며 담당자의 확인이 필요합니다.",
+        "additional_follow_up": [
+          "R-03 위반 사유를 승인·ERP 원시 이력과 대조해야 합니다."
+        ],
+        "citations": [
+          "R-01",
+          "R-02",
+          "R-03",
+          "R-04",
+          "APR-2608-025",
+          "EVD-2608-025",
+          "PAY-2608-025"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "sample_id": "SMP-2608-009",
+      "change_id": "CHG-2608-026",
+      "case_id": "CASE-2608-026",
+      "vendor_id": "V26026",
+      "vendor_name": "가상한울유통",
+      "selection_reason": "핵심 규칙 위반 전수",
+      "day1_status": "review",
+      "rule_results": [
+        {
+          "rule_id": "R-01",
+          "rule_name": "필수값과 형식",
+          "result": "pass",
+          "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+        },
+        {
+          "rule_id": "R-02",
+          "rule_name": "변경 전 승인",
+          "result": "pass",
+          "detail": "ERP 반영 전 또는 같은 시각 승인"
+        },
+        {
+          "rule_id": "R-03",
+          "rule_name": "요청·승인 업무 분리",
+          "result": "pass",
+          "detail": "요청자와 최종 승인자 분리"
+        },
+        {
+          "rule_id": "R-04",
+          "rule_name": "승인 계좌와 ERP 일치",
+          "result": "fail",
+          "detail": "승인 계좌와 ERP 계좌 불일치"
+        }
+      ],
+      "source_ids": {
+        "approval_ids": [
+          "APR-2608-026"
+        ],
+        "evidence_ids": [
+          "EVD-2608-026"
+        ],
+        "payment_ids": [
+          "PAY-2608-026"
+        ]
+      },
+      "evidence": {
+        "vendor_change": {
+          "change_id": "CHG-2608-026",
+          "case_id": "CASE-2608-026",
+          "vendor_id": "V26026",
+          "request_id": "REQ-2608-026",
+          "requested_at": "2026-08-26 08:30:00",
+          "requested_by": "U203",
+          "before_account_token": "ACCT-2608-026-OLD",
+          "requested_account_token": "ACCT-2608-026-NEW",
+          "changed_at": "2026-08-26 10:00:00",
+          "changed_by": "U401",
+          "change_reason": "승인 계좌와 ERP 계좌 불일치 사례"
+        },
+        "vendor_master": {
+          "vendor_id": "V26026",
+          "vendor_name": "가상한울유통",
+          "business_registration_no_masked": "***-**-10026",
+          "vendor_status": "활성",
+          "vendor_type": "일반거래처",
+          "bank_code": "088",
+          "bank_name": "신한은행",
+          "account_holder": "가상한울유통",
+          "current_account_masked": "***-***-9026",
+          "current_account_token": "ACCT-2608-026-ERP",
+          "last_updated_at": "2026-08-26 10:00:00",
+          "last_updated_by": "U401"
+        },
+        "approvals": [
+          {
+            "approval_id": "APR-2608-026",
+            "change_id": "CHG-2608-026",
+            "approval_stage": "최종 승인",
+            "decision": "승인",
+            "approved_at": "2026-08-26 09:30:00",
+            "approved_by": "U301",
+            "approved_account_token": "ACCT-2608-026-NEW",
+            "approval_note": "승인 계좌와 ERP 반영 계좌 불일치"
+          }
+        ],
+        "evidence_register": [
+          {
+            "evidence_id": "EVD-2608-026",
+            "request_id": "REQ-2608-026",
+            "document_type": "거래처 담당자 유선 재확인 기록",
+            "document_name": "가상한울유통 유선 재확인 기록",
+            "document_status": "추가 확인",
+            "issued_date": "2026-08-26 08:00:00",
+            "received_at": "2026-08-26 08:20:00",
+            "verified_at": "2026-08-26 10:20:00",
+            "verified_by": "U501",
+            "document_account_token": "ACCT-2608-026-NEW",
+            "storage_ref": "EDU-DAY1/EVD-2608-026",
+            "note": "ERP 계좌 불일치 재확인 필요"
+          }
+        ],
+        "payment_requests": [
+          {
+            "payment_id": "PAY-2608-026",
+            "vendor_id": "V26026",
+            "change_id": "CHG-2608-026",
+            "requested_at": "2026-08-26 11:00:00",
+            "scheduled_date": "2026-08-28 09:00:00",
+            "amount_krw": "26000000",
+            "payment_status": "지급 대기",
+            "payment_purpose": "교육용 유통 대금",
+            "beneficiary_account_token": "ACCT-2608-026-ERP",
+            "requested_by": "U601"
+          }
+        ],
+        "user_roles": [
+          {
+            "user_id": "U203",
+            "user_name": "가상사용자 박도윤",
+            "department": "구매운영팀",
+            "position": "대리",
+            "role_name": "거래처 변경 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U301",
+            "user_name": "가상사용자 최하늘",
+            "department": "재무관리팀",
+            "position": "차장",
+            "role_name": "거래처 변경 승인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U401",
+            "user_name": "가상사용자 윤마루",
+            "department": "ERP운영팀",
+            "position": "과장",
+            "role_name": "거래처 마스터 변경자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_MASTER_EDIT"
+            ]
+          },
+          {
+            "user_id": "U501",
+            "user_name": "가상사용자 한누리",
+            "department": "구매지원팀",
+            "position": "대리",
+            "role_name": "증빙 확인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "EVIDENCE_VERIFY"
+            ]
+          },
+          {
+            "user_id": "U601",
+            "user_name": "가상사용자 서이음",
+            "department": "지급운영팀",
+            "position": "대리",
+            "role_name": "지급 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "PAYMENT_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U701",
+            "user_name": "가상사용자 조다정",
+            "department": "내부통제팀",
+            "position": "차장",
+            "role_name": "내부통제 검토자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "CONTROL_REVIEW"
+            ]
+          }
+        ],
+        "day1_result": {
+          "status": "review",
+          "reason": "승인 계좌와 ERP 계좌 불일치",
+          "rule_results": [
+            {
+              "rule_id": "R-01",
+              "rule_name": "필수값과 형식",
+              "result": "pass",
+              "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+            },
+            {
+              "rule_id": "R-02",
+              "rule_name": "변경 전 승인",
+              "result": "pass",
+              "detail": "ERP 반영 전 또는 같은 시각 승인"
+            },
+            {
+              "rule_id": "R-03",
+              "rule_name": "요청·승인 업무 분리",
+              "result": "pass",
+              "detail": "요청자와 최종 승인자 분리"
+            },
+            {
+              "rule_id": "R-04",
+              "rule_name": "승인 계좌와 ERP 일치",
+              "result": "fail",
+              "detail": "승인 계좌와 ERP 계좌 불일치"
+            }
+          ]
+        }
+      },
+      "agent_draft": {
+        "procedure": "Day 1에 적용한 규칙 결과를 유지한 채 Mock ERP MCP의 승인·증빙 등록부·지급 요청·사용자 역할 메타데이터를 식별자로 연결했습니다.",
+        "facts": [
+          "R-01 규칙 결과는 pass이며 사유는 '필수값·날짜 형식·change_id 중복 확인 완료'입니다.",
+          "R-02 규칙 결과는 pass이며 사유는 'ERP 반영 전 또는 같은 시각 승인'입니다.",
+          "R-03 규칙 결과는 pass이며 사유는 '요청자와 최종 승인자 분리'입니다.",
+          "R-04 규칙 결과는 fail이며 사유는 '승인 계좌와 ERP 계좌 불일치'입니다.",
+          "APR-2608-026 승인 메타데이터의 승인 시각은 2026-08-26 09:30:00이고 승인자 ID는 U301입니다.",
+          "EVD-2608-026 증빙 등록부 메타데이터의 상태는 추가 확인입니다.",
+          "PAY-2608-026 지급 요청 메타데이터의 상태는 지급 대기이고 금액은 26000000원입니다."
+        ],
+        "draft_assessment": "Day 1에 규칙을 적용한 결과 R-04 검토 사항이 식별됐습니다. 연결 메타데이터는 참고 정보이며 담당자의 확인이 필요합니다.",
+        "additional_follow_up": [
+          "EVD-2608-026 등록부 상태가 추가 확인이므로 실제 문서 수취·확인 여부를 추가 확인해야 합니다."
+        ],
+        "citations": [
+          "R-01",
+          "R-02",
+          "R-03",
+          "R-04",
+          "APR-2608-026",
+          "EVD-2608-026",
+          "PAY-2608-026"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "sample_id": "SMP-2608-010",
+      "change_id": "CHG-2608-027",
+      "case_id": "CASE-2608-027",
+      "vendor_id": "V26027",
+      "vendor_name": "가상두레설비",
+      "selection_reason": "핵심 규칙 위반 전수",
+      "day1_status": "review",
+      "rule_results": [
+        {
+          "rule_id": "R-01",
+          "rule_name": "필수값과 형식",
+          "result": "pass",
+          "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+        },
+        {
+          "rule_id": "R-02",
+          "rule_name": "변경 전 승인",
+          "result": "pass",
+          "detail": "ERP 반영 전 또는 같은 시각 승인"
+        },
+        {
+          "rule_id": "R-03",
+          "rule_name": "요청·승인 업무 분리",
+          "result": "pass",
+          "detail": "요청자와 최종 승인자 분리"
+        },
+        {
+          "rule_id": "R-04",
+          "rule_name": "승인 계좌와 ERP 일치",
+          "result": "fail",
+          "detail": "승인 계좌와 ERP 계좌 불일치"
+        }
+      ],
+      "source_ids": {
+        "approval_ids": [
+          "APR-2608-027"
+        ],
+        "evidence_ids": [
+          "EVD-2608-027"
+        ],
+        "payment_ids": [
+          "PAY-2608-027"
+        ]
+      },
+      "evidence": {
+        "vendor_change": {
+          "change_id": "CHG-2608-027",
+          "case_id": "CASE-2608-027",
+          "vendor_id": "V26027",
+          "request_id": "REQ-2608-027",
+          "requested_at": "2026-08-27 08:30:00",
+          "requested_by": "U201",
+          "before_account_token": "ACCT-2608-027-OLD",
+          "requested_account_token": "ACCT-2608-027-NEW",
+          "changed_at": "2026-08-27 10:00:00",
+          "changed_by": "U401",
+          "change_reason": "승인 계좌와 ERP 계좌 불일치 사례"
+        },
+        "vendor_master": {
+          "vendor_id": "V26027",
+          "vendor_name": "가상두레설비",
+          "business_registration_no_masked": "***-**-10027",
+          "vendor_status": "활성",
+          "vendor_type": "일반거래처",
+          "bank_code": "020",
+          "bank_name": "우리은행",
+          "account_holder": "가상두레설비",
+          "current_account_masked": "***-***-9027",
+          "current_account_token": "ACCT-2608-027-ERP",
+          "last_updated_at": "2026-08-27 10:00:00",
+          "last_updated_by": "U401"
+        },
+        "approvals": [
+          {
+            "approval_id": "APR-2608-027",
+            "change_id": "CHG-2608-027",
+            "approval_stage": "최종 승인",
+            "decision": "승인",
+            "approved_at": "2026-08-27 09:30:00",
+            "approved_by": "U302",
+            "approved_account_token": "ACCT-2608-027-NEW",
+            "approval_note": "승인 계좌와 ERP 반영 계좌 불일치"
+          }
+        ],
+        "evidence_register": [
+          {
+            "evidence_id": "EVD-2608-027",
+            "request_id": "REQ-2608-027",
+            "document_type": "거래처 명의 계좌변경 공문",
+            "document_name": "가상두레설비 계좌변경 공문",
+            "document_status": "추가 확인",
+            "issued_date": "2026-08-27 08:00:00",
+            "received_at": "2026-08-27 08:20:00",
+            "verified_at": "2026-08-27 10:20:00",
+            "verified_by": "U501",
+            "document_account_token": "ACCT-2608-027-NEW",
+            "storage_ref": "EDU-DAY1/EVD-2608-027",
+            "note": "ERP 계좌 불일치 재확인 필요"
+          }
+        ],
+        "payment_requests": [
+          {
+            "payment_id": "PAY-2608-027",
+            "vendor_id": "V26027",
+            "change_id": "CHG-2608-027",
+            "requested_at": "2026-08-27 11:00:00",
+            "scheduled_date": "2026-08-29 09:00:00",
+            "amount_krw": "27000000",
+            "payment_status": "지급 대기",
+            "payment_purpose": "교육용 설비 대금",
+            "beneficiary_account_token": "ACCT-2608-027-ERP",
+            "requested_by": "U601"
+          }
+        ],
+        "user_roles": [
+          {
+            "user_id": "U201",
+            "user_name": "가상사용자 김가람",
+            "department": "구매운영팀",
+            "position": "대리",
+            "role_name": "거래처 변경 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_REQUEST",
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U302",
+            "user_name": "가상사용자 정바다",
+            "department": "재무관리팀",
+            "position": "부장",
+            "role_name": "거래처 변경 승인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U401",
+            "user_name": "가상사용자 윤마루",
+            "department": "ERP운영팀",
+            "position": "과장",
+            "role_name": "거래처 마스터 변경자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_MASTER_EDIT"
+            ]
+          },
+          {
+            "user_id": "U501",
+            "user_name": "가상사용자 한누리",
+            "department": "구매지원팀",
+            "position": "대리",
+            "role_name": "증빙 확인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "EVIDENCE_VERIFY"
+            ]
+          },
+          {
+            "user_id": "U601",
+            "user_name": "가상사용자 서이음",
+            "department": "지급운영팀",
+            "position": "대리",
+            "role_name": "지급 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "PAYMENT_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U701",
+            "user_name": "가상사용자 조다정",
+            "department": "내부통제팀",
+            "position": "차장",
+            "role_name": "내부통제 검토자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "CONTROL_REVIEW"
+            ]
+          }
+        ],
+        "day1_result": {
+          "status": "review",
+          "reason": "승인 계좌와 ERP 계좌 불일치",
+          "rule_results": [
+            {
+              "rule_id": "R-01",
+              "rule_name": "필수값과 형식",
+              "result": "pass",
+              "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+            },
+            {
+              "rule_id": "R-02",
+              "rule_name": "변경 전 승인",
+              "result": "pass",
+              "detail": "ERP 반영 전 또는 같은 시각 승인"
+            },
+            {
+              "rule_id": "R-03",
+              "rule_name": "요청·승인 업무 분리",
+              "result": "pass",
+              "detail": "요청자와 최종 승인자 분리"
+            },
+            {
+              "rule_id": "R-04",
+              "rule_name": "승인 계좌와 ERP 일치",
+              "result": "fail",
+              "detail": "승인 계좌와 ERP 계좌 불일치"
+            }
+          ]
+        }
+      },
+      "agent_draft": {
+        "procedure": "Day 1에 적용한 규칙 결과를 유지한 채 Mock ERP MCP의 승인·증빙 등록부·지급 요청·사용자 역할 메타데이터를 식별자로 연결했습니다.",
+        "facts": [
+          "R-01 규칙 결과는 pass이며 사유는 '필수값·날짜 형식·change_id 중복 확인 완료'입니다.",
+          "R-02 규칙 결과는 pass이며 사유는 'ERP 반영 전 또는 같은 시각 승인'입니다.",
+          "R-03 규칙 결과는 pass이며 사유는 '요청자와 최종 승인자 분리'입니다.",
+          "R-04 규칙 결과는 fail이며 사유는 '승인 계좌와 ERP 계좌 불일치'입니다.",
+          "APR-2608-027 승인 메타데이터의 승인 시각은 2026-08-27 09:30:00이고 승인자 ID는 U302입니다.",
+          "EVD-2608-027 증빙 등록부 메타데이터의 상태는 추가 확인입니다.",
+          "PAY-2608-027 지급 요청 메타데이터의 상태는 지급 대기이고 금액은 27000000원입니다."
+        ],
+        "draft_assessment": "Day 1에 규칙을 적용한 결과 R-04 검토 사항이 식별됐습니다. 연결 메타데이터는 참고 정보이며 담당자의 확인이 필요합니다.",
+        "additional_follow_up": [
+          "EVD-2608-027 등록부 상태가 추가 확인이므로 실제 문서 수취·확인 여부를 추가 확인해야 합니다."
+        ],
+        "citations": [
+          "R-01",
+          "R-02",
+          "R-03",
+          "R-04",
+          "APR-2608-027",
+          "EVD-2608-027",
+          "PAY-2608-027"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "sample_id": "SMP-2608-011",
+      "change_id": "CHG-2608-028",
+      "case_id": "CASE-2608-028",
+      "vendor_id": "V26028",
+      "vendor_name": "가상미소렌탈",
+      "selection_reason": "핵심 규칙 위반 전수",
+      "day1_status": "review",
+      "rule_results": [
+        {
+          "rule_id": "R-01",
+          "rule_name": "필수값과 형식",
+          "result": "pass",
+          "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+        },
+        {
+          "rule_id": "R-02",
+          "rule_name": "변경 전 승인",
+          "result": "fail",
+          "detail": "ERP 반영 후 승인"
+        },
+        {
+          "rule_id": "R-03",
+          "rule_name": "요청·승인 업무 분리",
+          "result": "fail",
+          "detail": "요청자와 최종 승인자가 동일"
+        },
+        {
+          "rule_id": "R-04",
+          "rule_name": "승인 계좌와 ERP 일치",
+          "result": "pass",
+          "detail": "승인 계좌와 ERP 계좌 일치"
+        }
+      ],
+      "source_ids": {
+        "approval_ids": [
+          "APR-2608-028"
+        ],
+        "evidence_ids": [
+          "EVD-2608-028"
+        ],
+        "payment_ids": [
+          "PAY-2608-028"
+        ]
+      },
+      "evidence": {
+        "vendor_change": {
+          "change_id": "CHG-2608-028",
+          "case_id": "CASE-2608-028",
+          "vendor_id": "V26028",
+          "request_id": "REQ-2608-028",
+          "requested_at": "2026-08-28 08:30:00",
+          "requested_by": "U202",
+          "before_account_token": "ACCT-2608-028-OLD",
+          "requested_account_token": "ACCT-2608-028-NEW",
+          "changed_at": "2026-08-28 10:00:00",
+          "changed_by": "U401",
+          "change_reason": "ERP 우선 반영과 업무 미분리 사례"
+        },
+        "vendor_master": {
+          "vendor_id": "V26028",
+          "vendor_name": "가상미소렌탈",
+          "business_registration_no_masked": "***-**-10028",
+          "vendor_status": "활성",
+          "vendor_type": "일반거래처",
+          "bank_code": "081",
+          "bank_name": "하나은행",
+          "account_holder": "가상미소렌탈",
+          "current_account_masked": "***-***-1028",
+          "current_account_token": "ACCT-2608-028-NEW",
+          "last_updated_at": "2026-08-28 10:00:00",
+          "last_updated_by": "U401"
+        },
+        "approvals": [
+          {
+            "approval_id": "APR-2608-028",
+            "change_id": "CHG-2608-028",
+            "approval_stage": "최종 승인",
+            "decision": "승인",
+            "approved_at": "2026-08-28 11:00:00",
+            "approved_by": "U202",
+            "approved_account_token": "ACCT-2608-028-NEW",
+            "approval_note": "ERP 반영 후 요청자가 직접 승인"
+          }
+        ],
+        "evidence_register": [
+          {
+            "evidence_id": "EVD-2608-028",
+            "request_id": "REQ-2608-028",
+            "document_type": "거래처 담당자 유선 재확인 기록",
+            "document_name": "가상미소렌탈 유선 재확인 기록",
+            "document_status": "미수취",
+            "issued_date": "2026-08-28 08:00:00",
+            "received_at": "",
+            "verified_at": "",
+            "verified_by": "",
+            "document_account_token": "ACCT-2608-028-NEW",
+            "storage_ref": "EDU-DAY1/EVD-2608-028",
+            "note": "사후 승인과 업무 미분리 관련 추가 증빙 미수취"
+          }
+        ],
+        "payment_requests": [
+          {
+            "payment_id": "PAY-2608-028",
+            "vendor_id": "V26028",
+            "change_id": "CHG-2608-028",
+            "requested_at": "2026-08-28 12:00:00",
+            "scheduled_date": "2026-08-30 09:00:00",
+            "amount_krw": "28000000",
+            "payment_status": "지급 대기",
+            "payment_purpose": "교육용 임차료",
+            "beneficiary_account_token": "ACCT-2608-028-NEW",
+            "requested_by": "U601"
+          }
+        ],
+        "user_roles": [
+          {
+            "user_id": "U202",
+            "user_name": "가상사용자 이나래",
+            "department": "구매운영팀",
+            "position": "과장",
+            "role_name": "거래처 변경 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_REQUEST",
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U401",
+            "user_name": "가상사용자 윤마루",
+            "department": "ERP운영팀",
+            "position": "과장",
+            "role_name": "거래처 마스터 변경자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_MASTER_EDIT"
+            ]
+          },
+          {
+            "user_id": "U601",
+            "user_name": "가상사용자 서이음",
+            "department": "지급운영팀",
+            "position": "대리",
+            "role_name": "지급 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "PAYMENT_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U701",
+            "user_name": "가상사용자 조다정",
+            "department": "내부통제팀",
+            "position": "차장",
+            "role_name": "내부통제 검토자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "CONTROL_REVIEW"
+            ]
+          }
+        ],
+        "day1_result": {
+          "status": "review",
+          "reason": "ERP 반영 후 승인; 요청자와 최종 승인자가 동일",
+          "rule_results": [
+            {
+              "rule_id": "R-01",
+              "rule_name": "필수값과 형식",
+              "result": "pass",
+              "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+            },
+            {
+              "rule_id": "R-02",
+              "rule_name": "변경 전 승인",
+              "result": "fail",
+              "detail": "ERP 반영 후 승인"
+            },
+            {
+              "rule_id": "R-03",
+              "rule_name": "요청·승인 업무 분리",
+              "result": "fail",
+              "detail": "요청자와 최종 승인자가 동일"
+            },
+            {
+              "rule_id": "R-04",
+              "rule_name": "승인 계좌와 ERP 일치",
+              "result": "pass",
+              "detail": "승인 계좌와 ERP 계좌 일치"
+            }
+          ]
+        }
+      },
+      "agent_draft": {
+        "procedure": "Day 1에 적용한 규칙 결과를 유지한 채 Mock ERP MCP의 승인·증빙 등록부·지급 요청·사용자 역할 메타데이터를 식별자로 연결했습니다.",
+        "facts": [
+          "R-01 규칙 결과는 pass이며 사유는 '필수값·날짜 형식·change_id 중복 확인 완료'입니다.",
+          "R-02 규칙 결과는 fail이며 사유는 'ERP 반영 후 승인'입니다.",
+          "R-03 규칙 결과는 fail이며 사유는 '요청자와 최종 승인자가 동일'입니다.",
+          "R-04 규칙 결과는 pass이며 사유는 '승인 계좌와 ERP 계좌 일치'입니다.",
+          "APR-2608-028 승인 메타데이터의 승인 시각은 2026-08-28 11:00:00이고 승인자 ID는 U202입니다.",
+          "EVD-2608-028 증빙 등록부 메타데이터의 상태는 미수취입니다.",
+          "PAY-2608-028 지급 요청 메타데이터의 상태는 지급 대기이고 금액은 28000000원입니다."
+        ],
+        "draft_assessment": "Day 1에 규칙을 적용한 결과 R-02, R-03 검토 사항이 식별됐습니다. 연결 메타데이터는 참고 정보이며 담당자의 확인이 필요합니다.",
+        "additional_follow_up": [
+          "EVD-2608-028 등록부 상태가 미수취이므로 실제 문서 수취·확인 여부를 추가 확인해야 합니다."
+        ],
+        "citations": [
+          "R-01",
+          "R-02",
+          "R-03",
+          "R-04",
+          "APR-2608-028",
+          "EVD-2608-028",
+          "PAY-2608-028"
+        ]
+      },
+      "requires_human_review": true
+    },
+    {
+      "sample_id": "SMP-2608-012",
+      "change_id": "CHG-2608-029",
+      "case_id": "CASE-2608-029",
+      "vendor_id": "V26029",
+      "vendor_name": "가상아침테크",
+      "selection_reason": "핵심 규칙 위반 전수",
+      "day1_status": "review",
+      "rule_results": [
+        {
+          "rule_id": "R-01",
+          "rule_name": "필수값과 형식",
+          "result": "pass",
+          "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+        },
+        {
+          "rule_id": "R-02",
+          "rule_name": "변경 전 승인",
+          "result": "fail",
+          "detail": "ERP 반영 후 승인"
+        },
+        {
+          "rule_id": "R-03",
+          "rule_name": "요청·승인 업무 분리",
+          "result": "pass",
+          "detail": "요청자와 최종 승인자 분리"
+        },
+        {
+          "rule_id": "R-04",
+          "rule_name": "승인 계좌와 ERP 일치",
+          "result": "fail",
+          "detail": "승인 계좌와 ERP 계좌 불일치"
+        }
+      ],
+      "source_ids": {
+        "approval_ids": [
+          "APR-2608-029"
+        ],
+        "evidence_ids": [
+          "EVD-2608-029"
+        ],
+        "payment_ids": [
+          "PAY-2608-029"
+        ]
+      },
+      "evidence": {
+        "vendor_change": {
+          "change_id": "CHG-2608-029",
+          "case_id": "CASE-2608-029",
+          "vendor_id": "V26029",
+          "request_id": "REQ-2608-029",
+          "requested_at": "2026-08-29 08:30:00",
+          "requested_by": "U203",
+          "before_account_token": "ACCT-2608-029-OLD",
+          "requested_account_token": "ACCT-2608-029-NEW",
+          "changed_at": "2026-08-29 10:00:00",
+          "changed_by": "U401",
+          "change_reason": "ERP 우선 반영과 계좌 불일치 사례"
+        },
+        "vendor_master": {
+          "vendor_id": "V26029",
+          "vendor_name": "가상아침테크",
+          "business_registration_no_masked": "***-**-10029",
+          "vendor_status": "활성",
+          "vendor_type": "일반거래처",
+          "bank_code": "011",
+          "bank_name": "NH농협은행",
+          "account_holder": "가상아침테크",
+          "current_account_masked": "***-***-9029",
+          "current_account_token": "ACCT-2608-029-ERP",
+          "last_updated_at": "2026-08-29 10:00:00",
+          "last_updated_by": "U401"
+        },
+        "approvals": [
+          {
+            "approval_id": "APR-2608-029",
+            "change_id": "CHG-2608-029",
+            "approval_stage": "최종 승인",
+            "decision": "승인",
+            "approved_at": "2026-08-29 12:00:00",
+            "approved_by": "U301",
+            "approved_account_token": "ACCT-2608-029-NEW",
+            "approval_note": "ERP 반영 후 승인했고 계좌도 불일치"
+          }
+        ],
+        "evidence_register": [
+          {
+            "evidence_id": "EVD-2608-029",
+            "request_id": "REQ-2608-029",
+            "document_type": "ERP 거래처 마스터 변경이력",
+            "document_name": "가상아침테크 ERP 변경이력",
+            "document_status": "추가 확인",
+            "issued_date": "2026-08-29 08:00:00",
+            "received_at": "2026-08-29 08:20:00",
+            "verified_at": "2026-08-29 12:20:00",
+            "verified_by": "U501",
+            "document_account_token": "ACCT-2608-029-NEW",
+            "storage_ref": "EDU-DAY1/EVD-2608-029",
+            "note": "사후 승인과 ERP 계좌 불일치 재확인 필요"
+          }
+        ],
+        "payment_requests": [
+          {
+            "payment_id": "PAY-2608-029",
+            "vendor_id": "V26029",
+            "change_id": "CHG-2608-029",
+            "requested_at": "2026-08-29 13:00:00",
+            "scheduled_date": "2026-08-31 09:00:00",
+            "amount_krw": "29000000",
+            "payment_status": "지급 대기",
+            "payment_purpose": "교육용 기술용역 대금",
+            "beneficiary_account_token": "ACCT-2608-029-ERP",
+            "requested_by": "U601"
+          }
+        ],
+        "user_roles": [
+          {
+            "user_id": "U203",
+            "user_name": "가상사용자 박도윤",
+            "department": "구매운영팀",
+            "position": "대리",
+            "role_name": "거래처 변경 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U301",
+            "user_name": "가상사용자 최하늘",
+            "department": "재무관리팀",
+            "position": "차장",
+            "role_name": "거래처 변경 승인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_CHANGE_APPROVE"
+            ]
+          },
+          {
+            "user_id": "U401",
+            "user_name": "가상사용자 윤마루",
+            "department": "ERP운영팀",
+            "position": "과장",
+            "role_name": "거래처 마스터 변경자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "VENDOR_MASTER_EDIT"
+            ]
+          },
+          {
+            "user_id": "U501",
+            "user_name": "가상사용자 한누리",
+            "department": "구매지원팀",
+            "position": "대리",
+            "role_name": "증빙 확인자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "EVIDENCE_VERIFY"
+            ]
+          },
+          {
+            "user_id": "U601",
+            "user_name": "가상사용자 서이음",
+            "department": "지급운영팀",
+            "position": "대리",
+            "role_name": "지급 요청자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "PAYMENT_REQUEST"
+            ]
+          },
+          {
+            "user_id": "U701",
+            "user_name": "가상사용자 조다정",
+            "department": "내부통제팀",
+            "position": "차장",
+            "role_name": "내부통제 검토자",
+            "user_status": "활성",
+            "valid_from": "2026-01-01 00:00:00",
+            "valid_to": "2026-12-31 23:59:59",
+            "permissions": [
+              "CONTROL_REVIEW"
+            ]
+          }
+        ],
+        "day1_result": {
+          "status": "review",
+          "reason": "ERP 반영 후 승인; 승인 계좌와 ERP 계좌 불일치",
+          "rule_results": [
+            {
+              "rule_id": "R-01",
+              "rule_name": "필수값과 형식",
+              "result": "pass",
+              "detail": "필수값·날짜 형식·change_id 중복 확인 완료"
+            },
+            {
+              "rule_id": "R-02",
+              "rule_name": "변경 전 승인",
+              "result": "fail",
+              "detail": "ERP 반영 후 승인"
+            },
+            {
+              "rule_id": "R-03",
+              "rule_name": "요청·승인 업무 분리",
+              "result": "pass",
+              "detail": "요청자와 최종 승인자 분리"
+            },
+            {
+              "rule_id": "R-04",
+              "rule_name": "승인 계좌와 ERP 일치",
+              "result": "fail",
+              "detail": "승인 계좌와 ERP 계좌 불일치"
+            }
+          ]
+        }
+      },
+      "agent_draft": {
+        "procedure": "Day 1에 적용한 규칙 결과를 유지한 채 Mock ERP MCP의 승인·증빙 등록부·지급 요청·사용자 역할 메타데이터를 식별자로 연결했습니다.",
+        "facts": [
+          "R-01 규칙 결과는 pass이며 사유는 '필수값·날짜 형식·change_id 중복 확인 완료'입니다.",
+          "R-02 규칙 결과는 fail이며 사유는 'ERP 반영 후 승인'입니다.",
+          "R-03 규칙 결과는 pass이며 사유는 '요청자와 최종 승인자 분리'입니다.",
+          "R-04 규칙 결과는 fail이며 사유는 '승인 계좌와 ERP 계좌 불일치'입니다.",
+          "APR-2608-029 승인 메타데이터의 승인 시각은 2026-08-29 12:00:00이고 승인자 ID는 U301입니다.",
+          "EVD-2608-029 증빙 등록부 메타데이터의 상태는 추가 확인입니다.",
+          "PAY-2608-029 지급 요청 메타데이터의 상태는 지급 대기이고 금액은 29000000원입니다."
+        ],
+        "draft_assessment": "Day 1에 규칙을 적용한 결과 R-02, R-04 검토 사항이 식별됐습니다. 연결 메타데이터는 참고 정보이며 담당자의 확인이 필요합니다.",
+        "additional_follow_up": [
+          "EVD-2608-029 등록부 상태가 추가 확인이므로 실제 문서 수취·확인 여부를 추가 확인해야 합니다."
+        ],
+        "citations": [
+          "R-01",
+          "R-02",
+          "R-03",
+          "R-04",
+          "APR-2608-029",
+          "EVD-2608-029",
+          "PAY-2608-029"
+        ]
+      },
+      "requires_human_review": true
+    }
+  ]
+}

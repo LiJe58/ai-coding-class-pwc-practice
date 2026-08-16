@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -10,6 +11,26 @@ SPEC = importlib.util.spec_from_file_location("checkpoint", MODULE_PATH)
 checkpoint = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader
 SPEC.loader.exec_module(checkpoint)
+
+
+EXPECTED_CHECKPOINTS = [
+    "student/00-starter",
+    "student/01-population-ready",
+    "student/02-controls-ready",
+    "student/03-controls-persisted",
+    "student/04-day1-ui-ready",
+    "student/05-day1-complete",
+    "student/06-mcp-connected",
+    "student/07-samples-ready",
+    "student/08-evidence-ready",
+    "student/09-evidence-skill-ready",
+    "student/10-working-paper-api-ready",
+    "student/11-day2-complete",
+    "student/12-review-storage-ready",
+    "student/13-review-ui-ready",
+    "student/14-agent-history-ready",
+    "instructor/complete",
+]
 
 
 class CheckpointToolTest(unittest.TestCase):
@@ -70,6 +91,15 @@ class CheckpointToolTest(unittest.TestCase):
         self.assertFalse((target / ".env").exists())
         self.assertFalse((target / "runtime.log").exists())
         self.assertFalse((target / "assets").exists())
+
+
+class CheckpointIndexTest(unittest.TestCase):
+    def test_manifest_and_stage_metadata_use_the_complete_ordered_index(self) -> None:
+        self.assertEqual(checkpoint.manifest()["checkpoints"], EXPECTED_CHECKPOINTS)
+        for name in EXPECTED_CHECKPOINTS:
+            root = checkpoint.checkpoint_path(name, must_exist=True)
+            metadata = json.loads((root / ".course-workspace.json").read_text(encoding="utf-8"))
+            self.assertEqual(metadata["stage"], name.split("/", 1)[1] if name.startswith("student/") else "complete")
 
 
 if __name__ == "__main__":

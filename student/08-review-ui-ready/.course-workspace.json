@@ -1,7 +1,0 @@
-{
-  "kind": "course-workspace",
-  "stage": "08-review-ui-ready",
-  "audience": "student",
-  "inputSource": "input/day-1",
-  "inputPolicy": "read-only"
-}
