@@ -71,6 +71,7 @@ def reset(value: str) -> None:
             shutil.rmtree(WORKSPACE)
         copy_clean(source, WORKSPACE)
         copy_clean(REPO / "assets" / "scenario", WORKSPACE / "assets" / "scenario")
+        shutil.copy2(REPO / "instructor" / "complete" / ".env.example", WORKSPACE / ".env.example")
         for saved, relative in preserved:
             destination = WORKSPACE / relative
             destination.parent.mkdir(parents=True, exist_ok=True)

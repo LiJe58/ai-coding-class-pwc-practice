@@ -28,7 +28,7 @@ npm run check
 npm run start:backend
 ```
 
-의존성은 전체 기능이 포함된 환경으로 한 번만 설치합니다. 이후 reset은 `.venv`, `frontend/node_modules`, 로컬 비밀 설정 `.env`를 보존하므로 다시 설치하거나 키를 재입력하지 않습니다. `.env.example`은 `instructor/complete`에 포함됩니다. 새 터미널에서는 저장소 루트 또는 `practice/workspace`에서 `npm run dev:frontend`를 실행합니다.
+의존성은 `practice/workspace`의 전체 기능 환경에서 한 번만 설치합니다. 이후 reset은 `.venv`, `frontend/node_modules`, 로컬 비밀 설정 `.env`를 보존하고 `.env.example`을 다시 복사하므로 다시 설치하거나 키를 재입력하지 않습니다. 새 터미널에서는 저장소 루트 또는 `practice/workspace`에서 `npm run dev:frontend`를 실행합니다.
 
 기본 주소는 backend `http://127.0.0.1:8000`, frontend `http://127.0.0.1:5173`입니다. MCP가 필요한 단계는 `npm run start:mcp`를 사용합니다.
 
