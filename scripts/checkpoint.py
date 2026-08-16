@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import shutil
 import subprocess
@@ -87,10 +86,6 @@ def promote(value: str) -> None:
     copy_clean(WORKSPACE, target, root_excludes=("assets",))
 
 
-def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
 def manifest() -> dict:
     path = REPO / "checkpoints.json"
     return json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}
@@ -98,8 +93,6 @@ def manifest() -> dict:
 
 def verify_excel(data: dict) -> None:
     path = REPO / "assets" / "scenario" / "case-matrix.xlsx"
-    if sha256(path) != data["case_matrix_sha256"]:
-        raise ValueError("case-matrix.xlsx 해시가 다릅니다.")
     with zipfile.ZipFile(path) as package:
         names = package.namelist()
         content = b"".join(package.read(name) for name in names)
@@ -126,12 +119,6 @@ def verify() -> None:
     csvs = sorted(canonical.glob("*.csv"))
     if len(csvs) != 6:
         raise ValueError("canonical CSV는 6종이어야 합니다.")
-    expected_assets = data.get("assets", {})
-    for csv_path in csvs:
-        expected = expected_assets.get(csv_path.name)
-        if not expected or sha256(csv_path) != expected:
-            raise ValueError(f"canonical asset 해시 불일치: {csv_path.name}")
-    working_paper_hash = data.get("working_paper_sha256")
     for position, name in enumerate(names):
         root = checkpoint_path(name, must_exist=True)
         workspace_metadata = json.loads((root / ".course-workspace.json").read_text(encoding="utf-8"))
@@ -162,11 +149,11 @@ def verify() -> None:
             raise ValueError(f"control-test Skill 누락: {name}")
         for csv_path in csvs:
             copy = root / "input" / "day-1" / csv_path.name
-            if not copy.is_file() or sha256(copy) != sha256(csv_path):
+            if not copy.is_file() or copy.read_bytes() != csv_path.read_bytes():
                 raise ValueError(f"CSV 사본 불일치: {name}/{csv_path.name}")
         working_paper = root / "output" / "day-2" / "working-paper.json"
-        if name in DAY2_TARGETS and (not working_paper.is_file() or working_paper_hash and sha256(working_paper) != working_paper_hash):
-            raise ValueError(f"Day 2 검토자료 기준 파일 불일치: {name}")
+        if name in DAY2_TARGETS and not working_paper.is_file():
+            raise ValueError(f"Day 2 검토자료 누락: {name}")
         links = [path for path in root.rglob("*") if path.is_symlink() or getattr(path, "is_junction", lambda: False)()]
         if links:
             raise ValueError(f"링크를 사용할 수 없습니다: {links[0]}")

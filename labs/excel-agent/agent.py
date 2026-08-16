@@ -59,7 +59,7 @@ async def run_agent(user_request: str, top_n: int = 4) -> dict:
     for step in range(MAX_AGENT_STEPS):
         response = await client.responses.create(
             model=model,
-            instructions="PBC 수치는 Tool 결과만 사용해 한국어로 설명하고 사람 검토가 필요하다고 알리세요.",
+            instructions="PBC 수치는 Tool 결과만 사용해 한국어로 설명하고 담당자 검토가 필요하다고 알리세요.",
             input=input_items,
             tools=[TOOL],
             tool_choice={"type": "function", "name": TOOL_NAME} if step == 0 else "none",

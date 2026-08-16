@@ -178,7 +178,7 @@ def load_working_paper() -> dict:
     if [sample.get("change_id") for sample in samples] != DAY2_SAMPLE_IDS:
         errors.append("Day 2 표본 목록 또는 순서 불일치")
     if len(samples) != 12 or any(sample.get("requires_human_review") is not True for sample in samples):
-        errors.append("모든 표본 12건은 사람 검토가 필요합니다.")
+        errors.append("표본 12건 모두 담당자 확인이 필요합니다.")
     return {
         "status": "invalid" if errors else "ready",
         "message": errors[0] if errors else "Agent 통제 검토자료 12건을 불러왔습니다.",
@@ -288,7 +288,7 @@ def get_day3_reviews() -> dict:
 def save_day3_review(change_id: str, request: ReviewRequest) -> dict:
     paper = require_working_paper()
     if change_id not in {sample["change_id"] for sample in paper["samples"]}:
-        raise HTTPException(status_code=404, detail=f"고정 표본에 없는 change_id입니다: {change_id}")
+        raise HTTPException(status_code=404, detail=f"지정 표본에 없는 change_id입니다: {change_id}")
     require_reviewer(request.reviewer_user_id)
     expected = {
         "review_action_id": str(request.review_action_id),
@@ -322,7 +322,7 @@ def export_day3_reviews(reviewer_user_id: str = Query(...)) -> Response:
     paper = require_working_paper()
     payload = day3_payload(paper, review_events())
     if not payload["export_ready"]:
-        raise HTTPException(status_code=409, detail=f"사람 검토가 {payload['pending_count']}건 남았습니다.")
+        raise HTTPException(status_code=409, detail=f"담당자 검토가 {payload['pending_count']}건 남았습니다.")
     current = {item["change_id"]: item["current_review"] for item in payload["items"]}
     output = io.StringIO(newline="")
     writer = csv.DictWriter(output, fieldnames=EXPORT_FIELDS, lineterminator="\r\n")

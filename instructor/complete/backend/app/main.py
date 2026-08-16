@@ -305,7 +305,7 @@ def validate_working_paper(payload: object) -> list[str]:
     if len(samples) != 12:
         errors.append(f"표본은 12건이어야 합니다. 현재 {len(samples)}건입니다.")
     if change_ids != DAY2_SAMPLE_IDS:
-        errors.append("change_id 목록 또는 순서가 Day 2 고정 표본과 다릅니다.")
+        errors.append("change_id 목록 또는 순서가 Day 2 지정 표본과 다릅니다.")
     if payload.get("source_test_run_id") != TEST_RUN_ID:
         errors.append(f"source_test_run_id는 {TEST_RUN_ID}이어야 합니다.")
     mcp = payload.get("mcp")
@@ -340,7 +340,7 @@ def validate_working_paper(payload: object) -> list[str]:
         if not isinstance(agent_draft, dict) or draft_required - agent_draft.keys():
             errors.append(f"{sample.get('change_id', index)} agent_draft 형식이 올바르지 않습니다.")
         if sample.get("requires_human_review") is not True:
-            errors.append(f"{sample.get('change_id', index)}는 사람 검토 필요 상태여야 합니다.")
+            errors.append(f"{sample.get('change_id', index)}는 담당자 검토 필요 상태여야 합니다.")
     return errors
 
 
@@ -562,7 +562,7 @@ def get_day2_working_paper() -> dict:
 async def post_agent_preview(change_id: str, request: AgentPreviewRequest) -> dict:
     paper = require_working_paper()
     if change_id not in {sample["change_id"] for sample in paper["samples"]}:
-        raise HTTPException(status_code=404, detail=f"고정 표본에 없는 change_id입니다: {change_id}")
+        raise HTTPException(status_code=404, detail=f"지정 표본에 없는 change_id입니다: {change_id}")
     started_at = datetime.now().astimezone().isoformat(timespec="seconds")
     try:
         require_reviewer(request.requester_user_id)
@@ -630,7 +630,7 @@ async def post_agent_preview(change_id: str, request: AgentPreviewRequest) -> di
 def get_agent_runs(change_id: str = Query(...), requester_user_id: str = Query(...)) -> dict:
     paper = require_working_paper()
     if change_id not in {sample["change_id"] for sample in paper["samples"]}:
-        raise HTTPException(status_code=404, detail=f"고정 표본에 없는 change_id입니다: {change_id}")
+        raise HTTPException(status_code=404, detail=f"지정 표본에 없는 change_id입니다: {change_id}")
     require_reviewer(requester_user_id)
     try:
         with closing(open_review_db()) as connection, connection:
@@ -659,7 +659,7 @@ def get_day3_reviews() -> dict:
 def save_day3_review(change_id: str, request: ReviewRequest) -> dict:
     paper = require_working_paper()
     if change_id not in {sample["change_id"] for sample in paper["samples"]}:
-        raise HTTPException(status_code=404, detail=f"고정 표본에 없는 change_id입니다: {change_id}")
+        raise HTTPException(status_code=404, detail=f"지정 표본에 없는 change_id입니다: {change_id}")
     require_reviewer(request.reviewer_user_id)
     action_id = str(request.review_action_id)
     expected = (
@@ -707,7 +707,7 @@ def export_day3_reviews(reviewer_user_id: str = Query(...)) -> Response:
     current = current_reviews(paper, events)
     summary = review_summary(paper, events)
     if not summary["export_ready"]:
-        raise HTTPException(status_code=409, detail=f"현재 Agent 초안의 사람 검토가 {summary['pending_count']}건 남았습니다.")
+        raise HTTPException(status_code=409, detail=f"현재 Agent 초안의 담당자 검토가 {summary['pending_count']}건 남았습니다.")
     output = io.StringIO(newline="")
     writer = csv.DictWriter(output, fieldnames=EXPORT_FIELDS, lineterminator="\r\n")
     writer.writeheader()

@@ -49,7 +49,7 @@ class ReviewUiCheckpointTest(unittest.TestCase):
         denied = {**first, "review_action_id": str(uuid.uuid4()), "reviewer_user_id": "U601"}
         self.assertEqual(self.client.post("/api/day3/reviews/CHG-2608-002", json=denied).status_code, 403)
         frontend = (ROOT / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
-        for contract in ("Agent 초안", "사람 결론", "전체 이력", "/api/day3/reviews"):
+        for contract in ("Agent 초안", "최종 검토 결과", "전체 이력", "/api/day3/reviews"):
             self.assertIn(contract, frontend)
 
         new_paper = json.loads(WORKING_PAPER_PATH.read_text(encoding="utf-8"))

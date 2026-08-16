@@ -37,15 +37,15 @@ def get_control_population(status: str = "all") -> dict:
 
 @mcp.tool()
 def select_day2_samples() -> dict:
-    """교육용 고정 Day 2 표본 12건을 지정 순서로 조회합니다."""
+    """교육용 Day 2 지정 표본 12건을 지정 순서로 조회합니다."""
     result = build_result()
     by_id = {row["change_id"]: row for row in result["population"]}
     rows = []
     for change_id in DAY2_SAMPLE_IDS:
         item = population_row(by_id[change_id])
-        item["selection_reason"] = "핵심 규칙 위반 전수" if item["status"] == "review" else "교육용 고정 정상 표본"
+        item["selection_reason"] = "핵심 규칙 위반 전수" if item["status"] == "review" else "교육용 지정 정상 표본"
         rows.append(item)
-    return response("success", "교육용 고정 표본 12건을 선택했습니다.", source_test_run_id=result["test_run_id"], summary={"sample_count": 12, "normal_count": 4, "review_count": 8}, rows=rows)
+    return response("success", "교육용 지정 표본 12건을 선택했습니다.", source_test_run_id=result["test_run_id"], summary={"sample_count": 12, "normal_count": 4, "review_count": 8}, rows=rows)
 
 
 @mcp.tool()

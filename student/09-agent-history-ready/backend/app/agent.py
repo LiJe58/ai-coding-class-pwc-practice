@@ -93,7 +93,7 @@ async def create_agent_preview(change_id: str, requester_user_id: str) -> dict:
         try:
             response = await client.responses.create(
                 model=model,
-                instructions="근거 조회 결과를 추측 없이 설명하고 마지막에 사람 검토가 필요하다고 알리세요.",
+                instructions="근거 조회 결과를 추측 없이 설명하고 마지막에 담당자 검토가 필요하다고 알리세요.",
                 input=input_items,
                 tools=[TOOL],
                 tool_choice={"type": "function", "name": TOOL_NAME} if step == 0 else "none",

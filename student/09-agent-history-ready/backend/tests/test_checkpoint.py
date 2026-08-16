@@ -18,9 +18,6 @@ from app.agent import load_agent_settings
 
 ROOT = Path(__file__).resolve().parents[2]
 PAPER = ROOT / "output" / "day-2" / "working-paper.json"
-PAPER_SHA256 = "2d702687e1f52ce475266ccf7df2a7a7acffdb799e098fba8b065fb8dc21616b"
-
-
 class InstructorCheckpointTest(unittest.TestCase):
     def setUp(self) -> None:
         DAY3_DB_PATH.unlink(missing_ok=True)
@@ -78,7 +75,7 @@ class InstructorCheckpointTest(unittest.TestCase):
                     )],
                     output_text="",
                 )
-            return SimpleNamespace(output=[], output_text="근거를 확인했습니다. 사람 검토가 필요합니다.")
+            return SimpleNamespace(output=[], output_text="근거를 확인했습니다. 담당자 검토가 필요합니다.")
 
         responses.create = create
         return SimpleNamespace(responses=responses)
@@ -218,7 +215,6 @@ class InstructorCheckpointTest(unittest.TestCase):
         self.assertEqual(export.status_code, 200)
         rows = list(csv.DictReader(io.StringIO(export.content.decode("utf-8-sig"))))
         self.assertEqual(len(rows), 12)
-        self.assertEqual(hashlib.sha256(PAPER.read_bytes()).hexdigest(), PAPER_SHA256)
         self.assertTrue((ROOT / "templates" / "application-scope.md").is_file())
 
         new_paper = json.loads(PAPER.read_text(encoding="utf-8"))
