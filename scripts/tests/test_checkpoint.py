@@ -31,6 +31,8 @@ EXPECTED_CHECKPOINTS = [
     "student/14-agent-history-ready",
     "instructor/complete",
 ]
+WORKING_PAPER_CHECKPOINTS = EXPECTED_CHECKPOINTS[9:]
+REVIEW_CHECKPOINTS = EXPECTED_CHECKPOINTS[12:]
 
 
 class CheckpointToolTest(unittest.TestCase):
@@ -105,6 +107,56 @@ class CheckpointIndexTest(unittest.TestCase):
             root = checkpoint.checkpoint_path(name, must_exist=True)
             metadata = json.loads((root / ".course-workspace.json").read_text(encoding="utf-8"))
             self.assertEqual(metadata["stage"], name.split("/", 1)[1] if name.startswith("student/") else "complete")
+
+
+class PublishedContentContractTest(unittest.TestCase):
+    def test_agent_drafts_are_case_specific_and_do_not_expose_course_stages(self) -> None:
+        for name in WORKING_PAPER_CHECKPOINTS:
+            root = checkpoint.checkpoint_path(name, must_exist=True)
+            paper = json.loads((root / "output" / "day-2" / "working-paper.json").read_text(encoding="utf-8"))
+            procedures = []
+            assessments = []
+            for sample in paper["samples"]:
+                draft = sample["agent_draft"]
+                text = json.dumps(draft, ensure_ascii=False)
+                self.assertNotIn("Day 1", text, name)
+                self.assertNotIn("?", text, name)
+                self.assertIn(sample["change_id"], draft["procedure"], name)
+                self.assertIn(sample["vendor_name"], draft["procedure"], name)
+                self.assertIn(sample["vendor_name"], draft["draft_assessment"], name)
+                self.assertTrue(any(source_id in draft["procedure"] for ids in sample["source_ids"].values() for source_id in ids), name)
+                procedures.append(draft["procedure"])
+                assessments.append(draft["draft_assessment"])
+            self.assertEqual(len(set(procedures)), 12, name)
+            self.assertEqual(len(set(assessments)), 12, name)
+
+            skill = (root / ".claude" / "skills" / "control-test" / "SKILL.md").read_text(encoding="utf-8")
+            self.assertIn("단계명인 `Day 1`", skill, name)
+            self.assertIn("사례별로 구체적으로", skill, name)
+
+    def test_review_permission_errors_name_the_user_and_recovery_action(self) -> None:
+        expected = "U701 · 내부통제 검토자를 선택해 주세요."
+        for name in REVIEW_CHECKPOINTS:
+            root = checkpoint.checkpoint_path(name, must_exist=True)
+            backend = (root / "backend" / "app" / "main.py").read_text(encoding="utf-8")
+            self.assertIn("검토자 {user_id}에게 CONTROL_REVIEW 권한이 없습니다.", backend, name)
+            self.assertIn(expected, backend, name)
+
+        frontend = (checkpoint.checkpoint_path("student/13-review-ui-ready", must_exist=True) / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
+        self.assertIn("await response.json()", frontend)
+        self.assertIn("권한 거부", frontend)
+
+    def test_agent_run_history_renders_markdown(self) -> None:
+        expected = '<div className="agent-review-markdown"><ReactMarkdown>{run.answer ?? run.error_message}</ReactMarkdown></div>'
+        for name in ("student/14-agent-history-ready", "instructor/complete"):
+            root = checkpoint.checkpoint_path(name, must_exist=True)
+            frontend = (root / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
+            styles = (root / "frontend" / "src" / "styles.css").read_text(encoding="utf-8")
+            self.assertIn(expected, frontend, name)
+            self.assertNotIn("<p>{run.answer ?? run.error_message}</p>", frontend, name)
+            self.assertIn(".timeline .agent-review-markdown { width: 100%; min-width: 0;", styles, name)
+            self.assertIn(".timeline > li {", styles, name)
+            self.assertNotIn(".timeline li {", styles, name)
 
 
 if __name__ == "__main__":

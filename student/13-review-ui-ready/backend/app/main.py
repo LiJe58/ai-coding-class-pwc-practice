@@ -198,7 +198,10 @@ def require_reviewer(user_id: str) -> None:
     user = next((row for row in read_inputs()["user_roles.csv"] if row["user_id"] == user_id), None)
     permissions = set(user["permissions"].split(";")) if user else set()
     if not user or user["user_status"] != "활성" or "CONTROL_REVIEW" not in permissions:
-        raise HTTPException(status_code=403, detail="활성 CONTROL_REVIEW 권한이 필요합니다.")
+        raise HTTPException(
+            status_code=403,
+            detail=f"검토자 {user_id}에게 CONTROL_REVIEW 권한이 없습니다. U701 · 내부통제 검토자를 선택해 주세요.",
+        )
 
 
 def open_review_db() -> sqlite3.Connection:

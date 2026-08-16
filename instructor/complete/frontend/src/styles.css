@@ -307,12 +307,13 @@ textarea { width: 100%; padding: 11px 12px; resize: vertical; line-height: 1.6; 
 .inline-message.success { color: var(--success); background: var(--success-soft); }
 .inline-message.error { color: var(--warning); background: var(--warning-soft); }
 .timeline { margin: 0; padding: 0; list-style: none; }
-.timeline li { position: relative; display: grid; grid-template-columns: 19px 1fr; gap: 10px; min-height: 61px; }
-.timeline li:not(:last-child)::before { position: absolute; top: 15px; bottom: -1px; left: 5px; border-left: 1px solid var(--border); content: ""; }
+.timeline > li { position: relative; display: grid; grid-template-columns: 19px 1fr; gap: 10px; min-height: 61px; }
+.timeline > li:not(:last-child)::before { position: absolute; top: 15px; bottom: -1px; left: 5px; border-left: 1px solid var(--border); content: ""; }
 .timeline-dot { z-index: 1; width: 11px; height: 11px; margin-top: 6px; border: 2px solid var(--border-strong); border-radius: 50%; background: var(--surface); }
 .timeline-dot.active { border-color: var(--success); background: var(--success); }
 .timeline strong { font-size: 13px; }
-.timeline li > div { display: grid; justify-items: start; }
+.timeline > li > div { display: grid; justify-items: start; }
+.timeline .agent-review-markdown { width: 100%; min-width: 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
 .timeline-draft { margin: 2px 0; color: var(--day3); background: var(--day3-soft); }
 .timeline small { color: var(--muted); font-size: 11px; }
 .timeline p { margin: 2px 0 0; color: var(--muted); font-size: 12px; }
