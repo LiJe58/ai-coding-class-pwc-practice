@@ -1,6 +1,6 @@
 # AI Coding Class · 내부통제 실습
 
-합성 거래처·승인·증빙·지급 데이터를 사용해 Day 1 규칙 기반 통제, Day 2 읽기 전용 MCP Agent 조서, Day 3 사람 검토와 export를 단계별로 구현하는 독립 공개 실습 저장소입니다.
+합성 거래처·승인·증빙·지급 데이터를 사용해 Day 1 규칙 기반 통제, Day 2 읽기 전용 MCP Agent 검토자료, Day 3 사람 검토와 CSV 내보내기를 단계별로 구현하는 독립 공개 실습 저장소입니다.
 
 ## 검증 기준 환경
 
@@ -20,6 +20,7 @@ cd ai-coding-class-pwc-practice
 python scripts/checkpoint.py reset instructor/complete
 cd practice/workspace
 npm run setup
+Copy-Item .env.example .env
 cd ../..
 python scripts/checkpoint.py reset student/00-starter
 cd practice/workspace
@@ -27,7 +28,7 @@ npm run check
 npm run start:backend
 ```
 
-의존성은 강사용 superset으로 한 번만 설치합니다. 이후 reset은 `.venv`와 `frontend/node_modules`를 보존하므로 다시 설치하지 않습니다. 새 터미널에서 frontend는 `npm run dev:frontend`로 실행합니다.
+의존성은 강사용 전체 기능 포함 환경으로 한 번만 설치합니다. 이후 reset은 `.venv`, `frontend/node_modules`, 로컬 비밀 설정 `.env`를 보존하므로 다시 설치하거나 키를 재입력하지 않습니다. `.env.example`은 강사용 완성 체크포인트에서 함께 복사됩니다. 새 터미널에서 frontend는 `npm run dev:frontend`로 실행합니다.
 
 기본 주소는 backend `http://127.0.0.1:8000`, frontend `http://127.0.0.1:5173`입니다. MCP가 필요한 단계는 `npm run start:mcp`를 사용합니다.
 
@@ -37,15 +38,15 @@ npm run start:backend
 |---|---|---|
 | `student/00-starter` | health, 준비 화면, CSV 6종 | 환경·입력 연결 |
 | `student/01-population-ready` | 모집단 30, 유효 29, 오류 1 | 통제 규칙·저장 |
-| `student/02-controls-persisted` | 정상 21, 검토 8, SQLite 멱등 저장 | Day 1 화면 연결 |
+| `student/02-controls-persisted` | 정상 21, 검토 8, 같은 실행을 중복 없이 SQLite에 저장 | Day 1 화면 연결 |
 | `student/03-day1-complete` | Day 1 API·UI·SQLite 완료 | Agent 구성·MCP 연결 |
 | `student/04-mcp-connected` | 읽기 전용 `mock-erp` Tool 3개 | 표본·근거·Skill |
-| `student/05-evidence-skill-ready` | 표본 12건, 권한 근거 조회, Skill | Agent 조서 생성·연결 |
-| `student/06-day2-complete` | 고정 조서 12건, 모두 사람 검토 필요 | 결론 저장소 분리 |
-| `student/07-review-storage-ready` | 권한 검증, append-only 검토 이벤트 | 멱등 이력·최종 화면 |
-| `student/08-review-ui-ready` | action ID 멱등, 전체 이력, 검토 UI | 상태·완료·export |
-| `student/09-agent-history-ready` | 현재 테스트 사용자, Agent 실행·append-only 이력 | 최종 검증·발표 |
-| `instructor/complete` | Day 1~3 전체 기능과 적용 범위 템플릿 | 최종 시연 |
+| `student/05-evidence-skill-ready` | 표본 12건, 권한 근거 조회, Skill | Agent 검토자료 생성·연결 |
+| `student/06-day2-complete` | 고정 검토자료 12건, 모두 사람 검토 필요 | 결론 저장소 분리 |
+| `student/07-review-storage-ready` | 권한 검증, 기존 기록을 남기는 검토 이력 | 중복 저장 방지·최종 화면 |
+| `student/08-review-ui-ready` | 요청 ID로 중복 저장 방지, 전체 이력, 검토 화면 | 상태·완료·CSV 내보내기 |
+| `student/09-agent-history-ready` | Agent 권한·실행 이력 API와 UI, 전체 검증 | 발표·마무리 |
+| `instructor/complete` | Day 1–3 전체 기능과 적용 범위 템플릿 | 최종 시연 |
 
 중간 합류나 오류 복구는 저장할 코드가 없는지 확인한 뒤 저장소 루트에서 다음처럼 실행합니다.
 
@@ -57,9 +58,9 @@ npm run check
 
 직접 만든 올바른 상태를 새 체크포인트로 보관할 때만 `python scripts/checkpoint.py promote student/<새-이름>`을 사용합니다. 기존 대상은 덮어쓰지 않습니다. 전체 배포 계약은 `python scripts/checkpoint.py verify`로 검사합니다.
 
-## 자료와 runtime 정책
+## 자료와 실행 중 생성되는 파일
 
-`assets/day-1/input/`의 CSV 6종, `assets/scenario/control-card.md`, `assets/scenario/case-matrix.xlsx`, Day 2 이후의 `output/day-2/working-paper.json`은 합성 고정 자료입니다. 실제 회사 자료, 개인정보, 비밀번호, 인증정보, 운영 URL을 추가하지 마세요. Excel과 애플리케이션에서 경로는 저장소 상대경로만 사용합니다.
+`assets/day-1/input/`의 CSV 6종, `assets/scenario/control-card.md`, `assets/scenario/case-matrix.xlsx`, Day 2 이후의 Agent 검토자료 파일 `output/day-2/working-paper.json`은 합성 고정 자료입니다. 체크포인트를 reset하면 시나리오 자산은 `practice/workspace/assets/scenario`에도 복사됩니다. 실제 회사 자료, 개인정보, 비밀번호, 인증정보, 운영 URL을 추가하지 마세요. Excel과 애플리케이션에서 경로는 저장소 상대경로만 사용합니다.
 
 `.venv`, `node_modules`, `dist`, `backend/data`, SQLite/WAL/journal, pycache, 로그, 임시 JSON, 실제 검토 이벤트와 다운로드 CSV는 Git에 포함하지 않습니다. 강사용 완성본은 `instructor/complete`에 있으며 같은 내용의 학생 최종 폴더는 두지 않습니다.
 

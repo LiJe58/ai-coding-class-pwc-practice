@@ -18,6 +18,7 @@ WORKSPACE = REPO / "practice" / "workspace"
 RUNTIME_NAMES = {".venv", "node_modules", "dist", "__pycache__", ".pytest_cache"}
 RUNTIME_SUFFIXES = (".pyc", ".pyo", ".sqlite", ".sqlite3", ".db", ".log")
 DAY2_TARGETS = {
+    "student/05-evidence-skill-ready",
     "student/06-day2-complete",
     "student/07-review-storage-ready",
     "student/08-review-ui-ready",
@@ -41,7 +42,7 @@ def checkpoint_path(value: str, *, must_exist: bool) -> Path:
 
 def ignored(path: Path) -> bool:
     parts = path.parts
-    if any(part in RUNTIME_NAMES for part in parts) or any(parts[index:index + 2] == ("backend", "data") for index in range(len(parts) - 1)):
+    if path.name == ".env" or any(part in RUNTIME_NAMES for part in parts) or any(parts[index:index + 2] == ("backend", "data") for index in range(len(parts) - 1)):
         return True
     if "output" in parts:
         suffix = parts[parts.index("output"):]
@@ -50,8 +51,8 @@ def ignored(path: Path) -> bool:
     return path.name.endswith(RUNTIME_SUFFIXES) or path.name.endswith((".sqlite3-wal", ".sqlite3-shm", ".sqlite3-journal"))
 
 
-def copy_clean(source: Path, destination: Path) -> None:
-    shutil.copytree(source, destination, ignore=lambda directory, names: [name for name in names if ignored(Path(directory) / name)])
+def copy_clean(source: Path, destination: Path, *, root_excludes: tuple[str, ...] = ()) -> None:
+    shutil.copytree(source, destination, ignore=lambda directory, names: [name for name in names if (Path(directory) == source and name in root_excludes) or ignored(Path(directory) / name)])
 
 
 def reset(value: str) -> None:
@@ -59,7 +60,7 @@ def reset(value: str) -> None:
     preserved: list[tuple[Path, Path]] = []
     with tempfile.TemporaryDirectory(dir=REPO / "practice") as temporary:
         temporary_path = Path(temporary)
-        for relative in (Path(".venv"), Path("frontend/node_modules")):
+        for relative in (Path(".venv"), Path("frontend/node_modules"), Path(".env")):
             runtime = WORKSPACE / relative
             if runtime.exists():
                 saved = temporary_path / relative
@@ -69,6 +70,7 @@ def reset(value: str) -> None:
         if WORKSPACE.exists():
             shutil.rmtree(WORKSPACE)
         copy_clean(source, WORKSPACE)
+        copy_clean(REPO / "assets" / "scenario", WORKSPACE / "assets" / "scenario")
         for saved, relative in preserved:
             destination = WORKSPACE / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
@@ -82,7 +84,7 @@ def promote(value: str) -> None:
     if target.exists():
         raise ValueError(f"대상이 이미 존재합니다: {value}")
     target.parent.mkdir(parents=True, exist_ok=True)
-    copy_clean(WORKSPACE, target)
+    copy_clean(WORKSPACE, target, root_excludes=("assets",))
 
 
 def sha256(path: Path) -> str:
@@ -129,9 +131,14 @@ def verify() -> None:
         expected = expected_assets.get(csv_path.name)
         if not expected or sha256(csv_path) != expected:
             raise ValueError(f"canonical asset 해시 불일치: {csv_path.name}")
-    fixture_hash = data.get("working_paper_sha256")
+    working_paper_hash = data.get("working_paper_sha256")
     for position, name in enumerate(names):
         root = checkpoint_path(name, must_exist=True)
+        workspace_metadata = json.loads((root / ".course-workspace.json").read_text(encoding="utf-8"))
+        expected_stage = name.split("/", 1)[1] if name.startswith("student/") else "complete"
+        expected_audience = name.split("/", 1)[0]
+        if workspace_metadata.get("stage") != expected_stage or workspace_metadata.get("audience") != expected_audience:
+            raise ValueError(f"체크포인트 메타데이터 불일치: {name}")
         for required in (".node-version", ".python-version", ".npmrc", "package.json", "backend/requirements.txt", "frontend/package.json", "frontend/package-lock.json"):
             if not (root / required).is_file():
                 raise ValueError(f"필수 파일 누락: {name}/{required}")
@@ -157,18 +164,25 @@ def verify() -> None:
             copy = root / "input" / "day-1" / csv_path.name
             if not copy.is_file() or sha256(copy) != sha256(csv_path):
                 raise ValueError(f"CSV 사본 불일치: {name}/{csv_path.name}")
-        fixture = root / "output" / "day-2" / "working-paper.json"
-        if name in DAY2_TARGETS and (not fixture.is_file() or fixture_hash and sha256(fixture) != fixture_hash):
-            raise ValueError(f"Day 2 조서 fixture 불일치: {name}")
+        working_paper = root / "output" / "day-2" / "working-paper.json"
+        if name in DAY2_TARGETS and (not working_paper.is_file() or working_paper_hash and sha256(working_paper) != working_paper_hash):
+            raise ValueError(f"Day 2 검토자료 기준 파일 불일치: {name}")
         links = [path for path in root.rglob("*") if path.is_symlink() or getattr(path, "is_junction", lambda: False)()]
         if links:
             raise ValueError(f"링크를 사용할 수 없습니다: {links[0]}")
     tracked = subprocess.run(["git", "ls-files"], cwd=REPO, check=True, capture_output=True, text=True).stdout.splitlines()
-    tracked_set = set(tracked)
+    versioned = subprocess.run(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
+        cwd=REPO,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.splitlines()
+    versioned_set = set(versioned)
     for name in DAY2_TARGETS:
-        fixture = f"{name}/output/day-2/working-paper.json"
-        if fixture not in tracked_set:
-            raise ValueError(f"Day 2 조서가 추적되지 않습니다: {fixture}")
+        working_paper = f"{name}/output/day-2/working-paper.json"
+        if working_paper not in versioned_set:
+            raise ValueError(f"Day 2 검토자료가 버전 관리 대상이 아닙니다: {working_paper}")
     bad = [path for path in tracked if ignored(Path(path)) and not path.endswith("output/day-2/working-paper.json")]
     if bad:
         raise ValueError("runtime 파일이 추적됩니다: " + ", ".join(bad))

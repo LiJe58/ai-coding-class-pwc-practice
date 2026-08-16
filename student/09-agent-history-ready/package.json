@@ -1,5 +1,5 @@
 {
-  "name": "internal-control-practice-09-agent-history-ready",
+  "name": "internal-control-practice-student-09-agent-history-ready",
   "private": true,
   "scripts": {
     "setup": "python tools/setup_workspace.py",

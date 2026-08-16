@@ -14,7 +14,7 @@ class ControlsCheckpointTest(unittest.TestCase):
     def tearDown(self) -> None:
         DB_PATH.unlink(missing_ok=True)
 
-    def test_rules_and_idempotent_sqlite_persistence(self) -> None:
+    def test_rules_and_duplicate_free_sqlite_persistence(self) -> None:
         client = TestClient(app)
         first = client.post("/api/control-test/run").json()
         second = client.post("/api/control-test/run").json()

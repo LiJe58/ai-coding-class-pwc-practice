@@ -1,4 +1,5 @@
 import csv
+import io
 import json
 import sqlite3
 import uuid
@@ -8,7 +9,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
+from fastapi.responses import Response
 from pydantic import BaseModel, Field, field_validator
 
 
@@ -33,6 +35,12 @@ SCHEMAS = {
     "user_roles.csv": ["user_id", "user_name", "department", "position", "role_name", "user_status", "valid_from", "valid_to", "permissions"],
 }
 RULE_NAMES = {"R-01": "필수값과 형식", "R-02": "변경 전 승인", "R-03": "요청·승인 업무 분리", "R-04": "승인 계좌와 ERP 일치"}
+EXPORT_FIELDS = [
+    "source_test_run_id", "agent_run_id", "working_paper_generated_at", "sample_id",
+    "change_id", "case_id", "vendor_id", "vendor_name", "selection_reason",
+    "day1_status", "human_conclusion", "review_comment", "reviewer_user_id",
+    "reviewed_at", "approval_ids", "evidence_ids", "payment_ids",
+]
 
 
 class ReviewRequest(BaseModel):
@@ -173,7 +181,7 @@ def load_working_paper() -> dict:
         errors.append("모든 표본 12건은 사람 검토가 필요합니다.")
     return {
         "status": "invalid" if errors else "ready",
-        "message": errors[0] if errors else "Agent 통제조서 12건을 불러왔습니다.",
+        "message": errors[0] if errors else "Agent 통제 검토자료 12건을 불러왔습니다.",
         "working_paper": paper,
         "validation": {"valid": not errors, "errors": errors},
     }
@@ -222,16 +230,31 @@ def review_events() -> list[dict]:
 def day3_payload(paper: dict, events: list[dict]) -> dict:
     current = {}
     for event in events:
-        current[event["change_id"]] = event
+        if event["working_paper_generated_at"] == paper["generated_at"]:
+            current[event["change_id"]] = event
     items = []
     for sample in paper["samples"]:
-        history = [event for event in reversed(events) if event["change_id"] == sample["change_id"]]
+        history = [
+            {**event, "is_current_working_paper": event["working_paper_generated_at"] == paper["generated_at"]}
+            for event in reversed(events) if event["change_id"] == sample["change_id"]
+        ]
         items.append({
             **{key: sample[key] for key in ("sample_id", "change_id", "case_id", "vendor_id", "vendor_name", "day1_status", "selection_reason")},
             "current_review": current.get(sample["change_id"]),
             "history": history,
         })
-    return {"status": "ready", "items": items}
+    counts = Counter(event["conclusion"] for event in current.values())
+    reviewed_count = len(current)
+    summary = {
+        "total_count": len(paper["samples"]),
+        "reviewed_count": reviewed_count,
+        "pending_count": len(paper["samples"]) - reviewed_count,
+        "normal_count": counts["normal"],
+        "follow_up_count": counts["follow_up"],
+        "control_exception_count": counts["control_exception"],
+        "export_ready": reviewed_count == len(paper["samples"]),
+    }
+    return {"status": "ready", "summary": summary, **summary, "items": items}
 
 
 @app.get("/api/health")
@@ -287,7 +310,38 @@ def save_day3_review(change_id: str, request: ReviewRequest) -> dict:
         if existing:
             event = dict(existing)
             if any(event[key] != value for key, value in expected.items()):
-                raise HTTPException(status_code=409, detail="같은 action ID가 다른 요청에 이미 사용되었습니다.")
+                raise HTTPException(status_code=409, detail="같은 요청 ID가 다른 저장 내용에 이미 사용되었습니다.")
         else:
             connection.execute("INSERT INTO review_events VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", tuple(event.values()))
-    return {"status": "saved", "event": event}
+    return {"status": "saved", "event": event, "summary": day3_payload(paper, review_events())["summary"]}
+
+
+@app.get("/api/day3/export.csv")
+def export_day3_reviews(reviewer_user_id: str = Query(...)) -> Response:
+    require_reviewer(reviewer_user_id)
+    paper = require_working_paper()
+    payload = day3_payload(paper, review_events())
+    if not payload["export_ready"]:
+        raise HTTPException(status_code=409, detail=f"사람 검토가 {payload['pending_count']}건 남았습니다.")
+    current = {item["change_id"]: item["current_review"] for item in payload["items"]}
+    output = io.StringIO(newline="")
+    writer = csv.DictWriter(output, fieldnames=EXPORT_FIELDS, lineterminator="\r\n")
+    writer.writeheader()
+    for sample in paper["samples"]:
+        event = current[sample["change_id"]]
+        writer.writerow({
+            "source_test_run_id": paper["source_test_run_id"],
+            "agent_run_id": paper["agent_run_id"],
+            "working_paper_generated_at": paper["generated_at"],
+            **{key: sample[key] for key in ("sample_id", "change_id", "case_id", "vendor_id", "vendor_name", "selection_reason", "day1_status")},
+            "human_conclusion": event["conclusion"],
+            "review_comment": event["review_comment"],
+            "reviewer_user_id": event["reviewer_user_id"],
+            "reviewed_at": event["reviewed_at"],
+            **{key: ";".join(sample["source_ids"][key]) for key in ("approval_ids", "evidence_ids", "payment_ids")},
+        })
+    return Response(
+        content="\ufeff" + output.getvalue(),
+        media_type="text/csv; charset=utf-8",
+        headers={"Content-Disposition": 'attachment; filename="day3-human-reviews.csv"'},
+    )

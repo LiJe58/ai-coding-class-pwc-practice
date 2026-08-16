@@ -19,6 +19,7 @@ jsonschema-specifications==2025.9.1
 markdown-it-py==4.2.0
 mcp==1.29.0
 mdurl==0.1.2
+openai==3.0.0
 pycparser==3.0
 pydantic==2.13.4
 pydantic-settings==2.15.0

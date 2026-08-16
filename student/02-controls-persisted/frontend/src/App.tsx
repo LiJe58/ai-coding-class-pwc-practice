@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react"
 
-type Payload = { summary: Record<string, number>; exceptions: { change_id: string; reason: string }[]; input_errors: { change_id: string; reason: string }[]; persistence: { database: string } | null }
+type Health = { status: string; message: string }
 
 export default function App() {
-  const [data, setData] = useState<Payload | null>(null)
+  const [health, setHealth] = useState<Health | null>(null)
   const [error, setError] = useState("")
-  const load = (persist = false) => { setError(""); fetch(persist ? "/api/control-test/run" : "/api/control-test", { method: persist ? "POST" : "GET" }).then((response) => response.ok ? response.json() : Promise.reject(new Error("통제 테스트 API 오류"))).then(setData).catch((reason: Error) => setError(reason.message)) }
-  useEffect(() => load(), [])
-  if (error) return <main><h1>통제 테스트 오류</h1><p role="alert">{error}</p><button onClick={() => load()}>다시 시도</button></main>
-  return <main><p className="eyebrow">Day 1 · 규칙과 저장</p><h1>거래처 변경 통제</h1><button onClick={() => load(true)}>판정하고 SQLite 저장</button><section>{data && Object.entries(data.summary).map(([key, value]) => <div key={key}><strong>{key}</strong><span>{value}</span></div>)}</section><p>{data?.persistence ? `저장됨: ${data.persistence.database}` : "저장 전"}</p><section><strong>검토 필요</strong><span>{data?.exceptions.map((item) => item.change_id).join(", ")}</span></section></main>
+
+  const load = () => {
+    setError("")
+    fetch("/api/health")
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error("health API 오류")))
+      .then(setHealth)
+      .catch((reason: Error) => setError(reason.message))
+  }
+
+  useEffect(load, [])
+  return <main>
+    <p className="eyebrow">Day 1 · 백엔드</p>
+    <h1>판정 API·SQLite 준비 완료</h1>
+    <p>대시보드와 검토 화면은 D1-06부터 구현합니다.</p>
+    {error ? <section className="error" role="alert">{error}<button onClick={load}>다시 시도</button></section> :
+      <section aria-live="polite"><strong>처리 영역</strong><span>{health?.status === "ready" ? "정상" : "확인 중"}</span><small>{health?.message}</small></section>}
+  </main>
 }

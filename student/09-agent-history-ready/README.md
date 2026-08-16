@@ -1,6 +1,8 @@
 # 09 · Agent History Ready
 
-완료 상태: 기존 사람 검토 UI와 완료·CSV 흐름을 유지하면서 현재 테스트 사용자, 읽기 전용 Agent 권한 카드, `get_case_evidence` 1회 실행, 사례별 append-only 실행 이력 조회가 연결되어 있습니다. 성공·권한 거부·설정 오류·Tool 오류·모델 오류는 사람 결론 및 `working-paper.json`과 분리해 기록합니다.
+완료 상태: Day 1–3 전체 기능, 사람 검토와 Agent 실행 이력 분리, 완료 조건, 권한 확인, 중복 저장 방지, CSV 내보내기와 적용 범위 템플릿이 포함됩니다.
+
+다음 교재: `present-and-wrap`.
 
 ```text
 npm run setup
@@ -10,6 +12,6 @@ npm run start:mcp
 npm run dev:frontend
 ```
 
-Agent 실행에는 서버 환경변수 `OPENAI_API_KEY`, `OPENAI_MODEL`이 필요하며 호환 API를 사용할 때만 `OPENAI_BASE_URL`을 설정합니다. 설정이 없으면 Agent API만 503으로 중단됩니다. `backend/data/day3_reviews.sqlite3`의 `agent_runs`는 과정 규모의 runtime 기록으로 자동 삭제하지 않지만 체크포인트에는 빈 DB 상태만 포함됩니다. API 키, 전체 모델 메시지, 원본 ERP 행은 저장하지 않습니다.
+Agent 확인을 실행하려면 `Copy-Item .env.example .env`로 로컬 설정 파일을 만든 뒤 `OPENAI_API_KEY`를 입력합니다. 내부 호환 API를 사용할 때만 `OPENAI_BASE_URL`을 추가합니다. `.env`는 Git에서 제외되고 workspace reset에서도 보존됩니다. 키를 코드나 브라우저에 넣지 마세요. 설정이 없으면 Agent 확인만 중단되고 기존 검토 기능은 계속 동작합니다.
 
-U701은 실행과 조회가 가능하고 U601은 모델·MCP 호출 전에 거부됩니다. 입력 CSV와 `output/day-2/working-paper.json`은 수정하지 않습니다. 복구는 `python scripts/checkpoint.py reset student/09-agent-history-ready`를 사용합니다.
+초기 집계는 `12/0/12`, 완료 집계 예시는 `12/12/0/4/1/7`입니다. 12건을 모두 검토하기 전에는 CSV 내보내기가 거부됩니다. 입력 CSV와 Agent 검토자료 파일 `output/day-2/working-paper.json`은 보존하고 SQLite·다운로드 CSV는 실행 중에만 사용하세요. Agent 실행 이력은 SQLite에 저장되지만 사람 결론과 검토자료는 바꾸지 않습니다. 복구는 `python scripts/checkpoint.py reset student/09-agent-history-ready`를 사용합니다.
