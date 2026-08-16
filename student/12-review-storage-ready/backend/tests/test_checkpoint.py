@@ -44,6 +44,11 @@ class ReviewStorageCheckpointTest(unittest.TestCase):
             self.assertEqual(self.client.post(f"/api/day3/reviews/{change_id}", json=payload).status_code, status)
             self.assertEqual(self.event_count(), 1)
 
+        frontend = (ROOT / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
+        self.assertIn("/api/day2/working-paper", frontend)
+        self.assertIn("최종 검토 화면은 다음 단계에서 연결됩니다", frontend)
+        self.assertNotIn("/api/day3/reviews", frontend)
+
         methods = {(route.path, method) for route in app.routes for method in getattr(route, "methods", set())}
         self.assertNotIn(("/api/day3/reviews/{change_id}", "PUT"), methods)
         self.assertNotIn(("/api/day3/reviews/{change_id}", "DELETE"), methods)

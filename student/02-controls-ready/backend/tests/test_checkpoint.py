@@ -1,8 +1,11 @@
 import unittest
+from pathlib import Path
 
 from fastapi.testclient import TestClient
 
 from app.main import app
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 class ControlsCheckpointTest(unittest.TestCase):
@@ -15,6 +18,11 @@ class ControlsCheckpointTest(unittest.TestCase):
         self.assertEqual([row["change_id"] for row in result["input_errors"]], ["CHG-2608-030"])
         case_23 = next(row for row in result["population"] if row["change_id"] == "CHG-2608-023")
         self.assertEqual({item["rule_id"]: item["result"] for item in case_23["rules"]}, {"R-01": "pass", "R-02": "fail", "R-03": "not_applicable", "R-04": "not_applicable"})
+        frontend = (ROOT / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
+        self.assertIn("metric-grid", frontend)
+        self.assertIn("예외 검토", frontend)
+        self.assertIn("입력 오류 행", frontend)
+        self.assertNotIn("/api/control-test/run", frontend)
 
 
 if __name__ == "__main__":

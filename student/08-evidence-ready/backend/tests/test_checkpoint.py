@@ -1,6 +1,9 @@
 import unittest
+from pathlib import Path
 
 from mcp_server import get_case_evidence
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 class EvidenceCheckpointTest(unittest.TestCase):
@@ -21,6 +24,8 @@ class EvidenceCheckpointTest(unittest.TestCase):
             allowed["source_ids"]["payment_ids"],
             [row["payment_id"] for row in allowed["evidence"]["payment_requests"]],
         )
+        frontend = (ROOT / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
+        self.assertIn("증적 참조 준비", frontend)
 
 
 if __name__ == "__main__":

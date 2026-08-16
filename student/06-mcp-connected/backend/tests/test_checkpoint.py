@@ -18,6 +18,9 @@ class McpCheckpointTest(unittest.TestCase):
         source = (ROOT / "backend" / "mcp_server.py").read_text(encoding="utf-8")
         self.assertNotIn("@mcp.tool()\ndef write", source)
         self.assertNotIn("@mcp.tool()\ndef delete", source)
+        frontend = (ROOT / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
+        self.assertIn("MCP 읽기 도구 연결", frontend)
+        self.assertNotIn("/api/day2/working-paper", frontend)
 
 
 if __name__ == "__main__":

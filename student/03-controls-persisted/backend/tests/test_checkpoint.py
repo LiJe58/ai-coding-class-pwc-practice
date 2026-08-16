@@ -1,10 +1,13 @@
 import sqlite3
 import unittest
 from contextlib import closing
+from pathlib import Path
 
 from fastapi.testclient import TestClient
 
 from app.main import DB_PATH, app
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 class ControlsCheckpointTest(unittest.TestCase):
@@ -28,6 +31,9 @@ class ControlsCheckpointTest(unittest.TestCase):
         with closing(sqlite3.connect(DB_PATH)) as connection:
             self.assertEqual(connection.execute("SELECT count(*) FROM population_results").fetchone()[0], 29)
             self.assertIsNone(connection.execute("SELECT 1 FROM population_results WHERE change_id='CHG-2608-030'").fetchone())
+        frontend = (ROOT / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
+        self.assertIn("/api/control-test/run", frontend)
+        self.assertIn("persistence-card", frontend)
 
 
 if __name__ == "__main__":

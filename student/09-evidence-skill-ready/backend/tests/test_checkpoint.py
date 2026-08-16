@@ -37,6 +37,9 @@ class EvidenceSkillCheckpointTest(unittest.TestCase):
         paper = json.loads((ROOT / "output" / "day-2" / "working-paper.json").read_text(encoding="utf-8"))
         self.assertEqual([sample["change_id"] for sample in paper["samples"]], DAY2_SAMPLE_IDS)
         self.assertTrue(all(sample["requires_human_review"] is True for sample in paper["samples"]))
+        frontend = (ROOT / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
+        self.assertIn("control-test Skill 준비", frontend)
+        self.assertNotIn("/api/day3/reviews", frontend)
 
 
 if __name__ == "__main__":

@@ -25,7 +25,9 @@ class WorkingPaperApiCheckpointTest(unittest.TestCase):
         response = TestClient(app).get("/api/day2/working-paper")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["working_paper"], paper)
-        self.assertNotIn("/api/day2/working-paper", (ROOT / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8"))
+        frontend = (ROOT / "frontend" / "src" / "App.tsx").read_text(encoding="utf-8")
+        self.assertNotIn("/api/day2/working-paper", frontend)
+        self.assertIn("Working paper API 준비", frontend)
 
 
 if __name__ == "__main__":
