@@ -24,7 +24,7 @@ from .agent import (
 )
 
 
-app = FastAPI(title="Internal Control Day 1")
+app = FastAPI(title="Internal Control Lab")
 
 WORKSPACE_DIR = Path(__file__).resolve().parents[2]
 INPUT_DIR = WORKSPACE_DIR / "input" / "day-1"
@@ -299,7 +299,7 @@ def validate_working_paper(payload: object) -> list[str]:
     if len(samples) != 12:
         errors.append(f"표본은 12건이어야 합니다. 현재 {len(samples)}건입니다.")
     if change_ids != DAY2_SAMPLE_IDS:
-        errors.append("change_id 목록 또는 순서가 Day 2 지정 표본과 다릅니다.")
+        errors.append("change_id 목록 또는 순서가 지정 표본과 다릅니다.")
     if payload.get("source_test_run_id") != TEST_RUN_ID:
         errors.append(f"source_test_run_id는 {TEST_RUN_ID}이어야 합니다.")
     mcp = payload.get("mcp")
@@ -697,5 +697,5 @@ def export_day3_reviews(reviewer_user_id: str = Query(...)) -> Response:
     return Response(
         content="\ufeff" + output.getvalue(),
         media_type="text/csv; charset=utf-8",
-        headers={"Content-Disposition": 'attachment; filename="day3-human-reviews.csv"'},
+        headers={"Content-Disposition": 'attachment; filename="human-reviews.csv"'},
     )

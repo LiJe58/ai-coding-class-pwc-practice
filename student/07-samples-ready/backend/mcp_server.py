@@ -27,17 +27,17 @@ def population_row(row: dict) -> dict:
 
 @mcp.tool()
 def get_control_population(status: str = "all") -> dict:
-    """Day 1 모집단과 R-01~R-04 판정 요약을 읽기 전용으로 조회합니다."""
+    """모집단과 R-01~R-04 판정 요약을 읽기 전용으로 조회합니다."""
     if status not in {"all", "normal", "review", "error"}:
         return response("invalid_request", "status는 all, normal, review, error 중 하나여야 합니다.", rows=[])
     result = build_result()
     rows = [population_row(row) for row in result["population"] if status == "all" or row["status"] == status]
-    return response("success" if rows else "empty", f"Day 1 모집단 {len(rows)}건을 조회했습니다." if rows else "조건에 맞는 모집단이 없습니다.", test_run_id=result["test_run_id"], summary=result["summary"], rows=rows)
+    return response("success" if rows else "empty", f"모집단 {len(rows)}건을 조회했습니다." if rows else "조건에 맞는 모집단이 없습니다.", test_run_id=result["test_run_id"], summary=result["summary"], rows=rows)
 
 
 @mcp.tool()
 def select_day2_samples() -> dict:
-    """교육용 고정 Day 2 표본 12건을 지정 순서로 조회합니다."""
+    """교육용 고정 표본 12건을 지정 순서로 조회합니다."""
     result = build_result()
     by_id = {row["change_id"]: row for row in result["population"]}
     rows = []

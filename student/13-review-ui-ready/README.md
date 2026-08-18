@@ -14,4 +14,4 @@ npm run start:mcp
 npm run dev:frontend
 ```
 
-U701은 저장할 수 있고 U601은 거부됩니다. Day 2 검토자료를 보존하고 Day 3 SQLite는 실행 중에만 사용하세요. 문제 발생 시 `python scripts/checkpoint.py reset student/13-review-ui-ready`로 복구합니다.
+U701은 저장할 수 있고 U601은 거부됩니다. Agent 검토자료를 보존하고 담당자 검토 SQLite는 실행 중에만 사용하세요. 문제 발생 시 `python scripts/checkpoint.py reset student/13-review-ui-ready`로 복구합니다.

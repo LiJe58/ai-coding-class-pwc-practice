@@ -14,7 +14,7 @@ from fastapi.responses import Response
 from pydantic import BaseModel, Field, field_validator
 
 
-app = FastAPI(title="Internal Control Day 1")
+app = FastAPI(title="Internal Control Lab")
 ROOT = Path(__file__).resolve().parents[2]
 INPUT_DIR = ROOT / "input" / "day-1"
 DB_PATH = ROOT / "backend" / "data" / "day1_control_test.sqlite3"
@@ -176,7 +176,7 @@ def load_working_paper() -> dict:
     errors = [f"{key} 불일치" for key, value in expected.items() if paper.get(key) != value]
     samples = paper.get("samples", [])
     if [sample.get("change_id") for sample in samples] != DAY2_SAMPLE_IDS:
-        errors.append("Day 2 표본 목록 또는 순서 불일치")
+        errors.append("지정 표본 목록 또는 순서 불일치")
     if len(samples) != 12 or any(sample.get("requires_human_review") is not True for sample in samples):
         errors.append("표본 12건 모두 담당자 확인이 필요합니다.")
     return {
@@ -343,5 +343,5 @@ def export_day3_reviews(reviewer_user_id: str = Query(...)) -> Response:
     return Response(
         content="\ufeff" + output.getvalue(),
         media_type="text/csv; charset=utf-8",
-        headers={"Content-Disposition": 'attachment; filename="day3-human-reviews.csv"'},
+        headers={"Content-Disposition": 'attachment; filename="human-reviews.csv"'},
     )

@@ -1,6 +1,6 @@
 ---
 name: control-test
-description: Mock ERP MCP 근거로 Day 2 거래처 계좌 변경 통제 표본 12건을 조사하고 검토 전 Agent 조서 파일을 작성할 때 사용합니다.
+description: Mock ERP MCP 근거로 거래처 계좌 변경 통제 표본 12건을 조사하고 검토 전 Agent 조서 파일을 작성할 때 사용합니다.
 ---
 
 # Control Test
@@ -8,7 +8,7 @@ description: Mock ERP MCP 근거로 Day 2 거래처 계좌 변경 통제 표본 
 ## 절차
 
 1. `mock-erp` MCP 연결을 확인하고 도구 목록에 `get_control_population`, `select_day2_samples`, `get_case_evidence`가 있는지 확인합니다. 연결 실패 시 중단하고 부분 결과를 정상 완료로 기록하지 않습니다.
-2. `get_control_population(status="all")`을 호출해 Day 1 실행 ID와 전체 30건·유효 29건·정상 21건·검토 필요 8건·입력 오류 1건을 확인합니다.
+2. `get_control_population(status="all")`을 호출해 통제 테스트 실행 ID와 전체 30건·유효 29건·정상 21건·검토 필요 8건·입력 오류 1건을 확인합니다.
 3. `select_day2_samples()`를 호출해 반환 순서가 `CHG-2608-001`–`004`, `CHG-2608-022`–`029`인지 확인합니다. 정상 4건에는 `교육용 지정 정상 표본`, 검토 필요 8건에는 `핵심 규칙 위반 전수`만 사용합니다.
 4. 각 표본에 `get_case_evidence(change_id, requester_user_id="U701")`를 호출합니다. 성공·빈 결과·잘못된 요청·권한 거부를 `status` 필드로 구분합니다.
 5. 각 사실을 `approval_id`, `evidence_id`, `payment_id` 또는 `rule_id`에 연결합니다. 근거 ID가 없으면 추정하지 말고 `확인 불가` 또는 `추가 확인 필요`로 기록합니다. 승인 없는 사례의 승인자를 만들지 않고, 증빙 등록부의 등록정보를 문서 내용처럼 설명하지 않습니다.

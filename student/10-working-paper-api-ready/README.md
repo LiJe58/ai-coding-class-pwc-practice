@@ -1,6 +1,6 @@
 # 10 · Working Paper API Ready
 
-완료 상태: 고정 Agent 통제 검토자료 12건을 읽기 전용 API로 제공하고 파일·JSON·내용 오류를 정상 응답과 구분합니다. 프런트엔드는 아직 Day 1 화면입니다.
+완료 상태: 고정 Agent 통제 검토자료 12건을 읽기 전용 API로 제공하고 파일·JSON·내용 오류를 정상 응답과 구분합니다. 프런트엔드는 아직 통제 테스트 화면입니다.
 
 다음 교재: `build-working-paper-screen`.
 

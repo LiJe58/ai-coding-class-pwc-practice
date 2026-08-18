@@ -6,7 +6,7 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException
 
 
-app = FastAPI(title="Internal Control Day 1")
+app = FastAPI(title="Internal Control Lab")
 ROOT = Path(__file__).resolve().parents[2]
 INPUT_DIR = ROOT / "input" / "day-1"
 TEST_RUN_ID = "DAY1-2026-08-V1"

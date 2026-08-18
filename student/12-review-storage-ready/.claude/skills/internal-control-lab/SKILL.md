@@ -1,6 +1,6 @@
 ---
 name: internal-control-lab
-description: Day 1–3 내부통제 실습의 한 차시를 현재 체크포인트에서 조사하고 구현·확인할 때 사용하는 절차입니다.
+description: 내부통제 실습의 한 차시를 현재 체크포인트에서 조사하고 구현·확인할 때 사용하는 절차입니다.
 ---
 
 # Internal Control Lab

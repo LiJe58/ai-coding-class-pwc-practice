@@ -16,9 +16,9 @@ export default function App() {
 
   useEffect(load, [])
   return <main>
-    <p className="eyebrow">Day 1 · 백엔드</p>
+    <p className="eyebrow">백엔드</p>
     <h1>모집단 API 준비 완료</h1>
-    <p>검토 화면은 판정과 저장을 마친 뒤 D1-06부터 구현합니다.</p>
+    <p>검토 화면은 판정과 저장을 마친 뒤 6단계부터 구현합니다.</p>
     {error ? <section className="error" role="alert">{error}<button onClick={load}>다시 시도</button></section> :
       <section aria-live="polite"><strong>처리 영역</strong><span>{health?.status === "ready" ? "정상" : "확인 중"}</span><small>{health?.message}</small></section>}
   </main>

@@ -20,8 +20,8 @@ backend/data/
 .env.*
 !.env.example
 practice/workspace/
-day3-human-reviews.csv
-**/day3-human-reviews.csv
+human-reviews.csv
+**/human-reviews.csv
 **/output/*
 !**/output/day-2/
 !**/output/day-2/working-paper.json

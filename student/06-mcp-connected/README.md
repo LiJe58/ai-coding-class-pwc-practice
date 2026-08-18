@@ -1,6 +1,6 @@
 # 06 · MCP Connected
 
-완료 상태: Day 1 결과를 읽는 `mock-erp` MCP 서버와 읽기 전용 Tool 3개가 연결되어 있습니다.
+완료 상태: 통제 테스트 결과를 읽는 `mock-erp` MCP 서버와 읽기 전용 Tool 3개가 연결되어 있습니다.
 
 다음 교재: `select-fixed-samples`.
 

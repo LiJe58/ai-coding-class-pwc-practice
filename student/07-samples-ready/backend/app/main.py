@@ -8,7 +8,7 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException
 
 
-app = FastAPI(title="Internal Control Day 1")
+app = FastAPI(title="Internal Control Lab")
 ROOT = Path(__file__).resolve().parents[2]
 INPUT_DIR = ROOT / "input" / "day-1"
 DB_PATH = ROOT / "backend" / "data" / "day1_control_test.sqlite3"

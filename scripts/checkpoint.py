@@ -154,7 +154,7 @@ def verify() -> None:
                 raise ValueError(f"CSV 사본 불일치: {name}/{csv_path.name}")
         working_paper = root / "output" / "day-2" / "working-paper.json"
         if name in DAY2_TARGETS and not working_paper.is_file():
-            raise ValueError(f"Day 2 검토자료 누락: {name}")
+            raise ValueError(f"Agent 검토자료 누락: {name}")
         links = [path for path in root.rglob("*") if path.is_symlink() or getattr(path, "is_junction", lambda: False)()]
         if links:
             raise ValueError(f"링크를 사용할 수 없습니다: {links[0]}")
@@ -170,7 +170,7 @@ def verify() -> None:
     for name in DAY2_TARGETS:
         working_paper = f"{name}/output/day-2/working-paper.json"
         if working_paper not in versioned_set:
-            raise ValueError(f"Day 2 검토자료가 버전 관리 대상이 아닙니다: {working_paper}")
+            raise ValueError(f"Agent 검토자료가 버전 관리 대상이 아닙니다: {working_paper}")
     bad = [path for path in tracked if ignored(Path(path)) and not path.endswith("output/day-2/working-paper.json")]
     if bad:
         raise ValueError("runtime 파일이 추적됩니다: " + ", ".join(bad))
